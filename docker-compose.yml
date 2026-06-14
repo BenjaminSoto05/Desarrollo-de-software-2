@@ -1,0 +1,67 @@
+# ============================================================================
+# Docker Compose — UCT-Vínculo Mayor
+# Adaptado del docker-compose de Django al stack Node.js + React
+# Mantiene la misma estructura: db + redis + app
+# ============================================================================
+
+version: '3.8'
+
+services:
+  # ==========================================
+  # Base de datos PostgreSQL (sin cambios)
+  # ==========================================
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=${DB_NAME:-uct_vinculo_mayor}
+      - POSTGRES_USER=${DB_USER:-postgres}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
+    ports:
+      - "5432:5432"
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-uct_vinculo_mayor}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ==========================================
+  # Redis — Cache + Sesiones (RNF-REN-01)
+  # ==========================================
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    restart: always
+
+  # ==========================================
+  # Aplicación Node.js (reemplaza Gunicorn + Django)
+  # Incluye: Backend API + Frontend React (build) + Cron (reemplaza Celery)
+  # ==========================================
+  app:
+    build: .
+    environment:
+      - DATABASE_URL=postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-uct_vinculo_mayor}?schema=public
+      - JWT_SECRET=${JWT_SECRET:-uct-vinculo-mayor-super-secret-key-2026}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN:-24h}
+      - PORT=3000
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
+      - CORS_ORIGIN=${CORS_ORIGIN:-*}
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    restart: always
+    deploy:
+      update_config:
+        order: start-first   # Zero downtime deployments (del compañero)
+        failure_action: rollback
+
+volumes:
+  postgres_data:

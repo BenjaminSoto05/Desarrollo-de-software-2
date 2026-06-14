@@ -1,0 +1,142 @@
+// ============================================================================
+// Schema Prisma — UCT-Vínculo Mayor
+// Modelo de datos alineado con el SRS y Clean Architecture
+// ============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// ENUMS
+// ============================================================================
+
+/// Roles del sistema según SRS Sección 2 (Actores del sistema)
+enum Role {
+  ADULTO_MAYOR
+  TUTOR
+  ESTUDIANTE
+  ADMIN
+}
+
+/// Estados del ciclo de vida de una solicitud (SRS Sección 5)
+/// PENDIENTE → EN_CURSO → COMPLETADA → FINALIZADA
+///                      → CANCELADA
+enum EstadoSolicitud {
+  PENDIENTE   // Publicada, esperando voluntario
+  EN_CURSO    // Aceptada por un estudiante
+  COMPLETADA  // Marcada como completada por el estudiante (RF-EJE-02)
+  FINALIZADA  // Confirmada por el adulto mayor (RF-EJE-03)
+  CANCELADA   // Cancelada por el solicitante o sistema
+}
+
+// ============================================================================
+// MODELOS
+// ============================================================================
+
+/// Usuario del sistema — RF-USR-01, RF-USR-02
+/// Soporta roles: Adulto Mayor, Tutor, Estudiante, Admin
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  passwordHash  String
+  rut           String   @unique
+  nombre        String
+  apellido      String
+  telefono      String?
+  rol           Role
+  comuna        String?
+  direccion     String?  // Solo relevante para ADULTO_MAYOR
+
+  // Control de conducta — RF-USR-04, RN-08, RN-09
+  inasistencias Int      @default(0)
+  suspendido    Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relaciones
+  solicitudesCreadas    Solicitud[]  @relation("Solicitante")
+  solicitudesAceptadas  Solicitud[]  @relation("Voluntario")
+  evaluacionesDadas     Evaluacion[] @relation("Evaluador")
+  evaluacionesRecibidas Evaluacion[] @relation("Evaluado")
+
+  @@map("users")
+}
+
+/// Categoría de solicitud — RF-SOL-01, RN-07
+/// Categorías predefinidas: Compras, Trámites, Acompañamiento, etc.
+/// RN-07: No se permiten categorías de riesgo (Medicina, Electricidad, Conducción)
+model Categoria {
+  id          String      @id @default(uuid())
+  nombre      String      @unique
+  descripcion String?
+  activa      Boolean     @default(true)
+  solicitudes Solicitud[]
+
+  @@map("categorias")
+}
+
+/// Solicitud de ayuda — RF-SOL-01 a RF-SOL-04, RF-EMP-01 a RF-EMP-05
+/// Representa una tarea que un adulto mayor necesita que un voluntario realice
+model Solicitud {
+  id          String @id @default(uuid())
+  titulo      String
+  descripcion String
+
+  // Clasificación — RF-SOL-01
+  categoriaId String
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+
+  // Actores
+  solicitanteId String
+  solicitante   User   @relation("Solicitante", fields: [solicitanteId], references: [id])
+  voluntarioId  String?
+  voluntario    User?  @relation("Voluntario", fields: [voluntarioId], references: [id])
+
+  // Estado del ciclo de vida
+  estado EstadoSolicitud @default(PENDIENTE)
+
+  // Programación — RF-SOL-02, RF-SOL-03, RN-04, RN-05
+  fechaProgramada DateTime
+  horaProgramada  String   // Formato "HH:mm", validado en dominio
+
+  // Ubicación — RF-EMP-02, RF-EMP-05 (dirección oculta hasta aceptación)
+  direccion String
+  comuna    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relaciones
+  evaluaciones Evaluacion[]
+
+  @@map("solicitudes")
+}
+
+/// Evaluación post-tarea — RF-EJE-04
+/// Permite calificar con estrellas (1-5) después de completar una tarea
+model Evaluacion {
+  id          String @id @default(uuid())
+  puntuacion  Int    // 1-5 estrellas
+  comentario  String?
+
+  // Relaciones
+  solicitudId String
+  solicitud   Solicitud @relation(fields: [solicitudId], references: [id])
+  evaluadorId String
+  evaluador   User      @relation("Evaluador", fields: [evaluadorId], references: [id])
+  evaluadoId  String
+  evaluado    User      @relation("Evaluado", fields: [evaluadoId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  // Un evaluador solo puede evaluar una vez por solicitud
+  @@unique([solicitudId, evaluadorId])
+  @@map("evaluaciones")
+}

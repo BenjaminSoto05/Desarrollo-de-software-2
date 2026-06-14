@@ -1,0 +1,9 @@
+<button type="{{ type|default:'button' }}" 
+        class="w-full md:w-auto px-8 py-5 text-2xl md:text-xl font-bold text-white bg-blue-700 rounded-2xl shadow-lg 
+               hover:bg-blue-800 focus:ring-4 focus:ring-amber-400 focus:outline-none 
+               transition-colors duration-200 ease-in-out {% if extra_classes %}{{ extra_classes }}{% endif %}"
+        {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+        {% if id %}id="{{ id }}"{% endif %}
+        {% if disabled %}disabled{% endif %}>
+    {{ text }}
+</button>

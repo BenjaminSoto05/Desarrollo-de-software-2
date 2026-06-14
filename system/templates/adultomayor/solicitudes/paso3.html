@@ -1,0 +1,39 @@
+{% extends 'base_accesible.html' %}
+
+{% block title %}Paso 3: Confirmación - AllyUCT{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-3xl shadow-xl p-6 md:p-10 mb-8 border border-gray-200">
+    <div class="mb-8">
+        <a href="{% url 'solicitud_paso2' %}" class="text-blue-700 font-bold text-lg hover:underline focus-visible:ring-4 focus-visible:ring-amber-400 p-2 rounded inline-block mb-4">
+            ← Volver al Paso 2
+        </a>
+    </div>
+
+    <div class="text-center mb-10">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-primary mb-2">Paso 3 de 3: Revisa tu solicitud</h1>
+        <p class="text-xl text-gray-700">Comprueba que todo esté correcto antes de enviarla.</p>
+    </div>
+
+    <div class="bg-blue-50 rounded-2xl p-6 md:p-8 border-2 border-blue-200 mb-10 max-w-2xl mx-auto">
+        <div class="mb-6">
+            <h2 class="text-lg font-bold text-gray-500 uppercase tracking-wider mb-1">Tipo de Ayuda</h2>
+            <p class="text-3xl font-extrabold text-gray-900">{{ tipo_ayuda }}</p>
+        </div>
+        
+        <div>
+            <h2 class="text-lg font-bold text-gray-500 uppercase tracking-wider mb-1">Detalles proporcionados</h2>
+            <p class="text-2xl text-gray-800 leading-relaxed bg-white p-4 rounded-xl border border-gray-300">
+                {{ descripcion }}
+            </p>
+        </div>
+    </div>
+
+    <form method="post" action="{% url 'solicitud_paso3' %}" class="max-w-2xl mx-auto flex flex-col items-center">
+        {% csrf_token %}
+        <p class="text-xl text-center text-gray-600 mb-6">Si todo está correcto, presiona el botón grande abajo para enviar tu solicitud a nuestros voluntarios.</p>
+        
+        {% include 'components/btn.html' with text="¡Confirmar y Enviar Solicitud!" type="submit" extra_classes="w-full text-2xl md:text-3xl py-6 bg-green-600 hover:bg-green-700 focus:ring-green-300 shadow-xl border-b-4 border-green-800" aria_label="Confirmar y enviar mi solicitud de ayuda ahora" %}
+    </form>
+</div>
+{% endblock %}
