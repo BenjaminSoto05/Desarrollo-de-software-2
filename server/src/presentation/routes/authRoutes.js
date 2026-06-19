@@ -17,6 +17,7 @@ const {
 // Infraestructura
 const prisma = require('../../infrastructure/database/prismaClient');
 const PrismaUserRepository = require('../../infrastructure/repositories/PrismaUserRepository');
+const PrismaRefreshTokenRepository = require('../../infrastructure/repositories/PrismaRefreshTokenRepository');
 const JwtService = require('../../infrastructure/services/JwtService');
 const HashService = require('../../infrastructure/services/HashService');
 
@@ -25,6 +26,9 @@ const RegisterStudentUseCase = require('../../application/use-cases/user/Registe
 const RegisterElderlyUseCase = require('../../application/use-cases/user/RegisterElderlyUseCase');
 const LoginUserUseCase = require('../../application/use-cases/user/LoginUserUseCase');
 const GetUserProfileUseCase = require('../../application/use-cases/user/GetUserProfileUseCase');
+const RefreshTokenUseCase = require('../../application/use-cases/user/RefreshTokenUseCase');
+const LogoutUserUseCase = require('../../application/use-cases/user/LogoutUserUseCase');
+const LogoutAllUsersUseCase = require('../../application/use-cases/user/LogoutAllUsersUseCase');
 
 // Controller
 const AuthController = require('../controllers/AuthController');
@@ -34,17 +38,23 @@ const AuthController = require('../controllers/AuthController');
 // ============================================================================
 
 const userRepository = new PrismaUserRepository(prisma);
+const refreshTokenRepository = new PrismaRefreshTokenRepository(prisma);
 const hashService = new HashService();
 const jwtService = new JwtService(
   process.env.JWT_SECRET,
-  process.env.JWT_EXPIRES_IN
+  process.env.JWT_EXPIRES_IN,
+  process.env.JWT_REFRESH_SECRET,
+  process.env.JWT_REFRESH_EXPIRES_IN
 );
 
 const authController = new AuthController({
   registerStudent: new RegisterStudentUseCase(userRepository, hashService),
   registerElderly: new RegisterElderlyUseCase(userRepository, hashService),
-  loginUser: new LoginUserUseCase(userRepository, hashService, jwtService),
+  loginUser: new LoginUserUseCase(userRepository, refreshTokenRepository, hashService, jwtService),
   getUserProfile: new GetUserProfileUseCase(userRepository),
+  refreshToken: new RefreshTokenUseCase(refreshTokenRepository, userRepository, jwtService),
+  logoutUser: new LogoutUserUseCase(refreshTokenRepository, jwtService),
+  logoutAllUsers: new LogoutAllUsersUseCase(refreshTokenRepository),
 });
 
 // ============================================================================
@@ -87,5 +97,25 @@ router.post('/login', loginRules, authController.handleLogin);
  * Obtiene perfil del usuario autenticado (requiere JWT)
  */
 router.get('/me', authMiddleware, authController.handleGetProfile);
+
+/**
+ * POST /api/auth/refresh
+ * Renueva el token de acceso usando el Refresh Token
+ * Body: { refreshToken }
+ */
+router.post('/refresh', authController.handleRefresh);
+
+/**
+ * POST /api/auth/logout
+ * Cierra sesión individual revocando el Refresh Token
+ * Body: { refreshToken }
+ */
+router.post('/logout', authController.handleLogout);
+
+/**
+ * POST /api/auth/logout-all
+ * Cierra todas las sesiones del usuario de forma global (requiere JWT)
+ */
+router.post('/logout-all', authMiddleware, authController.handleLogoutAll);
 
 module.exports = router;

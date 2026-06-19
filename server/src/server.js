@@ -5,6 +5,20 @@
 
 require('dotenv').config();
 
+const REQUIRED_ENV_VARS = [
+  'JWT_SECRET',
+  'JWT_REFRESH_SECRET',
+  'JWT_EXPIRES_IN',
+  'JWT_REFRESH_EXPIRES_IN'
+];
+
+for (const envVar of REQUIRED_ENV_VARS) {
+  if (!process.env[envVar]) {
+    console.error(`❌ Error crítico de configuración: Variable de entorno ${envVar} no definida.`);
+    process.exit(1);
+  }
+}
+
 const app = require('./app');
 const prisma = require('./infrastructure/database/prismaClient');
 const { logger } = require('./infrastructure/logger');

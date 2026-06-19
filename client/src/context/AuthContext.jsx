@@ -29,25 +29,48 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     const res = await authAPI.login({ email, password });
-    const { user: userData, token: jwt } = res.data.data;
+    const { user: userData, accessToken, refreshToken } = res.data.data;
     setUser(userData);
-    setToken(jwt);
+    setToken(accessToken);
     localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('token', jwt);
+    localStorage.setItem('token', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
     return userData;
   };
 
-  const logout = () => {
+  const logout = async () => {
+    const currentRefreshToken = localStorage.getItem('refreshToken');
+    if (currentRefreshToken) {
+      try {
+        await authAPI.logout({ refreshToken: currentRefreshToken });
+      } catch (e) {
+        console.error('Error al revocar en logout:', e);
+      }
+    }
     setUser(null);
     setToken(null);
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+  };
+
+  const logoutAll = async () => {
+    try {
+      await authAPI.logoutAll();
+    } catch (e) {
+      console.error('Error en logout global:', e);
+    }
+    setUser(null);
+    setToken(null);
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
   };
 
   const isAuthenticated = !!user && !!token;
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated, loading }}>
+    <AuthContext.Provider value={{ user, token, login, logout, logoutAll, isAuthenticated, loading }}>
       {children}
     </AuthContext.Provider>
   );

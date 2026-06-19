@@ -1,6 +1,5 @@
 // ============================================================================
 // Configuración Swagger/OpenAPI — RNF-MAN-02
-// Equivalente a drf-spectacular en Django
 // Documentación automática de la API REST
 // ============================================================================
 
@@ -29,7 +28,7 @@ const options = {
           type: 'http',
           scheme: 'bearer',
           bearerFormat: 'JWT',
-          description: 'Token JWT obtenido en /api/auth/login',
+          description: 'Token JWT obtenido en /api/auth/login o /api/auth/refresh',
         },
       },
       schemas: {
@@ -77,8 +76,29 @@ const options = {
             data: {
               type: 'object',
               properties: {
-                token: { type: 'string', description: 'JWT Token' },
+                accessToken: { type: 'string', description: 'JWT Access Token (corta duración)' },
+                refreshToken: { type: 'string', description: 'JWT Refresh Token (larga duración)' },
                 user: { $ref: '#/components/schemas/User' },
+              },
+            },
+          },
+        },
+        RefreshTokenRequest: {
+          type: 'object',
+          required: ['refreshToken'],
+          properties: {
+            refreshToken: { type: 'string', description: 'Token de refresco original' },
+          },
+        },
+        RefreshTokenResponse: {
+          type: 'object',
+          properties: {
+            success: { type: 'boolean', example: true },
+            data: {
+              type: 'object',
+              properties: {
+                accessToken: { type: 'string' },
+                refreshToken: { type: 'string' },
               },
             },
           },
@@ -86,7 +106,7 @@ const options = {
         User: {
           type: 'object',
           properties: {
-            id: { type: 'integer' },
+            id: { type: 'string', format: 'uuid' },
             email: { type: 'string' },
             nombre: { type: 'string' },
             apellido: { type: 'string' },
@@ -104,7 +124,7 @@ const options = {
           properties: {
             titulo: { type: 'string', example: 'Necesito ayuda con compras' },
             descripcion: { type: 'string', example: 'Compras en supermercado cercano' },
-            categoriaId: { type: 'integer', example: 1 },
+            categoriaId: { type: 'string', format: 'uuid', example: 'd3b07384-d113-49c3-a55d-254e2ac50a41' },
             comuna: { type: 'string', example: 'Temuco', description: 'RN-03: Solo Temuco o Padre Las Casas' },
             direccion: { type: 'string', example: 'Av. Alemania 456', description: 'RF-EMP-05: Oculta hasta aceptación' },
             fechaProgramada: { type: 'string', format: 'date', example: '2026-06-01', description: 'RN-05: Mínimo 24h anticipación' },
@@ -114,14 +134,14 @@ const options = {
         Solicitud: {
           type: 'object',
           properties: {
-            id: { type: 'integer' },
+            id: { type: 'string', format: 'uuid' },
             titulo: { type: 'string' },
             descripcion: { type: 'string' },
             estado: { type: 'string', enum: ['PENDIENTE', 'EN_CURSO', 'COMPLETADA', 'FINALIZADA', 'CANCELADA'] },
             comuna: { type: 'string' },
             fechaProgramada: { type: 'string', format: 'date' },
             horaProgramada: { type: 'string' },
-            categoria: { type: 'object', properties: { id: { type: 'integer' }, nombre: { type: 'string' } } },
+            categoria: { type: 'object', properties: { id: { type: 'string', format: 'uuid' }, nombre: { type: 'string' } } },
             solicitante: { $ref: '#/components/schemas/User' },
           },
         },
@@ -133,7 +153,7 @@ const options = {
           type: 'object',
           required: ['solicitudId', 'puntuacion'],
           properties: {
-            solicitudId: { type: 'integer' },
+            solicitudId: { type: 'string', format: 'uuid' },
             puntuacion: { type: 'integer', minimum: 1, maximum: 5, description: 'Estrellas del 1 al 5' },
             comentario: { type: 'string' },
           },
@@ -185,7 +205,7 @@ const options = {
         post: {
           tags: ['Autenticación'],
           summary: 'Iniciar sesión (RF-USR-03)',
-          description: 'Autentica con correo + contraseña. Retorna JWT.',
+          description: 'Autentica con correo + contraseña. Retorna JWT Access Token y Refresh Token.',
           security: [],
           requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/LoginRequest' } } } },
           responses: {
@@ -201,6 +221,40 @@ const options = {
           responses: { 200: { description: 'Perfil del usuario' } },
         },
       },
+      '/auth/refresh': {
+        post: {
+          tags: ['Autenticación'],
+          summary: 'Renovar Access Token mediante Refresh Token',
+          security: [],
+          requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/RefreshTokenRequest' } } } },
+          responses: {
+            200: { description: 'Token renovado exitosamente', content: { 'application/json': { schema: { $ref: '#/components/schemas/RefreshTokenResponse' } } } },
+            401: { description: 'Refresh Token inválido, expirado o revocado' },
+          },
+        },
+      },
+      '/auth/logout': {
+        post: {
+          tags: ['Autenticación'],
+          summary: 'Cerrar sesión (individual)',
+          security: [],
+          requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/RefreshTokenRequest' } } } },
+          responses: {
+            200: { description: 'Sesión cerrada exitosamente' },
+            400: { description: 'Solicitud inválida' },
+          },
+        },
+      },
+      '/auth/logout-all': {
+        post: {
+          tags: ['Autenticación'],
+          summary: 'Cerrar todas las sesiones (global)',
+          description: 'Revoca todos los Refresh Tokens asociados al usuario autenticado.',
+          responses: {
+            200: { description: 'Todas las sesiones activas cerradas' },
+          },
+        },
+      },
 
       // --- SOLICITUDES ---
       '/solicitudes': {
@@ -209,7 +263,7 @@ const options = {
           summary: 'Listar solicitudes con filtros (RF-EMP-01, RF-EMP-02)',
           description: 'Filtrables por categoría, comuna y estado. La dirección se oculta para no-participantes.',
           parameters: [
-            { in: 'query', name: 'categoriaId', schema: { type: 'integer' } },
+            { in: 'query', name: 'categoriaId', schema: { type: 'string', format: 'uuid' } },
             { in: 'query', name: 'comuna', schema: { type: 'string' } },
             { in: 'query', name: 'estado', schema: { type: 'string' } },
             { in: 'query', name: 'page', schema: { type: 'integer', default: 1 } },
@@ -237,20 +291,20 @@ const options = {
           tags: ['Solicitudes'],
           summary: 'Detalle de solicitud (RF-EMP-02, RF-EMP-05)',
           description: 'Dirección visible solo para participantes aceptados.',
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
+          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } }],
           responses: { 200: { description: 'Detalle completo' }, 404: { description: 'No encontrada' } },
         },
         put: {
           tags: ['Solicitudes'],
           summary: 'Editar solicitud (RF-SOL-04)',
           description: 'Solo si estado = PENDIENTE y es el creador.',
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
+          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } }],
           responses: { 200: { description: 'Solicitud actualizada' } },
         },
         delete: {
           tags: ['Solicitudes'],
           summary: 'Cancelar solicitud pendiente (RF-SOL-04)',
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
+          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } }],
           responses: { 200: { description: 'Solicitud cancelada' } },
         },
       },
@@ -259,7 +313,7 @@ const options = {
           tags: ['Ciclo de Vida'],
           summary: 'Aceptar solicitud (RF-EMP-03, RF-EMP-04)',
           description: 'Solo estudiantes. Máximo 2 activas (RF-EMP-04). Transacción atómica.',
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
+          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } }],
           responses: { 200: { description: 'Solicitud aceptada' }, 409: { description: 'Ya aceptada o límite alcanzado' } },
         },
       },
@@ -268,7 +322,7 @@ const options = {
           tags: ['Ciclo de Vida'],
           summary: 'Cancelar tarea aceptada (RF-EJE-01)',
           description: 'Si <4h antes = inasistencia (RN-08). 3 inasistencias = suspensión (RN-09).',
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
+          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } }],
           responses: { 200: { description: 'Cancelación procesada' } },
         },
       },
@@ -277,7 +331,7 @@ const options = {
           tags: ['Ciclo de Vida'],
           summary: 'Marcar como completada (RF-EJE-02)',
           description: 'Solo el voluntario asignado. Estado: EN_CURSO → COMPLETADA.',
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
+          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } }],
           responses: { 200: { description: 'Solicitud completada' } },
         },
       },
@@ -286,7 +340,7 @@ const options = {
           tags: ['Ciclo de Vida'],
           summary: 'Confirmar recepción (RF-EJE-03, RF-EJE-06, RN-11)',
           description: 'Solo el solicitante. Acredita horas al voluntario. COMPLETADA → FINALIZADA.',
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
+          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } }],
           responses: { 200: { description: 'Servicio confirmado' } },
         },
       },
@@ -313,7 +367,7 @@ const options = {
         get: {
           tags: ['Evaluaciones'],
           summary: 'Ver evaluaciones de una solicitud',
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
+          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } }],
           responses: { 200: { description: 'Lista de evaluaciones' } },
         },
       },

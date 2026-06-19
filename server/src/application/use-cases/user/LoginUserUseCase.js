@@ -7,21 +7,23 @@
 class LoginUserUseCase {
   /**
    * @param {import('../../domain/repositories/UserRepository')} userRepository
+   * @param {import('../../domain/repositories/RefreshTokenRepository')} refreshTokenRepository
    * @param {import('../../infrastructure/services/HashService')} hashService
    * @param {import('../../infrastructure/services/JwtService')} jwtService
    */
-  constructor(userRepository, hashService, jwtService) {
+  constructor(userRepository, refreshTokenRepository, hashService, jwtService) {
     this.userRepository = userRepository;
+    this.refreshTokenRepository = refreshTokenRepository;
     this.hashService = hashService;
     this.jwtService = jwtService;
   }
 
   /**
-   * Autentica un usuario y retorna un token JWT.
+   * Autentica un usuario y retorna un token JWT de acceso y uno de refresco.
    * @param {Object} input
    * @param {string} input.email
    * @param {string} input.password
-   * @returns {Promise<{ user: Object, token: string }>}
+   * @returns {Promise<{ user: Object, accessToken: string, refreshToken: string }>}
    * @throws {Error} Si las credenciales son inválidas o el usuario está suspendido
    */
   async execute(input) {
@@ -57,19 +59,32 @@ class LoginUserUseCase {
       throw error;
     }
 
-    // 4. Generar token JWT
-    const token = this.jwtService.generateToken({
+    // 4. Generar tokens
+    const payload = {
       id: user.id,
       email: user.email,
       rol: user.rol,
+    };
+    const accessToken = this.jwtService.generateAccessToken(payload);
+    const refreshToken = this.jwtService.generateRefreshToken(payload);
+
+    // 5. Guardar hash del Refresh Token en BD
+    const tokenHash = this.jwtService.hashToken(refreshToken);
+    const expiresAt = this.jwtService.getRefreshTokenExpiresAt();
+
+    await this.refreshTokenRepository.create({
+      tokenHash,
+      userId: user.id,
+      expiresAt,
     });
 
-    // 5. Retornar usuario sin datos sensibles + token
+    // 6. Retornar usuario sin datos sensibles + tokens
     const { passwordHash: _, ...userWithoutPassword } = user;
 
     return {
       user: userWithoutPassword,
-      token,
+      accessToken,
+      refreshToken,
     };
   }
 }

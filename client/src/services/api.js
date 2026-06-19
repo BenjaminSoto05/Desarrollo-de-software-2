@@ -14,15 +14,88 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Interceptor: manejar errores de autenticación
+// Control de refresco de tokens
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+  failedQueue = [];
+};
+
+// Interceptor: manejar errores de autenticación con renovación automática
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = '/login';
+  async (error) => {
+    const originalRequest = error.config;
+
+    // Si el error es 401 y no es una re-petición ya intentada
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      if (isRefreshing) {
+        // Encolar peticiones concurrentes mientras se realiza el refresh
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then((token) => {
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+            return api(originalRequest);
+          })
+          .catch((err) => Promise.reject(err));
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (!refreshToken) {
+        // No hay refresh token, forzar cierre de sesión
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+        return Promise.reject(error);
+      }
+
+      try {
+        // Usar una instancia limpia de axios para evitar loops infinitos con interceptores
+        const res = await axios.post('/api/auth/refresh', { refreshToken }, {
+          headers: { 'Content-Type': 'application/json' }
+        });
+        
+        const { accessToken: newAccessToken, refreshToken: newRefreshToken } = res.data.data;
+
+        // Guardar nuevos tokens
+        localStorage.setItem('token', newAccessToken);
+        localStorage.setItem('refreshToken', newRefreshToken);
+
+        // Actualizar headers
+        api.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
+        processQueue(null, newAccessToken);
+        isRefreshing = false;
+
+        // Reintentar petición original
+        return api(originalRequest);
+      } catch (refreshError) {
+        processQueue(refreshError, null);
+        isRefreshing = false;
+        
+        // El refresco falló o el token expiró/fue revocado
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+        return Promise.reject(refreshError);
+      }
     }
+
     return Promise.reject(error);
   }
 );
@@ -33,6 +106,8 @@ export const authAPI = {
   registerElderly: (data) => api.post('/auth/register/elderly', data),
   login: (data) => api.post('/auth/login', data),
   getProfile: () => api.get('/auth/me'),
+  logout: (data) => api.post('/auth/logout', data),
+  logoutAll: () => api.post('/auth/logout-all'),
 };
 
 // Solicitudes API
