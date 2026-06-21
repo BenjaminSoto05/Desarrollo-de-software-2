@@ -6,10 +6,30 @@
   "scripts": {
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/",
     "prisma:generate": "npx prisma generate",
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:seed": "node prisma/seed.js",
     "prisma:studio": "npx prisma studio"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/tests"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "text",
+      "lcov"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/server.js",
+      "!src/infrastructure/swagger.js",
+      "!src/infrastructure/database/**"
+    ]
   },
   "keywords": [
     "uct",
@@ -34,6 +54,8 @@
     "winston": "^3.19.0"
   },
   "devDependencies": {
+    "eslint": "^10.5.0",
+    "jest": "^30.4.2",
     "prisma": "^6.9.0"
   }
 }
