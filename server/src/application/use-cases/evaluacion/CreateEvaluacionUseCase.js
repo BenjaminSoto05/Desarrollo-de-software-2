@@ -64,7 +64,7 @@ class CreateEvaluacionUseCase {
       comentario: input.comentario,
     });
 
-    // 5. Verificar que no se autoeval​​úe
+    // 5. Verificar que no se autoevalue
     if (evaluacion.esAutoEvaluacion()) {
       const error = new Error('No puedes evaluarte a ti mismo.');
       error.statusCode = 400;
