@@ -57,16 +57,18 @@ jobs:
 
       - name: Install SonarScanner CLI
         run: |
-          export SONAR_SCANNER_VERSION=5.0.1.3006
-          curl -sSLo /tmp/sonar-scanner.zip "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}-linux.zip"
+          export SONAR_SCANNER_VERSION=6.2.1.4610
+          curl -sSLo /tmp/sonar-scanner.zip "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}-linux-x64.zip"
           unzip -q /tmp/sonar-scanner.zip -d /opt/
-          echo "/opt/sonar-scanner-${SONAR_SCANNER_VERSION}-linux/bin" >> $GITHUB_PATH
+          echo "/opt/sonar-scanner-${SONAR_SCANNER_VERSION}-linux-x64/bin" >> $GITHUB_PATH
 
       - name: SonarQube Analysis
         run: |
           sonar-scanner \
             -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
             -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
-            -Dsonar.projectBaseDir=.
+            -Dsonar.projectBaseDir=. \
+            -Dsonar.verbose=true \
+            -X
         env:
           SONAR_SCANNER_OPTS: "-Xmx512m -Dhttps.protocols=TLSv1.2 -Dhttp.keepAlive=false"
