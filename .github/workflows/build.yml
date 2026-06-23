@@ -49,18 +49,24 @@ jobs:
         working-directory: server
 
       # ── SonarQube Analysis ────────────────────────────────
-      - uses: SonarSource/sonarqube-scan-action@v6
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_SCANNER_OPTS: >-
-            -Xmx512m
-            -Dokhttp.protocols=http/1.1
-            -Djdk.tls.client.protocols=TLSv1.2
-            -Dhttp.keepAlive=false
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
-      # Optional: Fail the job if Quality Gate is red
-      # - uses: SonarSource/sonarqube-quality-gate-action@v1
-      #   timeout-minutes: 5
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Install SonarScanner CLI
+        run: |
+          export SONAR_SCANNER_VERSION=5.0.1.3006
+          curl -sSLo /tmp/sonar-scanner.zip "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}-linux.zip"
+          unzip -q /tmp/sonar-scanner.zip -d /opt/
+          echo "/opt/sonar-scanner-${SONAR_SCANNER_VERSION}-linux/bin" >> $GITHUB_PATH
+
+      - name: SonarQube Analysis
+        run: |
+          sonar-scanner \
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.projectBaseDir=.
+        env:
+          SONAR_SCANNER_OPTS: "-Xmx512m -Dhttps.protocols=TLSv1.2 -Dhttp.keepAlive=false"
