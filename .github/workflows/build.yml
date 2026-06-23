@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     name: Build and Analyze
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       # ── Checkout ──────────────────────────────────────────
@@ -49,26 +49,8 @@ jobs:
         working-directory: server
 
       # ── SonarQube Analysis ────────────────────────────────
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Install SonarScanner CLI
-        run: |
-          export SONAR_SCANNER_VERSION=6.2.1.4610
-          curl -sSLo /tmp/sonar-scanner.zip "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}-linux-x64.zip"
-          unzip -q /tmp/sonar-scanner.zip -d /opt/
-          echo "/opt/sonar-scanner-${SONAR_SCANNER_VERSION}-linux-x64/bin" >> $GITHUB_PATH
-
-      - name: SonarQube Analysis
-        run: |
-          sonar-scanner \
-            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-            -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
-            -Dsonar.projectBaseDir=. \
-            -Dsonar.verbose=true \
-            -X
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v6
         env:
-          SONAR_SCANNER_OPTS: "-Xmx512m -Dhttps.protocols=TLSv1.2 -Dhttp.keepAlive=false"
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
