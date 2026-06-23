@@ -53,6 +53,11 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_SCANNER_OPTS: >-
+            -Xmx512m
+            -Dokhttp.protocols=http/1.1
+            -Djdk.tls.client.protocols=TLSv1.2
+            -Dhttp.keepAlive=false
 
       # Optional: Fail the job if Quality Gate is red
       # - uses: SonarSource/sonarqube-quality-gate-action@v1
