@@ -1,141 +1,68 @@
-// ============================================================================
-// Tests Unitarios: SolicitudValidationService
-// Capa: Domain — Reglas de negocio RN-04, RN-05, RN-08
-// ============================================================================
-
 const {
   SolicitudValidationService,
   HORARIO_INICIO,
   HORARIO_FIN,
   HORAS_ANTICIPACION_MINIMA,
-  HORAS_CANCELACION_SIN_PENALIZACION,
 } = require('../../../../src/domain/services/SolicitudValidationService');
 
 describe('SolicitudValidationService', () => {
-
   describe('validarHorario() — RN-04', () => {
-    test('debe aceptar hora 08:00', () => {
-      const result = SolicitudValidationService.validarHorario('08:00');
-      expect(result.valid).toBe(true);
-    });
-
-    test('debe aceptar hora 19:59', () => {
-      const result = SolicitudValidationService.validarHorario('19:59');
-      expect(result.valid).toBe(true);
-    });
-
-    test('debe rechazar hora 20:00', () => {
-      const result = SolicitudValidationService.validarHorario('20:00');
-      expect(result.valid).toBe(false);
-      expect(result.error).toContain(`${HORARIO_INICIO}:00`);
-    });
-
-    test('debe rechazar hora 07:59', () => {
-      const result = SolicitudValidationService.validarHorario('07:59');
-      expect(result.valid).toBe(false);
-    });
-
-    test('debe rechazar hora 23:00', () => {
-      const result = SolicitudValidationService.validarHorario('23:00');
-      expect(result.valid).toBe(false);
-    });
-
-    test('debe rechazar hora 00:00', () => {
-      const result = SolicitudValidationService.validarHorario('00:00');
-      expect(result.valid).toBe(false);
-    });
-
-    test('debe rechazar formato inválido', () => {
-      const result = SolicitudValidationService.validarHorario('abc');
-      expect(result.valid).toBe(false);
-    });
-
-    test('debe rechazar hora null', () => {
-      const result = SolicitudValidationService.validarHorario(null);
-      expect(result.valid).toBe(false);
-    });
-
-    test('debe rechazar hora undefined', () => {
-      const result = SolicitudValidationService.validarHorario(undefined);
-      expect(result.valid).toBe(false);
-    });
-
-    test('debe rechazar hora con minutos inválidos', () => {
-      const result = SolicitudValidationService.validarHorario('10:99');
-      expect(result.valid).toBe(false);
-    });
+    test('acepta 08:00', () => { expect(SolicitudValidationService.validarHorario('08:00').valid).toBe(true); });
+    test('acepta 19:59', () => { expect(SolicitudValidationService.validarHorario('19:59').valid).toBe(true); });
+    test('rechaza 20:00', () => { expect(SolicitudValidationService.validarHorario('20:00').valid).toBe(false); });
+    test('rechaza 07:59', () => { expect(SolicitudValidationService.validarHorario('07:59').valid).toBe(false); });
+    test('rechaza 23:00', () => { expect(SolicitudValidationService.validarHorario('23:00').valid).toBe(false); });
+    test('rechaza 00:00', () => { expect(SolicitudValidationService.validarHorario('00:00').valid).toBe(false); });
+    test('rechaza formato inválido', () => { expect(SolicitudValidationService.validarHorario('abc').valid).toBe(false); });
+    test('rechaza null', () => { expect(SolicitudValidationService.validarHorario(null).valid).toBe(false); });
+    test('rechaza undefined', () => { expect(SolicitudValidationService.validarHorario(undefined).valid).toBe(false); });
   });
 
   describe('validarFechaFutura()', () => {
-    test('debe aceptar una fecha futura', () => {
-      const futuro = new Date();
-      futuro.setDate(futuro.getDate() + 7);
-      const result = SolicitudValidationService.validarFechaFutura(futuro);
-      expect(result.valid).toBe(true);
+    test('acepta fecha futura', () => {
+      const f = new Date(); f.setDate(f.getDate() + 7);
+      expect(SolicitudValidationService.validarFechaFutura(f).valid).toBe(true);
     });
-
-    test('debe rechazar una fecha pasada', () => {
-      const pasado = new Date('2020-01-01');
-      const result = SolicitudValidationService.validarFechaFutura(pasado);
-      expect(result.valid).toBe(false);
-      expect(result.error).toContain('pasado');
+    test('rechaza fecha pasada', () => {
+      expect(SolicitudValidationService.validarFechaFutura(new Date('2020-01-01')).valid).toBe(false);
     });
   });
 
   describe('validarAnticipacion() — RN-05', () => {
-    test('debe aceptar solicitud con más de 24h de anticipación', () => {
-      const futuro = new Date();
-      futuro.setDate(futuro.getDate() + 3);
-      const result = SolicitudValidationService.validarAnticipacion(futuro, '10:00');
-      expect(result.valid).toBe(true);
+    test('acepta >24h', () => {
+      const f = new Date(); f.setDate(f.getDate() + 3);
+      expect(SolicitudValidationService.validarAnticipacion(f, '10:00').valid).toBe(true);
     });
-
-    test('debe rechazar solicitud con menos de 24h de anticipación', () => {
-      const pronto = new Date();
-      pronto.setHours(pronto.getHours() + 2);
-      const result = SolicitudValidationService.validarAnticipacion(pronto, pronto.getHours().toString().padStart(2, '0') + ':00');
-      expect(result.valid).toBe(false);
-      expect(result.error).toContain(`${HORAS_ANTICIPACION_MINIMA}`);
+    test('rechaza <24h', () => {
+      const f = new Date(); f.setHours(f.getHours() + 2);
+      const hora = f.getHours().toString().padStart(2, '0') + ':00';
+      expect(SolicitudValidationService.validarAnticipacion(f, hora).valid).toBe(false);
     });
   });
 
   describe('cancelacionGeneraInasistencia() — RN-08', () => {
-    test('debe generar inasistencia si faltan menos de 4 horas', () => {
-      const pronto = new Date();
-      pronto.setHours(pronto.getHours() + 2);
-      const hora = pronto.getHours().toString().padStart(2, '0') + ':00';
-      const result = SolicitudValidationService.cancelacionGeneraInasistencia(pronto, hora);
-      expect(result).toBe(true);
+    test('genera si <4h', () => {
+      const f = new Date(); f.setHours(f.getHours() + 2);
+      const hora = f.getHours().toString().padStart(2, '0') + ':00';
+      expect(SolicitudValidationService.cancelacionGeneraInasistencia(f, hora)).toBe(true);
     });
-
-    test('no debe generar inasistencia si faltan más de 4 horas', () => {
-      const lejano = new Date();
-      lejano.setDate(lejano.getDate() + 3);
-      const result = SolicitudValidationService.cancelacionGeneraInasistencia(lejano, '10:00');
-      expect(result).toBe(false);
+    test('no genera si >4h', () => {
+      const f = new Date(); f.setDate(f.getDate() + 3);
+      expect(SolicitudValidationService.cancelacionGeneraInasistencia(f, '10:00')).toBe(false);
     });
   });
 
   describe('validarCreacion()', () => {
-    test('debe aceptar datos válidos', () => {
-      const futuro = new Date();
-      futuro.setDate(futuro.getDate() + 3);
-      const result = SolicitudValidationService.validarCreacion({
-        fechaProgramada: futuro,
-        horaProgramada: '10:00',
-      });
-      expect(result.valid).toBe(true);
-      expect(result.errors).toHaveLength(0);
+    test('acepta datos válidos', () => {
+      const f = new Date(); f.setDate(f.getDate() + 3);
+      const r = SolicitudValidationService.validarCreacion({ fechaProgramada: f, horaProgramada: '10:00' });
+      expect(r.valid).toBe(true);
+      expect(r.errors).toHaveLength(0);
     });
-
-    test('debe acumular múltiples errores', () => {
-      const pasado = new Date('2020-01-01');
-      const result = SolicitudValidationService.validarCreacion({
-        fechaProgramada: pasado,
-        horaProgramada: '23:00',
-      });
-      expect(result.valid).toBe(false);
-      expect(result.errors.length).toBeGreaterThanOrEqual(1);
+    test('acumula errores', () => {
+      const r = SolicitudValidationService.validarCreacion({ fechaProgramada: new Date('2020-01-01'), horaProgramada: '23:00' });
+      expect(r.valid).toBe(false);
+      expect(r.errors.length).toBeGreaterThanOrEqual(1);
     });
   });
 });

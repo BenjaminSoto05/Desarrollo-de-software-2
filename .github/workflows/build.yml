@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     name: Build and Analyze
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       # ── Checkout ──────────────────────────────────────────
@@ -49,13 +49,10 @@ jobs:
         working-directory: server
 
       # ── SonarQube Analysis ────────────────────────────────
-      - uses: SonarSource/sonarqube-scan-action@v6
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-
-      # Optional: Fail the job if Quality Gate is red
-      # - uses: SonarSource/sonarqube-quality-gate-action@v1
-      #   timeout-minutes: 5
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: "-Dsonar.scm.disabled=true -X"

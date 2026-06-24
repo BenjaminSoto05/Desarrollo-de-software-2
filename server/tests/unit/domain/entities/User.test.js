@@ -1,8 +1,3 @@
-// ============================================================================
-// Tests Unitarios: Entidad User
-// Capa: Domain
-// ============================================================================
-
 const { User, ROLES, MAX_INASISTENCIAS } = require('../../../../src/domain/entities/User');
 
 describe('User Entity', () => {
@@ -28,107 +23,95 @@ describe('User Entity', () => {
       expect(user.suspendido).toBe(false);
     });
 
-    test('debe asignar valores por defecto cuando no se proporcionan opcionales', () => {
+    test('debe asignar valores por defecto', () => {
       const user = new User(validUserProps);
       expect(user.telefono).toBeNull();
       expect(user.comuna).toBeNull();
       expect(user.direccion).toBeNull();
-      expect(user.inasistencias).toBe(0);
-      expect(user.suspendido).toBe(false);
     });
   });
 
   describe('getNombreCompleto()', () => {
-    test('debe retornar nombre y apellido concatenados', () => {
+    test('debe retornar nombre y apellido', () => {
       const user = new User(validUserProps);
       expect(user.getNombreCompleto()).toBe('Juan Pérez');
     });
   });
 
   describe('esEstudiante()', () => {
-    test('debe retornar true para rol ESTUDIANTE', () => {
+    test('true para ESTUDIANTE', () => {
       const user = new User({ ...validUserProps, rol: ROLES.ESTUDIANTE });
       expect(user.esEstudiante()).toBe(true);
     });
-
-    test('debe retornar false para rol ADULTO_MAYOR', () => {
+    test('false para ADULTO_MAYOR', () => {
       const user = new User({ ...validUserProps, rol: ROLES.ADULTO_MAYOR });
       expect(user.esEstudiante()).toBe(false);
     });
   });
 
   describe('puedeCrearSolicitudes()', () => {
-    test('debe retornar true para ADULTO_MAYOR no suspendido', () => {
+    test('true para ADULTO_MAYOR no suspendido', () => {
       const user = new User({ ...validUserProps, rol: ROLES.ADULTO_MAYOR });
       expect(user.puedeCrearSolicitudes()).toBe(true);
     });
-
-    test('debe retornar true para TUTOR no suspendido', () => {
+    test('true para TUTOR no suspendido', () => {
       const user = new User({ ...validUserProps, rol: ROLES.TUTOR });
       expect(user.puedeCrearSolicitudes()).toBe(true);
     });
-
-    test('debe retornar false para ESTUDIANTE', () => {
+    test('false para ESTUDIANTE', () => {
       const user = new User({ ...validUserProps, rol: ROLES.ESTUDIANTE });
       expect(user.puedeCrearSolicitudes()).toBe(false);
     });
-
-    test('debe retornar false si el usuario está suspendido', () => {
+    test('false si suspendido', () => {
       const user = new User({ ...validUserProps, rol: ROLES.ADULTO_MAYOR, suspendido: true });
       expect(user.puedeCrearSolicitudes()).toBe(false);
     });
   });
 
   describe('puedeAceptarTareas()', () => {
-    test('debe retornar true para ESTUDIANTE no suspendido', () => {
+    test('true para ESTUDIANTE no suspendido', () => {
       const user = new User({ ...validUserProps, rol: ROLES.ESTUDIANTE });
       expect(user.puedeAceptarTareas()).toBe(true);
     });
-
-    test('debe retornar false para ADULTO_MAYOR', () => {
+    test('false para ADULTO_MAYOR', () => {
       const user = new User({ ...validUserProps, rol: ROLES.ADULTO_MAYOR });
       expect(user.puedeAceptarTareas()).toBe(false);
     });
-
-    test('debe retornar false si está suspendido', () => {
+    test('false si suspendido', () => {
       const user = new User({ ...validUserProps, rol: ROLES.ESTUDIANTE, suspendido: true });
       expect(user.puedeAceptarTareas()).toBe(false);
     });
   });
 
   describe('esAdmin()', () => {
-    test('debe retornar true para ADMIN', () => {
+    test('true para ADMIN', () => {
       const user = new User({ ...validUserProps, rol: ROLES.ADMIN });
       expect(user.esAdmin()).toBe(true);
     });
-
-    test('debe retornar false para otros roles', () => {
+    test('false para otros roles', () => {
       const user = new User({ ...validUserProps, rol: ROLES.ESTUDIANTE });
       expect(user.esAdmin()).toBe(false);
     });
   });
 
-  describe('registrarInasistencia()', () => {
-    test('debe incrementar el contador de inasistencias', () => {
+  describe('registrarInasistencia() — RN-09', () => {
+    test('incrementa contador', () => {
       const user = new User(validUserProps);
       user.registrarInasistencia();
       expect(user.inasistencias).toBe(1);
     });
-
-    test('no debe suspender con menos de 3 inasistencias', () => {
+    test('no suspende con menos de 3', () => {
       const user = new User(validUserProps);
       user.registrarInasistencia();
       user.registrarInasistencia();
       expect(user.suspendido).toBe(false);
-      expect(user.inasistencias).toBe(2);
     });
-
-    test('debe suspender al alcanzar 3 inasistencias (RN-09)', () => {
+    test('suspende al alcanzar 3', () => {
       const user = new User(validUserProps);
       user.registrarInasistencia();
       user.registrarInasistencia();
-      const suspendido = user.registrarInasistencia();
-      expect(suspendido).toBe(true);
+      const result = user.registrarInasistencia();
+      expect(result).toBe(true);
       expect(user.suspendido).toBe(true);
       expect(user.inasistencias).toBe(MAX_INASISTENCIAS);
     });

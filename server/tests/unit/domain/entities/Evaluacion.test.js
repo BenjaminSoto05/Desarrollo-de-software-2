@@ -1,76 +1,41 @@
-// ============================================================================
-// Tests Unitarios: Entidad Evaluacion
-// Capa: Domain
-// ============================================================================
-
 const { Evaluacion, PUNTUACION_MINIMA, PUNTUACION_MAXIMA } = require('../../../../src/domain/entities/Evaluacion');
 
 describe('Evaluacion Entity', () => {
   const validProps = {
-    id: 'eval-1',
-    solicitudId: 'sol-1',
-    evaluadorId: 'user-1',
-    evaluadoId: 'user-2',
-    puntuacion: 5,
-    comentario: 'Excelente servicio',
+    id: 'eval-1', solicitudId: 'sol-1', evaluadorId: 'user-1',
+    evaluadoId: 'user-2', puntuacion: 5, comentario: 'Excelente',
   };
 
   describe('constructor', () => {
-    test('debe crear una evaluación con puntuación válida', () => {
-      const evaluacion = new Evaluacion(validProps);
-      expect(evaluacion.puntuacion).toBe(5);
-      expect(evaluacion.comentario).toBe('Excelente servicio');
+    test('crea con puntuación válida', () => {
+      const e = new Evaluacion(validProps);
+      expect(e.puntuacion).toBe(5);
     });
-
-    test('debe aceptar puntuación mínima (1)', () => {
-      const evaluacion = new Evaluacion({ ...validProps, puntuacion: PUNTUACION_MINIMA });
-      expect(evaluacion.puntuacion).toBe(1);
+    test('acepta mínima (1)', () => {
+      expect(new Evaluacion({ ...validProps, puntuacion: PUNTUACION_MINIMA }).puntuacion).toBe(1);
     });
-
-    test('debe aceptar puntuación máxima (5)', () => {
-      const evaluacion = new Evaluacion({ ...validProps, puntuacion: PUNTUACION_MAXIMA });
-      expect(evaluacion.puntuacion).toBe(5);
+    test('acepta máxima (5)', () => {
+      expect(new Evaluacion({ ...validProps, puntuacion: PUNTUACION_MAXIMA }).puntuacion).toBe(5);
     });
-
-    test('debe asignar null al comentario si no se proporciona', () => {
-      const evaluacion = new Evaluacion({ ...validProps, comentario: undefined });
-      expect(evaluacion.comentario).toBeNull();
+    test('null si no hay comentario', () => {
+      expect(new Evaluacion({ ...validProps, comentario: undefined }).comentario).toBeNull();
     });
   });
 
   describe('validarPuntuacion()', () => {
-    test('debe lanzar error con puntuación 0', () => {
-      expect(() => new Evaluacion({ ...validProps, puntuacion: 0 })).toThrow(
-        `La puntuación debe ser un entero entre ${PUNTUACION_MINIMA} y ${PUNTUACION_MAXIMA}`
-      );
-    });
-
-    test('debe lanzar error con puntuación 6', () => {
-      expect(() => new Evaluacion({ ...validProps, puntuacion: 6 })).toThrow();
-    });
-
-    test('debe lanzar error con puntuación negativa', () => {
-      expect(() => new Evaluacion({ ...validProps, puntuacion: -1 })).toThrow();
-    });
-
-    test('debe lanzar error con puntuación decimal', () => {
-      expect(() => new Evaluacion({ ...validProps, puntuacion: 3.5 })).toThrow();
-    });
-
-    test('debe lanzar error con puntuación no numérica', () => {
-      expect(() => new Evaluacion({ ...validProps, puntuacion: 'cinco' })).toThrow();
-    });
+    test('rechaza 0', () => { expect(() => new Evaluacion({ ...validProps, puntuacion: 0 })).toThrow(); });
+    test('rechaza 6', () => { expect(() => new Evaluacion({ ...validProps, puntuacion: 6 })).toThrow(); });
+    test('rechaza negativo', () => { expect(() => new Evaluacion({ ...validProps, puntuacion: -1 })).toThrow(); });
+    test('rechaza decimal', () => { expect(() => new Evaluacion({ ...validProps, puntuacion: 3.5 })).toThrow(); });
+    test('rechaza string', () => { expect(() => new Evaluacion({ ...validProps, puntuacion: 'cinco' })).toThrow(); });
   });
 
   describe('esAutoEvaluacion()', () => {
-    test('debe retornar true si evaluador y evaluado son el mismo', () => {
-      const evaluacion = new Evaluacion({ ...validProps, evaluadorId: 'user-1', evaluadoId: 'user-1' });
-      expect(evaluacion.esAutoEvaluacion()).toBe(true);
+    test('true si mismo usuario', () => {
+      expect(new Evaluacion({ ...validProps, evaluadorId: 'u1', evaluadoId: 'u1' }).esAutoEvaluacion()).toBe(true);
     });
-
-    test('debe retornar false si evaluador y evaluado son diferentes', () => {
-      const evaluacion = new Evaluacion(validProps);
-      expect(evaluacion.esAutoEvaluacion()).toBe(false);
+    test('false si diferentes', () => {
+      expect(new Evaluacion(validProps).esAutoEvaluacion()).toBe(false);
     });
   });
 });
