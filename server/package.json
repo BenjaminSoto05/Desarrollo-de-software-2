@@ -10,7 +10,9 @@
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:seed": "node prisma/seed.js",
     "prisma:studio": "npx prisma studio",
-    "test": "jest"
+    "test": "jest --coverage --coverageReporters=text --coverageReporters=lcov --coverageReporters=cobertura",
+    "test:ci": "jest --coverage --coverageReporters=lcov --coverageReporters=cobertura --ci",
+    "test:unit": "jest tests/unit --coverage --coverageReporters=text"
   },
   "keywords": [
     "uct",
@@ -38,5 +40,32 @@
     "jest": "^30.4.2",
     "prisma": "^6.9.0",
     "supertest": "^7.2.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/server.js",
+      "!src/app.js",
+      "!src/infrastructure/swagger.js"
+    ],
+    "coverageThreshold": {
+      "./src/domain/entities/": {
+        "lines": 90,
+        "functions": 90,
+        "branches": 90,
+        "statements": 90
+      },
+      "./src/domain/services/": {
+        "lines": 90,
+        "functions": 90,
+        "branches": 85,
+        "statements": 90
+      }
+    },
+    "coverageDirectory": "coverage"
   }
 }
