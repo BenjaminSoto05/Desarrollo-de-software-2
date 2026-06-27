@@ -45,6 +45,8 @@ class Solicitud {
    * @param {string} props.horaProgramada
    * @param {string} props.direccion
    * @param {string} props.comuna
+   * @param {string} [props.nombreBeneficiario]
+   * @param {string} [props.telefonoBeneficiario]
    */
   constructor(props) {
     this.id = props.id || null;
@@ -58,6 +60,8 @@ class Solicitud {
     this.horaProgramada = props.horaProgramada;
     this.direccion = props.direccion;
     this.comuna = props.comuna;
+    this.nombreBeneficiario = props.nombreBeneficiario || null;
+    this.telefonoBeneficiario = props.telefonoBeneficiario || null;
   }
 
   /** @returns {boolean} Si la solicitud está disponible para aceptar */

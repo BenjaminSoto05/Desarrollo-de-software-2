@@ -84,6 +84,19 @@ const USUARIOS = [
     direccion: 'Av. Alemania 456, Temuco',
   },
 
+  // --- Presidentes de Junta ---
+  {
+    email: 'roberto.junta@gmail.com',
+    password: 'MiPass123',
+    rut: '14567890-2',
+    nombre: 'Roberto',
+    apellido: 'Soto',
+    telefono: '+56922244666',
+    rol: 'PRESIDENTE_JUNTA',
+    comuna: 'Temuco',
+    direccion: 'Sede Vecinal Los Pinos, Temuco',
+  },
+
   // --- Estudiantes UCT ---
   {
     email: 'juan.perez@alu.uct.cl',
@@ -208,6 +221,19 @@ function buildSolicitudes(userMap, catMap) {
       horaProgramada: '11:00',
       direccion: 'Manuel Montt 1234, Temuco',
       comuna: 'Temuco',
+    },
+    {
+      titulo: 'Retirar remedios del consultorio',
+      descripcion: 'Don Pedro no puede caminar bien. Necesita que le retiren sus remedios del Cesfam.',
+      categoriaId: catMap['Trámites'],
+      solicitanteId: userMap['roberto.junta@gmail.com'],
+      estado: 'PENDIENTE',
+      fechaProgramada: en5Dias,
+      horaProgramada: '09:00',
+      direccion: 'Calle Los Pinos 567, Temuco',
+      comuna: 'Temuco',
+      nombreBeneficiario: 'Pedro Alarcón',
+      telefonoBeneficiario: '+56999988888',
     },
 
     // --- EN CURSO (4) ---
@@ -444,7 +470,7 @@ async function main() {
       },
     });
     userMap[user.email] = result.id;
-    const rolTag = { ADULTO_MAYOR: '👴', TUTOR: '👨‍👦', ESTUDIANTE: '🎓', ADMIN: '🛡️' };
+    const rolTag = { ADULTO_MAYOR: '👴', TUTOR: '👨‍👦', PRESIDENTE_JUNTA: '🏘️', ESTUDIANTE: '🎓', ADMIN: '🛡️' };
     console.log(`   ${rolTag[user.rol]} ${result.nombre} ${result.apellido} (${result.email})`);
   }
 
@@ -493,6 +519,7 @@ async function main() {
   console.log('\n📌 Cuentas de prueba:');
   console.log('   🎓 juan.perez@alu.uct.cl     / MiPass123');
   console.log('   👴 maria.lagos@gmail.com      / MiPass123');
+  console.log('   🏘️  roberto.junta@gmail.com    / MiPass123');
   console.log('   🛡️  admin@uct.cl              / AdminUCT2026');
   console.log('');
 }

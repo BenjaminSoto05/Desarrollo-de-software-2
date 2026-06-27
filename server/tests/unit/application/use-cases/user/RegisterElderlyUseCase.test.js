@@ -65,7 +65,7 @@ describe('RegisterElderlyUseCase', () => {
   it('debe lanzar error 400 si el rol no es ADULTO_MAYOR o TUTOR', async () => {
     const payload = { ...validPayload, rol: ROLES.ESTUDIANTE };
     await expect(registerElderlyUseCase.execute(payload))
-      .rejects.toThrow(`El rol debe ser uno de: ${ROLES.ADULTO_MAYOR}, ${ROLES.TUTOR}.`);
+      .rejects.toThrow(`El rol debe ser uno de: ${ROLES.ADULTO_MAYOR}, ${ROLES.TUTOR}, ${ROLES.PRESIDENTE_JUNTA}.`);
   });
 
   it('debe lanzar error 400 si el RUT es inválido', async () => {
