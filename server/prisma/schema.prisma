@@ -20,6 +20,7 @@ datasource db {
 enum Role {
   ADULTO_MAYOR
   TUTOR
+  PRESIDENTE_JUNTA
   ESTUDIANTE
   ADMIN
 }
@@ -109,6 +110,10 @@ model Solicitud {
   // Ubicación — RF-EMP-02, RF-EMP-05 (dirección oculta hasta aceptación)
   direccion String
   comuna    String
+
+  // Datos opcionales del beneficiario (si es creado por Tutor o Presidente de Junta)
+  nombreBeneficiario   String?
+  telefonoBeneficiario String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

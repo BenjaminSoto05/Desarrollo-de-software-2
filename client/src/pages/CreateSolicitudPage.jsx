@@ -5,7 +5,7 @@ import { solicitudesAPI, categoriasAPI } from '../services/api';
 export default function CreateSolicitudPage() {
   const navigate = useNavigate();
   const [categorias, setCategorias] = useState([]);
-  const [form, setForm] = useState({ titulo: '', descripcion: '', categoriaId: '', fechaProgramada: '', horaProgramada: '', direccion: '', comuna: '' });
+  const [form, setForm] = useState({ titulo: '', descripcion: '', categoriaId: '', fechaProgramada: '', horaProgramada: '', direccion: '', comuna: '', nombreBeneficiario: '', telefonoBeneficiario: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -72,6 +72,18 @@ export default function CreateSolicitudPage() {
             <div>
               <label htmlFor="direccion" className="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
               <input id="direccion" name="direccion" required value={form.direccion} onChange={handleChange} placeholder="Av. Alemania 123"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:ring-2 focus:ring-uct-blue focus:border-transparent" />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="nombreBeneficiario" className="block text-sm font-medium text-gray-700 mb-1">Nombre Beneficiario (Opcional)</label>
+              <input id="nombreBeneficiario" name="nombreBeneficiario" value={form.nombreBeneficiario} onChange={handleChange} placeholder="Si la ayuda es para otra persona"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:ring-2 focus:ring-uct-blue focus:border-transparent" />
+            </div>
+            <div>
+              <label htmlFor="telefonoBeneficiario" className="block text-sm font-medium text-gray-700 mb-1">Teléfono Beneficiario (Opcional)</label>
+              <input id="telefonoBeneficiario" name="telefonoBeneficiario" value={form.telefonoBeneficiario} onChange={handleChange} placeholder="+56912345678"
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:ring-2 focus:ring-uct-blue focus:border-transparent" />
             </div>
           </div>

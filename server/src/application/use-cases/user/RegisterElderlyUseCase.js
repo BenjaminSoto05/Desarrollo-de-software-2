@@ -8,7 +8,7 @@ const { ROLES } = require('../../../domain/entities/User');
 const { UserValidationService } = require('../../../domain/services/UserValidationService');
 
 /** Roles permitidos para este registro */
-const ROLES_PERMITIDOS = [ROLES.ADULTO_MAYOR, ROLES.TUTOR];
+const ROLES_PERMITIDOS = [ROLES.ADULTO_MAYOR, ROLES.TUTOR, ROLES.PRESIDENTE_JUNTA];
 
 class RegisterElderlyUseCase {
   /**

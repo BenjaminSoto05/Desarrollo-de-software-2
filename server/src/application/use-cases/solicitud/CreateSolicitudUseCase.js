@@ -8,6 +8,7 @@
 // ============================================================================
 
 const { Solicitud } = require('../../../domain/entities/Solicitud');
+const { User } = require('../../../domain/entities/User');
 const { SolicitudValidationService } = require('../../../domain/services/SolicitudValidationService');
 const { UserValidationService } = require('../../../domain/services/UserValidationService');
 
@@ -33,20 +34,24 @@ class CreateSolicitudUseCase {
    * @param {string} input.horaProgramada - "HH:mm"
    * @param {string} input.direccion
    * @param {string} input.comuna
+   * @param {string} [input.nombreBeneficiario]
+   * @param {string} [input.telefonoBeneficiario]
    * @param {string} solicitanteId - ID del usuario autenticado
    * @returns {Promise<Object>} Solicitud creada
    */
   async execute(input, solicitanteId) {
     // 1. Verificar que el solicitante existe y puede crear solicitudes
-    const solicitante = await this.userRepository.findById(solicitanteId);
-    if (!solicitante) {
+    const solicitanteData = await this.userRepository.findById(solicitanteId);
+    if (!solicitanteData) {
       const error = new Error('Usuario no encontrado.');
       error.statusCode = 404;
       throw error;
     }
 
-    if (!['ADULTO_MAYOR', 'TUTOR'].includes(solicitante.rol)) {
-      const error = new Error('Solo adultos mayores o tutores pueden crear solicitudes.');
+    const solicitante = new User(solicitanteData);
+
+    if (!['ADULTO_MAYOR', 'TUTOR', 'PRESIDENTE_JUNTA'].includes(solicitante.rol)) {
+      const error = new Error('Solo adultos mayores, tutores o presidentes de junta pueden crear solicitudes.');
       error.statusCode = 403;
       throw error;
     }
@@ -100,6 +105,8 @@ class CreateSolicitudUseCase {
       horaProgramada: input.horaProgramada,
       direccion: input.direccion.trim(),
       comuna: input.comuna.trim(),
+      nombreBeneficiario: input.nombreBeneficiario ? input.nombreBeneficiario.trim() : null,
+      telefonoBeneficiario: input.telefonoBeneficiario ? input.telefonoBeneficiario.trim() : null,
     };
 
     const solicitud = await this.solicitudRepository.create(solicitudData);

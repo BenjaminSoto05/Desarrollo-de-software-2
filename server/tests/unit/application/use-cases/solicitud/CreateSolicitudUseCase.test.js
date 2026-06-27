@@ -68,7 +68,7 @@ describe('CreateSolicitudUseCase', () => {
 
   it('debe lanzar error 403 si el rol no puede crear solicitudes', async () => {
     userRepositoryMock.findById.mockResolvedValue({ ...validSolicitante, rol: 'ESTUDIANTE' });
-    await expect(createSolicitudUseCase.execute(validInput, 'est-1')).rejects.toThrow('Solo adultos mayores o tutores pueden crear solicitudes.');
+    await expect(createSolicitudUseCase.execute(validInput, 'est-1')).rejects.toThrow('Solo adultos mayores, tutores o presidentes de junta pueden crear solicitudes.');
   });
 
   it('debe lanzar error 403 si el solicitante está suspendido', async () => {

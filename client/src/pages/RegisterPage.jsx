@@ -92,6 +92,7 @@ export default function RegisterPage() {
                       <select id="rol" name="rol" value={form.rol} onChange={handleChange} className={inputClass}>
                         <option value="ADULTO_MAYOR">Adulto Mayor</option>
                         <option value="TUTOR">Tutor / Familiar</option>
+                        <option value="PRESIDENTE_JUNTA">Presidente de Junta Vecinal</option>
                       </select>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
