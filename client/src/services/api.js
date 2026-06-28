@@ -64,11 +64,16 @@ api.interceptors.response.use(
 
       try {
         // Usar una instancia limpia de axios para evitar loops infinitos con interceptores
-        const res = await axios.post('/api/auth/refresh', { refreshToken }, {
-          headers: { 'Content-Type': 'application/json' }
-        });
-        
-        const { accessToken: newAccessToken, refreshToken: newRefreshToken } = res.data.data;
+        const res = await axios.post(
+          '/api/auth/refresh',
+          { refreshToken },
+          {
+            headers: { 'Content-Type': 'application/json' },
+          }
+        );
+
+        const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
+          res.data.data;
 
         // Guardar nuevos tokens
         localStorage.setItem('token', newAccessToken);
@@ -86,7 +91,7 @@ api.interceptors.response.use(
       } catch (refreshError) {
         processQueue(refreshError, null);
         isRefreshing = false;
-        
+
         // El refresco falló o el token expiró/fue revocado
         localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
@@ -132,7 +137,8 @@ export const categoriasAPI = {
 // Evaluaciones API
 export const evaluacionesAPI = {
   create: (data) => api.post('/evaluaciones', data),
-  getBySolicitud: (solicitudId) => api.get(`/evaluaciones/solicitud/${solicitudId}`),
+  getBySolicitud: (solicitudId) =>
+    api.get(`/evaluaciones/solicitud/${solicitudId}`),
 };
 
 export default api;

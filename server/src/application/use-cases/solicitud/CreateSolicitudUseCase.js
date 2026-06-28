@@ -7,9 +7,12 @@
 // RN-04, RN-05, RN-07
 // ============================================================================
 
-const { Solicitud } = require('../../../domain/entities/Solicitud');
-const { SolicitudValidationService } = require('../../../domain/services/SolicitudValidationService');
-const { UserValidationService } = require('../../../domain/services/UserValidationService');
+const {
+  SolicitudValidationService,
+} = require('../../../domain/services/SolicitudValidationService');
+const {
+  UserValidationService,
+} = require('../../../domain/services/UserValidationService');
 
 class CreateSolicitudUseCase {
   /**
@@ -46,19 +49,25 @@ class CreateSolicitudUseCase {
     }
 
     if (!['ADULTO_MAYOR', 'TUTOR'].includes(solicitante.rol)) {
-      const error = new Error('Solo adultos mayores o tutores pueden crear solicitudes.');
+      const error = new Error(
+        'Solo adultos mayores o tutores pueden crear solicitudes.'
+      );
       error.statusCode = 403;
       throw error;
     }
 
     if (solicitante.suspendido) {
-      const error = new Error('Tu cuenta está suspendida. No puedes crear solicitudes.');
+      const error = new Error(
+        'Tu cuenta está suspendida. No puedes crear solicitudes.'
+      );
       error.statusCode = 403;
       throw error;
     }
 
     // 2. Verificar que la categoría existe y está activa (RF-SOL-01)
-    const categoria = await this.categoriaRepository.findById(input.categoriaId);
+    const categoria = await this.categoriaRepository.findById(
+      input.categoriaId
+    );
     if (!categoria) {
       const error = new Error('La categoría seleccionada no existe.');
       error.statusCode = 400;

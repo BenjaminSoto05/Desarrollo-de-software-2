@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect } from 'react';
 import { authAPI } from '../services/api';
 
@@ -9,34 +10,7 @@ export function AuthProvider({ children }) {
     return saved ? JSON.parse(saved) : null;
   });
   const [token, setToken] = useState(() => localStorage.getItem('token'));
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (token) {
-      authAPI.getProfile()
-        .then((res) => {
-          setUser(res.data.data);
-          localStorage.setItem('user', JSON.stringify(res.data.data));
-        })
-        .catch(() => {
-          logout();
-        })
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
-    }
-  }, []);
-
-  const login = async (email, password) => {
-    const res = await authAPI.login({ email, password });
-    const { user: userData, accessToken, refreshToken } = res.data.data;
-    setUser(userData);
-    setToken(accessToken);
-    localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('token', accessToken);
-    localStorage.setItem('refreshToken', refreshToken);
-    return userData;
-  };
+  const [loading, setLoading] = useState(() => !!localStorage.getItem('token'));
 
   const logout = async () => {
     const currentRefreshToken = localStorage.getItem('refreshToken');
@@ -52,6 +26,32 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
+  };
+
+  useEffect(() => {
+    if (token) {
+      authAPI
+        .getProfile()
+        .then((res) => {
+          setUser(res.data.data);
+          localStorage.setItem('user', JSON.stringify(res.data.data));
+        })
+        .catch(() => {
+          logout();
+        })
+        .finally(() => setLoading(false));
+    }
+  }, []);
+
+  const login = async (email, password) => {
+    const res = await authAPI.login({ email, password });
+    const { user: userData, accessToken, refreshToken } = res.data.data;
+    setUser(userData);
+    setToken(accessToken);
+    localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.setItem('token', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
+    return userData;
   };
 
   const logoutAll = async () => {
@@ -70,7 +70,17 @@ export function AuthProvider({ children }) {
   const isAuthenticated = !!user && !!token;
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, logoutAll, isAuthenticated, loading }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        token,
+        login,
+        logout,
+        logoutAll,
+        isAuthenticated,
+        loading,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

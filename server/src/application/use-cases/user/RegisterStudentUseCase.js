@@ -5,8 +5,10 @@
 // RN-02: Solo estudiantes regulares pueden participar
 // ============================================================================
 
-const { User, ROLES } = require('../../../domain/entities/User');
-const { UserValidationService } = require('../../../domain/services/UserValidationService');
+const { ROLES } = require('../../../domain/entities/User');
+const {
+  UserValidationService,
+} = require('../../../domain/services/UserValidationService');
 
 class RegisterStudentUseCase {
   /**
@@ -32,7 +34,9 @@ class RegisterStudentUseCase {
    */
   async execute(input) {
     // 1. Validar email institucional (RF-USR-01)
-    const emailValidation = UserValidationService.validarEmailEstudiante(input.email);
+    const emailValidation = UserValidationService.validarEmailEstudiante(
+      input.email
+    );
     if (!emailValidation.valid) {
       const error = new Error(emailValidation.error);
       error.statusCode = 400;
@@ -49,7 +53,9 @@ class RegisterStudentUseCase {
     }
 
     // 3. Verificar que el email no esté registrado
-    const existingEmail = await this.userRepository.findByEmail(input.email.toLowerCase().trim());
+    const existingEmail = await this.userRepository.findByEmail(
+      input.email.toLowerCase().trim()
+    );
     if (existingEmail) {
       const error = new Error('Este correo electrónico ya está registrado.');
       error.statusCode = 409;

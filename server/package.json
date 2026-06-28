@@ -13,7 +13,10 @@
     "test": "jest --coverage --coverageReporters=text --coverageReporters=lcov --coverageReporters=cobertura",
     "test:ci": "jest --coverage --coverageReporters=lcov --coverageReporters=cobertura --ci",
     "test:unit": "jest tests/unit --coverage --coverageReporters=text",
-    "test:integration": "jest tests/integration --coverage --coverageReporters=text"
+    "test:integration": "jest tests/integration --coverage --coverageReporters=text",
+    "lint": "eslint src/",
+    "format": "prettier --write src/",
+    "format:check": "prettier --check src/"
   },
   "keywords": [
     "uct",
@@ -38,7 +41,12 @@
     "winston": "^3.19.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.6.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.7.0",
     "jest": "^30.4.2",
+    "prettier": "^3.9.1",
     "prisma": "^6.9.0",
     "supertest": "^7.2.2"
   },

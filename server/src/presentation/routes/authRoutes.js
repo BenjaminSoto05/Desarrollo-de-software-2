@@ -50,9 +50,18 @@ const jwtService = new JwtService(
 const authController = new AuthController({
   registerStudent: new RegisterStudentUseCase(userRepository, hashService),
   registerElderly: new RegisterElderlyUseCase(userRepository, hashService),
-  loginUser: new LoginUserUseCase(userRepository, refreshTokenRepository, hashService, jwtService),
+  loginUser: new LoginUserUseCase(
+    userRepository,
+    refreshTokenRepository,
+    hashService,
+    jwtService
+  ),
   getUserProfile: new GetUserProfileUseCase(userRepository),
-  refreshToken: new RefreshTokenUseCase(refreshTokenRepository, userRepository, jwtService),
+  refreshToken: new RefreshTokenUseCase(
+    refreshTokenRepository,
+    userRepository,
+    jwtService
+  ),
   logoutUser: new LogoutUserUseCase(refreshTokenRepository, jwtService),
   logoutAllUsers: new LogoutAllUsersUseCase(refreshTokenRepository),
 });

@@ -31,10 +31,9 @@ class RefreshTokenUseCase {
     }
 
     // 1. Verificar firma y expiración del JWT de refresco
-    let decoded;
     try {
-      decoded = this.jwtService.verifyRefreshToken(token);
-    } catch (err) {
+      this.jwtService.verifyRefreshToken(token);
+    } catch (_err) {
       const error = new Error('Refresh Token inválido o expirado.');
       error.statusCode = 401;
       throw error;
@@ -42,7 +41,8 @@ class RefreshTokenUseCase {
 
     // 2. Calcular hash y buscar en la base de datos
     const tokenHash = this.jwtService.hashToken(token);
-    const storedToken = await this.refreshTokenRepository.findByTokenHash(tokenHash);
+    const storedToken =
+      await this.refreshTokenRepository.findByTokenHash(tokenHash);
 
     if (!storedToken) {
       const error = new Error('Sesión no encontrada.');
@@ -54,7 +54,9 @@ class RefreshTokenUseCase {
     if (storedToken.revoked) {
       // Revocar todas las sesiones del usuario de forma inmediata
       await this.refreshTokenRepository.revokeAllByUserId(storedToken.userId);
-      const error = new Error('Brecha de seguridad detectada. Todas las sesiones del usuario han sido invalidadas.');
+      const error = new Error(
+        'Brecha de seguridad detectada. Todas las sesiones del usuario han sido invalidadas.'
+      );
       error.statusCode = 401;
       throw error;
     }

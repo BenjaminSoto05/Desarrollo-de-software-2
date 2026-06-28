@@ -10,7 +10,9 @@ const { body } = require('express-validator');
 // Middlewares
 const authMiddleware = require('../middlewares/authMiddleware');
 const roleMiddleware = require('../middlewares/roleMiddleware');
-const { handleValidationErrors } = require('../middlewares/validationMiddleware');
+const {
+  handleValidationErrors,
+} = require('../middlewares/validationMiddleware');
 
 // Infraestructura
 const prisma = require('../../infrastructure/database/prismaClient');
@@ -43,14 +45,28 @@ const categoriaRepository = new PrismaCategoriaRepository(prisma);
 const userRepository = new PrismaUserRepository(prisma);
 
 const solicitudController = new SolicitudController({
-  createSolicitud: new CreateSolicitudUseCase(solicitudRepository, categoriaRepository, userRepository),
+  createSolicitud: new CreateSolicitudUseCase(
+    solicitudRepository,
+    categoriaRepository,
+    userRepository
+  ),
   getSolicitudes: new GetSolicitudesUseCase(solicitudRepository),
   getSolicitudDetail: new GetSolicitudDetailUseCase(solicitudRepository),
-  updateSolicitud: new UpdateSolicitudUseCase(solicitudRepository, categoriaRepository),
+  updateSolicitud: new UpdateSolicitudUseCase(
+    solicitudRepository,
+    categoriaRepository
+  ),
   cancelSolicitud: new CancelSolicitudUseCase(solicitudRepository),
   getMisSolicitudes: new GetMisSolicitudesUseCase(solicitudRepository),
-  acceptSolicitud: new AcceptSolicitudUseCase(solicitudRepository, userRepository, prisma),
-  cancelAccepted: new CancelAcceptedSolicitudUseCase(solicitudRepository, userRepository),
+  acceptSolicitud: new AcceptSolicitudUseCase(
+    solicitudRepository,
+    userRepository,
+    prisma
+  ),
+  cancelAccepted: new CancelAcceptedSolicitudUseCase(
+    solicitudRepository,
+    userRepository
+  ),
   completeSolicitud: new CompleteSolicitudUseCase(solicitudRepository),
   confirmSolicitud: new ConfirmSolicitudUseCase(solicitudRepository),
   autoApprove: new AutoApproveSolicitudesUseCase(solicitudRepository),
@@ -62,47 +78,66 @@ const solicitudController = new SolicitudController({
 
 const createSolicitudRules = [
   body('titulo')
-    .notEmpty().withMessage('El título es requerido.')
-    .isLength({ min: 5, max: 100 }).withMessage('El título debe tener entre 5 y 100 caracteres.')
+    .notEmpty()
+    .withMessage('El título es requerido.')
+    .isLength({ min: 5, max: 100 })
+    .withMessage('El título debe tener entre 5 y 100 caracteres.')
     .trim(),
   body('descripcion')
-    .notEmpty().withMessage('La descripción es requerida.')
-    .isLength({ min: 10, max: 500 }).withMessage('La descripción debe tener entre 10 y 500 caracteres.')
+    .notEmpty()
+    .withMessage('La descripción es requerida.')
+    .isLength({ min: 10, max: 500 })
+    .withMessage('La descripción debe tener entre 10 y 500 caracteres.')
     .trim(),
   body('categoriaId')
-    .notEmpty().withMessage('La categoría es requerida.')
-    .isUUID().withMessage('ID de categoría inválido.'),
+    .notEmpty()
+    .withMessage('La categoría es requerida.')
+    .isUUID()
+    .withMessage('ID de categoría inválido.'),
   body('fechaProgramada')
-    .notEmpty().withMessage('La fecha programada es requerida.')
-    .isISO8601().withMessage('Formato de fecha inválido (use ISO 8601).'),
+    .notEmpty()
+    .withMessage('La fecha programada es requerida.')
+    .isISO8601()
+    .withMessage('Formato de fecha inválido (use ISO 8601).'),
   body('horaProgramada')
-    .notEmpty().withMessage('La hora programada es requerida.')
-    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/).withMessage('Formato de hora inválido (use HH:mm).'),
+    .notEmpty()
+    .withMessage('La hora programada es requerida.')
+    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/)
+    .withMessage('Formato de hora inválido (use HH:mm).'),
   body('direccion')
-    .notEmpty().withMessage('La dirección es requerida.')
-    .isLength({ min: 5, max: 200 }).withMessage('La dirección debe tener entre 5 y 200 caracteres.')
+    .notEmpty()
+    .withMessage('La dirección es requerida.')
+    .isLength({ min: 5, max: 200 })
+    .withMessage('La dirección debe tener entre 5 y 200 caracteres.')
     .trim(),
-  body('comuna')
-    .notEmpty().withMessage('La comuna es requerida.')
-    .trim(),
+  body('comuna').notEmpty().withMessage('La comuna es requerida.').trim(),
   handleValidationErrors,
 ];
 
 const updateSolicitudRules = [
-  body('titulo').optional()
-    .isLength({ min: 5, max: 100 }).withMessage('El título debe tener entre 5 y 100 caracteres.')
+  body('titulo')
+    .optional()
+    .isLength({ min: 5, max: 100 })
+    .withMessage('El título debe tener entre 5 y 100 caracteres.')
     .trim(),
-  body('descripcion').optional()
-    .isLength({ min: 10, max: 500 }).withMessage('La descripción debe tener entre 10 y 500 caracteres.')
+  body('descripcion')
+    .optional()
+    .isLength({ min: 10, max: 500 })
+    .withMessage('La descripción debe tener entre 10 y 500 caracteres.')
     .trim(),
-  body('categoriaId').optional()
-    .isUUID().withMessage('ID de categoría inválido.'),
-  body('fechaProgramada').optional()
-    .isISO8601().withMessage('Formato de fecha inválido.'),
-  body('horaProgramada').optional()
-    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/).withMessage('Formato de hora inválido.'),
-  body('direccion').optional()
-    .isLength({ min: 5, max: 200 }).trim(),
+  body('categoriaId')
+    .optional()
+    .isUUID()
+    .withMessage('ID de categoría inválido.'),
+  body('fechaProgramada')
+    .optional()
+    .isISO8601()
+    .withMessage('Formato de fecha inválido.'),
+  body('horaProgramada')
+    .optional()
+    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/)
+    .withMessage('Formato de hora inválido.'),
+  body('direccion').optional().isLength({ min: 5, max: 200 }).trim(),
   body('comuna').optional().trim(),
   handleValidationErrors,
 ];

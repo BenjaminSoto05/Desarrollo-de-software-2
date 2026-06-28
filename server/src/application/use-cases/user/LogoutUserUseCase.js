@@ -29,11 +29,10 @@ class LogoutUserUseCase {
     }
 
     const tokenHash = this.jwtService.hashToken(token);
-    
-    // Revocar en la base de datos
+
     try {
       await this.refreshTokenRepository.revoke(tokenHash);
-    } catch (e) {
+    } catch (_e) {
       // Ignorar errores si el token no existía (ej: ya expiró de la base de datos)
     }
 

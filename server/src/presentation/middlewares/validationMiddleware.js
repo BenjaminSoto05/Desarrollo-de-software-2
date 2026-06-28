@@ -32,26 +32,33 @@ function handleValidationErrors(req, res, next) {
  */
 const registerStudentRules = [
   body('email')
-    .isEmail().withMessage('Debe proporcionar un email válido.')
+    .isEmail()
+    .withMessage('Debe proporcionar un email válido.')
     .normalizeEmail(),
   body('password')
-    .isLength({ min: 8 }).withMessage('La contraseña debe tener al menos 8 caracteres.')
-    .matches(/[A-Z]/).withMessage('La contraseña debe contener al menos una mayúscula.')
-    .matches(/[0-9]/).withMessage('La contraseña debe contener al menos un número.'),
-  body('rut')
-    .notEmpty().withMessage('El RUT es requerido.')
-    .isString(),
+    .isLength({ min: 8 })
+    .withMessage('La contraseña debe tener al menos 8 caracteres.')
+    .matches(/[A-Z]/)
+    .withMessage('La contraseña debe contener al menos una mayúscula.')
+    .matches(/[0-9]/)
+    .withMessage('La contraseña debe contener al menos un número.'),
+  body('rut').notEmpty().withMessage('El RUT es requerido.').isString(),
   body('nombre')
-    .notEmpty().withMessage('El nombre es requerido.')
-    .isLength({ min: 2, max: 50 }).withMessage('El nombre debe tener entre 2 y 50 caracteres.')
+    .notEmpty()
+    .withMessage('El nombre es requerido.')
+    .isLength({ min: 2, max: 50 })
+    .withMessage('El nombre debe tener entre 2 y 50 caracteres.')
     .trim(),
   body('apellido')
-    .notEmpty().withMessage('El apellido es requerido.')
-    .isLength({ min: 2, max: 50 }).withMessage('El apellido debe tener entre 2 y 50 caracteres.')
+    .notEmpty()
+    .withMessage('El apellido es requerido.')
+    .isLength({ min: 2, max: 50 })
+    .withMessage('El apellido debe tener entre 2 y 50 caracteres.')
     .trim(),
   body('telefono')
     .optional({ values: 'falsy' })
-    .isMobilePhone('es-CL').withMessage('Debe proporcionar un teléfono válido.'),
+    .isMobilePhone('es-CL')
+    .withMessage('Debe proporcionar un teléfono válido.'),
   handleValidationErrors,
 ];
 
@@ -61,35 +68,31 @@ const registerStudentRules = [
  */
 const registerElderlyRules = [
   body('email')
-    .isEmail().withMessage('Debe proporcionar un email válido.')
+    .isEmail()
+    .withMessage('Debe proporcionar un email válido.')
     .normalizeEmail(),
   body('password')
-    .isLength({ min: 8 }).withMessage('La contraseña debe tener al menos 8 caracteres.'),
-  body('rut')
-    .notEmpty().withMessage('El RUT es requerido.')
-    .isString(),
+    .isLength({ min: 8 })
+    .withMessage('La contraseña debe tener al menos 8 caracteres.'),
+  body('rut').notEmpty().withMessage('El RUT es requerido.').isString(),
   body('nombre')
-    .notEmpty().withMessage('El nombre es requerido.')
+    .notEmpty()
+    .withMessage('El nombre es requerido.')
     .isLength({ min: 2, max: 50 })
     .trim(),
   body('apellido')
-    .notEmpty().withMessage('El apellido es requerido.')
+    .notEmpty()
+    .withMessage('El apellido es requerido.')
     .isLength({ min: 2, max: 50 })
     .trim(),
   body('rol')
-    .notEmpty().withMessage('El rol es requerido.')
-    .isIn(['ADULTO_MAYOR', 'TUTOR']).withMessage('El rol debe ser ADULTO_MAYOR o TUTOR.'),
-  body('telefono')
-    .optional()
-    .isString(),
-  body('comuna')
-    .optional()
-    .isString()
-    .trim(),
-  body('direccion')
-    .optional()
-    .isString()
-    .trim(),
+    .notEmpty()
+    .withMessage('El rol es requerido.')
+    .isIn(['ADULTO_MAYOR', 'TUTOR'])
+    .withMessage('El rol debe ser ADULTO_MAYOR o TUTOR.'),
+  body('telefono').optional().isString(),
+  body('comuna').optional().isString().trim(),
+  body('direccion').optional().isString().trim(),
   handleValidationErrors,
 ];
 
@@ -99,10 +102,10 @@ const registerElderlyRules = [
  */
 const loginRules = [
   body('email')
-    .isEmail().withMessage('Debe proporcionar un email válido.')
+    .isEmail()
+    .withMessage('Debe proporcionar un email válido.')
     .normalizeEmail(),
-  body('password')
-    .notEmpty().withMessage('La contraseña es requerida.'),
+  body('password').notEmpty().withMessage('La contraseña es requerida.'),
   handleValidationErrors,
 ];
 

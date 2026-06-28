@@ -14,7 +14,9 @@ import MisSolicitudesPage from './pages/MisSolicitudesPage';
 function AppLayout({ children }) {
   return (
     <>
-      <a href="#main-content" className="skip-link">Saltar al contenido principal</a>
+      <a href="#main-content" className="skip-link">
+        Saltar al contenido principal
+      </a>
       <Navbar />
       <main id="main-content">{children}</main>
     </>
@@ -34,21 +36,56 @@ export default function App() {
           <Route path="/register" element={<RegisterPage />} />
 
           {/* Protected */}
-          <Route path="/dashboard" element={
-            <ProtectedRoute><AppLayout><DashboardPage /></AppLayout></ProtectedRoute>
-          } />
-          <Route path="/solicitudes" element={
-            <ProtectedRoute><AppLayout><SolicitudesPage /></AppLayout></ProtectedRoute>
-          } />
-          <Route path="/solicitudes/nueva" element={
-            <ProtectedRoute roles={['ADULTO_MAYOR', 'TUTOR']}><AppLayout><CreateSolicitudPage /></AppLayout></ProtectedRoute>
-          } />
-          <Route path="/solicitudes/:id" element={
-            <ProtectedRoute><AppLayout><SolicitudDetailPage /></AppLayout></ProtectedRoute>
-          } />
-          <Route path="/mis-solicitudes" element={
-            <ProtectedRoute><AppLayout><MisSolicitudesPage /></AppLayout></ProtectedRoute>
-          } />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <DashboardPage />
+                </AppLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/solicitudes"
+            element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <SolicitudesPage />
+                </AppLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/solicitudes/nueva"
+            element={
+              <ProtectedRoute roles={['ADULTO_MAYOR', 'TUTOR']}>
+                <AppLayout>
+                  <CreateSolicitudPage />
+                </AppLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/solicitudes/:id"
+            element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <SolicitudDetailPage />
+                </AppLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mis-solicitudes"
+            element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <MisSolicitudesPage />
+                </AppLayout>
+              </ProtectedRoute>
+            }
+          />
 
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />

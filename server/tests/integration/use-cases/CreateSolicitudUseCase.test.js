@@ -156,12 +156,7 @@ describe('CreateSolicitudUseCase (Integracion)', () => {
         comuna: 'Temuco',
       };
 
-      try {
-        await useCase.execute(input, 'user-001');
-        fail('Deberia haber lanzado error');
-      } catch (error) {
-        expect(error.message).toContain('8:00');
-      }
+      await expect(useCase.execute(input, 'user-001')).rejects.toThrow('8:00');
       expect(mockSolicitudRepo.create).not.toHaveBeenCalled();
     });
 
@@ -179,12 +174,7 @@ describe('CreateSolicitudUseCase (Integracion)', () => {
         comuna: 'Temuco',
       };
 
-      try {
-        await useCase.execute(input, 'user-001');
-        fail('Deberia haber lanzado error');
-      } catch (error) {
-        expect(error.message).toContain('no puede ser en el pasado');
-      }
+      await expect(useCase.execute(input, 'user-001')).rejects.toThrow('no puede ser en el pasado');
       expect(mockSolicitudRepo.create).not.toHaveBeenCalled();
     });
   });
@@ -204,12 +194,7 @@ describe('CreateSolicitudUseCase (Integracion)', () => {
         comuna: 'Santiago',
       };
 
-      try {
-        await useCase.execute(input, 'user-001');
-        fail('Deberia haber lanzado error');
-      } catch (error) {
-        expect(error.message).toContain('temuco');
-      }
+      await expect(useCase.execute(input, 'user-001')).rejects.toThrow('temuco');
       expect(mockSolicitudRepo.create).not.toHaveBeenCalled();
     });
   });

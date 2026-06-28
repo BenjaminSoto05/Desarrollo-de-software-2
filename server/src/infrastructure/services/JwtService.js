@@ -14,11 +14,19 @@ class JwtService {
    * @param {string} [refreshTokenSecret]
    * @param {string} [refreshTokenExpiresIn]
    */
-  constructor(accessTokenSecret, accessTokenExpiresIn, refreshTokenSecret, refreshTokenExpiresIn) {
+  constructor(
+    accessTokenSecret,
+    accessTokenExpiresIn,
+    refreshTokenSecret,
+    refreshTokenExpiresIn
+  ) {
     this.accessTokenSecret = accessTokenSecret || process.env.JWT_SECRET;
-    this.accessTokenExpiresIn = accessTokenExpiresIn || process.env.JWT_EXPIRES_IN || '15m';
-    this.refreshTokenSecret = refreshTokenSecret || process.env.JWT_REFRESH_SECRET;
-    this.refreshTokenExpiresIn = refreshTokenExpiresIn || process.env.JWT_REFRESH_EXPIRES_IN || '7d';
+    this.accessTokenExpiresIn =
+      accessTokenExpiresIn || process.env.JWT_EXPIRES_IN || '15m';
+    this.refreshTokenSecret =
+      refreshTokenSecret || process.env.JWT_REFRESH_SECRET;
+    this.refreshTokenExpiresIn =
+      refreshTokenExpiresIn || process.env.JWT_REFRESH_EXPIRES_IN || '7d';
   }
 
   /**
@@ -27,7 +35,9 @@ class JwtService {
    * @returns {string} Token JWT firmado
    */
   generateAccessToken(payload) {
-    return jwt.sign(payload, this.accessTokenSecret, { expiresIn: this.accessTokenExpiresIn });
+    return jwt.sign(payload, this.accessTokenSecret, {
+      expiresIn: this.accessTokenExpiresIn,
+    });
   }
 
   /**
@@ -36,7 +46,9 @@ class JwtService {
    * @returns {string} Token JWT firmado
    */
   generateRefreshToken(payload) {
-    return jwt.sign(payload, this.refreshTokenSecret, { expiresIn: this.refreshTokenExpiresIn });
+    return jwt.sign(payload, this.refreshTokenSecret, {
+      expiresIn: this.refreshTokenExpiresIn,
+    });
   }
 
   /**
@@ -65,10 +77,7 @@ class JwtService {
    * @returns {string} Hash hexadecimal del token
    */
   hashToken(token) {
-    return crypto
-      .createHash('sha256')
-      .update(token)
-      .digest('hex');
+    return crypto.createHash('sha256').update(token).digest('hex');
   }
 
   /**
@@ -90,14 +99,14 @@ class JwtService {
     if (!matches) {
       throw new Error(`Formato de duración inválido: ${durationStr}`);
     }
-    
+
     const value = parseInt(matches[1], 10);
     const unit = matches[2];
     const multipliers = {
       s: 1000,
       m: 60 * 1000,
       h: 60 * 60 * 1000,
-      d: 24 * 60 * 60 * 1000
+      d: 24 * 60 * 60 * 1000,
     };
     return value * multipliers[unit];
   }

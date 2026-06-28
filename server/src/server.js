@@ -9,12 +9,14 @@ const REQUIRED_ENV_VARS = [
   'JWT_SECRET',
   'JWT_REFRESH_SECRET',
   'JWT_EXPIRES_IN',
-  'JWT_REFRESH_EXPIRES_IN'
+  'JWT_REFRESH_EXPIRES_IN',
 ];
 
 for (const envVar of REQUIRED_ENV_VARS) {
   if (!process.env[envVar]) {
-    console.error(`❌ Error crítico de configuración: Variable de entorno ${envVar} no definida.`);
+    console.error(
+      `❌ Error crítico de configuración: Variable de entorno ${envVar} no definida.`
+    );
     process.exit(1);
   }
 }
@@ -43,13 +45,17 @@ async function startServer() {
 
     // Iniciar servidor HTTP
     app.listen(PORT, () => {
-      console.log(`🚀 Servidor UCT-Vínculo Mayor corriendo en http://localhost:${PORT}`);
+      console.log(
+        `🚀 Servidor UCT-Vínculo Mayor corriendo en http://localhost:${PORT}`
+      );
       console.log(`📋 Health check: http://localhost:${PORT}/api/health`);
       console.log(`📖 Swagger docs: http://localhost:${PORT}/api/docs`);
       console.log(`🌍 Ambiente: ${process.env.NODE_ENV || 'development'}`);
     });
   } catch (error) {
-    logger.error(`❌ Error al iniciar el servidor: ${error.message}`, { module: 'server' });
+    logger.error(`❌ Error al iniciar el servidor: ${error.message}`, {
+      module: 'server',
+    });
     await prisma.$disconnect();
     process.exit(1);
   }
@@ -68,4 +74,3 @@ process.on('SIGTERM', async () => {
 });
 
 startServer();
-

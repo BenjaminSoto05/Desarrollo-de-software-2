@@ -94,9 +94,7 @@ class Solicitud {
    */
   cambiarEstado(nuevoEstado) {
     if (!this.puedeTransicionarA(nuevoEstado)) {
-      throw new Error(
-        `Transición inválida: ${this.estado} → ${nuevoEstado}`
-      );
+      throw new Error(`Transición inválida: ${this.estado} → ${nuevoEstado}`);
     }
     this.estado = nuevoEstado;
   }

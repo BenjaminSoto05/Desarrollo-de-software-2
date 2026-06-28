@@ -11,7 +11,8 @@ const options = {
     info: {
       title: 'AllyUCT API',
       version: '1.0.0',
-      description: 'Documentación oficial de la API REST para el sistema UCT-Vínculo Mayor. Plataforma de voluntariado que conecta estudiantes UCT con adultos mayores de Temuco.',
+      description:
+        'Documentación oficial de la API REST para el sistema UCT-Vínculo Mayor. Plataforma de voluntariado que conecta estudiantes UCT con adultos mayores de Temuco.',
       contact: {
         name: 'Equipo de Desarrollo UCT',
       },
@@ -28,7 +29,8 @@ const options = {
           type: 'http',
           scheme: 'bearer',
           bearerFormat: 'JWT',
-          description: 'Token JWT obtenido en /api/auth/login o /api/auth/refresh',
+          description:
+            'Token JWT obtenido en /api/auth/login o /api/auth/refresh',
         },
       },
       schemas: {
@@ -39,9 +41,18 @@ const options = {
           type: 'object',
           required: ['email', 'password', 'rut', 'nombre', 'apellido'],
           properties: {
-            email: { type: 'string', format: 'email', example: 'juan.perez@alu.uct.cl', description: 'Dominio @uct.cl o @alu.uct.cl (RF-USR-01)' },
+            email: {
+              type: 'string',
+              format: 'email',
+              example: 'juan.perez@alu.uct.cl',
+              description: 'Dominio @uct.cl o @alu.uct.cl (RF-USR-01)',
+            },
             password: { type: 'string', minLength: 8, example: 'MiPass123' },
-            rut: { type: 'string', example: '12345678-5', description: 'RUT chileno válido (módulo 11)' },
+            rut: {
+              type: 'string',
+              example: '12345678-5',
+              description: 'RUT chileno válido (módulo 11)',
+            },
             nombre: { type: 'string', example: 'Juan' },
             apellido: { type: 'string', example: 'Pérez' },
           },
@@ -50,12 +61,20 @@ const options = {
           type: 'object',
           required: ['email', 'password', 'rut', 'nombre', 'apellido', 'rol'],
           properties: {
-            email: { type: 'string', format: 'email', example: 'maria@gmail.com' },
+            email: {
+              type: 'string',
+              format: 'email',
+              example: 'maria@gmail.com',
+            },
             password: { type: 'string', minLength: 8 },
             rut: { type: 'string', example: '98765432-1' },
             nombre: { type: 'string', example: 'María' },
             apellido: { type: 'string', example: 'Lagos' },
-            rol: { type: 'string', enum: ['ADULTO_MAYOR', 'TUTOR'], description: 'RF-USR-02' },
+            rol: {
+              type: 'string',
+              enum: ['ADULTO_MAYOR', 'TUTOR'],
+              description: 'RF-USR-02',
+            },
             comuna: { type: 'string', example: 'Temuco' },
             direccion: { type: 'string', example: 'Av. Alemania 123' },
             telefono: { type: 'string', example: '+56912345678' },
@@ -76,8 +95,14 @@ const options = {
             data: {
               type: 'object',
               properties: {
-                accessToken: { type: 'string', description: 'JWT Access Token (corta duración)' },
-                refreshToken: { type: 'string', description: 'JWT Refresh Token (larga duración)' },
+                accessToken: {
+                  type: 'string',
+                  description: 'JWT Access Token (corta duración)',
+                },
+                refreshToken: {
+                  type: 'string',
+                  description: 'JWT Refresh Token (larga duración)',
+                },
                 user: { $ref: '#/components/schemas/User' },
               },
             },
@@ -87,7 +112,10 @@ const options = {
           type: 'object',
           required: ['refreshToken'],
           properties: {
-            refreshToken: { type: 'string', description: 'Token de refresco original' },
+            refreshToken: {
+              type: 'string',
+              description: 'Token de refresco original',
+            },
           },
         },
         RefreshTokenResponse: {
@@ -110,7 +138,10 @@ const options = {
             email: { type: 'string' },
             nombre: { type: 'string' },
             apellido: { type: 'string' },
-            rol: { type: 'string', enum: ['ESTUDIANTE', 'ADULTO_MAYOR', 'TUTOR', 'ADMIN'] },
+            rol: {
+              type: 'string',
+              enum: ['ESTUDIANTE', 'ADULTO_MAYOR', 'TUTOR', 'ADMIN'],
+            },
             rut: { type: 'string' },
           },
         },
@@ -120,15 +151,47 @@ const options = {
         // ==========================================
         CreateSolicitud: {
           type: 'object',
-          required: ['titulo', 'descripcion', 'categoriaId', 'comuna', 'direccion', 'fechaProgramada', 'horaProgramada'],
+          required: [
+            'titulo',
+            'descripcion',
+            'categoriaId',
+            'comuna',
+            'direccion',
+            'fechaProgramada',
+            'horaProgramada',
+          ],
           properties: {
             titulo: { type: 'string', example: 'Necesito ayuda con compras' },
-            descripcion: { type: 'string', example: 'Compras en supermercado cercano' },
-            categoriaId: { type: 'string', format: 'uuid', example: 'd3b07384-d113-49c3-a55d-254e2ac50a41' },
-            comuna: { type: 'string', example: 'Temuco', description: 'RN-03: Solo Temuco o Padre Las Casas' },
-            direccion: { type: 'string', example: 'Av. Alemania 456', description: 'RF-EMP-05: Oculta hasta aceptación' },
-            fechaProgramada: { type: 'string', format: 'date', example: '2026-06-01', description: 'RN-05: Mínimo 24h anticipación' },
-            horaProgramada: { type: 'string', example: '10:00', description: 'RN-04: Entre 08:00 y 20:00' },
+            descripcion: {
+              type: 'string',
+              example: 'Compras en supermercado cercano',
+            },
+            categoriaId: {
+              type: 'string',
+              format: 'uuid',
+              example: 'd3b07384-d113-49c3-a55d-254e2ac50a41',
+            },
+            comuna: {
+              type: 'string',
+              example: 'Temuco',
+              description: 'RN-03: Solo Temuco o Padre Las Casas',
+            },
+            direccion: {
+              type: 'string',
+              example: 'Av. Alemania 456',
+              description: 'RF-EMP-05: Oculta hasta aceptación',
+            },
+            fechaProgramada: {
+              type: 'string',
+              format: 'date',
+              example: '2026-06-01',
+              description: 'RN-05: Mínimo 24h anticipación',
+            },
+            horaProgramada: {
+              type: 'string',
+              example: '10:00',
+              description: 'RN-04: Entre 08:00 y 20:00',
+            },
           },
         },
         Solicitud: {
@@ -137,11 +200,26 @@ const options = {
             id: { type: 'string', format: 'uuid' },
             titulo: { type: 'string' },
             descripcion: { type: 'string' },
-            estado: { type: 'string', enum: ['PENDIENTE', 'EN_CURSO', 'COMPLETADA', 'FINALIZADA', 'CANCELADA'] },
+            estado: {
+              type: 'string',
+              enum: [
+                'PENDIENTE',
+                'EN_CURSO',
+                'COMPLETADA',
+                'FINALIZADA',
+                'CANCELADA',
+              ],
+            },
             comuna: { type: 'string' },
             fechaProgramada: { type: 'string', format: 'date' },
             horaProgramada: { type: 'string' },
-            categoria: { type: 'object', properties: { id: { type: 'string', format: 'uuid' }, nombre: { type: 'string' } } },
+            categoria: {
+              type: 'object',
+              properties: {
+                id: { type: 'string', format: 'uuid' },
+                nombre: { type: 'string' },
+              },
+            },
             solicitante: { $ref: '#/components/schemas/User' },
           },
         },
@@ -154,7 +232,12 @@ const options = {
           required: ['solicitudId', 'puntuacion'],
           properties: {
             solicitudId: { type: 'string', format: 'uuid' },
-            puntuacion: { type: 'integer', minimum: 1, maximum: 5, description: 'Estrellas del 1 al 5' },
+            puntuacion: {
+              type: 'integer',
+              minimum: 1,
+              maximum: 5,
+              description: 'Estrellas del 1 al 5',
+            },
             comentario: { type: 'string' },
           },
         },
@@ -181,10 +264,24 @@ const options = {
           summary: 'Registrar estudiante UCT (RF-USR-01)',
           description: 'Valida dominio @uct.cl o @alu.uct.cl y RUT módulo 11.',
           security: [],
-          requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/RegisterStudent' } } } },
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/RegisterStudent' },
+              },
+            },
+          },
           responses: {
             201: { description: 'Estudiante registrado exitosamente' },
-            400: { description: 'Datos inválidos', content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } } },
+            400: {
+              description: 'Datos inválidos',
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/Error' },
+                },
+              },
+            },
           },
         },
       },
@@ -194,7 +291,14 @@ const options = {
           summary: 'Registrar Adulto Mayor o Tutor (RF-USR-02)',
           description: 'Registro con RUT válido. Roles: ADULTO_MAYOR o TUTOR.',
           security: [],
-          requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/RegisterElderly' } } } },
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/RegisterElderly' },
+              },
+            },
+          },
           responses: {
             201: { description: 'Usuario registrado' },
             400: { description: 'Datos inválidos' },
@@ -205,11 +309,26 @@ const options = {
         post: {
           tags: ['Autenticación'],
           summary: 'Iniciar sesión (RF-USR-03)',
-          description: 'Autentica con correo + contraseña. Retorna JWT Access Token y Refresh Token.',
+          description:
+            'Autentica con correo + contraseña. Retorna JWT Access Token y Refresh Token.',
           security: [],
-          requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/LoginRequest' } } } },
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/LoginRequest' },
+              },
+            },
+          },
           responses: {
-            200: { description: 'Login exitoso', content: { 'application/json': { schema: { $ref: '#/components/schemas/LoginResponse' } } } },
+            200: {
+              description: 'Login exitoso',
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/LoginResponse' },
+                },
+              },
+            },
             401: { description: 'Credenciales inválidas' },
           },
         },
@@ -226,9 +345,23 @@ const options = {
           tags: ['Autenticación'],
           summary: 'Renovar Access Token mediante Refresh Token',
           security: [],
-          requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/RefreshTokenRequest' } } } },
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/RefreshTokenRequest' },
+              },
+            },
+          },
           responses: {
-            200: { description: 'Token renovado exitosamente', content: { 'application/json': { schema: { $ref: '#/components/schemas/RefreshTokenResponse' } } } },
+            200: {
+              description: 'Token renovado exitosamente',
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/RefreshTokenResponse' },
+                },
+              },
+            },
             401: { description: 'Refresh Token inválido, expirado o revocado' },
           },
         },
@@ -238,7 +371,14 @@ const options = {
           tags: ['Autenticación'],
           summary: 'Cerrar sesión (individual)',
           security: [],
-          requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/RefreshTokenRequest' } } } },
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/RefreshTokenRequest' },
+              },
+            },
+          },
           responses: {
             200: { description: 'Sesión cerrada exitosamente' },
             400: { description: 'Solicitud inválida' },
@@ -249,7 +389,8 @@ const options = {
         post: {
           tags: ['Autenticación'],
           summary: 'Cerrar todas las sesiones (global)',
-          description: 'Revoca todos los Refresh Tokens asociados al usuario autenticado.',
+          description:
+            'Revoca todos los Refresh Tokens asociados al usuario autenticado.',
           responses: {
             200: { description: 'Todas las sesiones activas cerradas' },
           },
@@ -261,22 +402,46 @@ const options = {
         get: {
           tags: ['Solicitudes'],
           summary: 'Listar solicitudes con filtros (RF-EMP-01, RF-EMP-02)',
-          description: 'Filtrables por categoría, comuna y estado. La dirección se oculta para no-participantes.',
+          description:
+            'Filtrables por categoría, comuna y estado. La dirección se oculta para no-participantes.',
           parameters: [
-            { in: 'query', name: 'categoriaId', schema: { type: 'string', format: 'uuid' } },
+            {
+              in: 'query',
+              name: 'categoriaId',
+              schema: { type: 'string', format: 'uuid' },
+            },
             { in: 'query', name: 'comuna', schema: { type: 'string' } },
             { in: 'query', name: 'estado', schema: { type: 'string' } },
-            { in: 'query', name: 'page', schema: { type: 'integer', default: 1 } },
-            { in: 'query', name: 'limit', schema: { type: 'integer', default: 10 } },
+            {
+              in: 'query',
+              name: 'page',
+              schema: { type: 'integer', default: 1 },
+            },
+            {
+              in: 'query',
+              name: 'limit',
+              schema: { type: 'integer', default: 10 },
+            },
           ],
           responses: { 200: { description: 'Lista paginada de solicitudes' } },
         },
         post: {
           tags: ['Solicitudes'],
           summary: 'Crear solicitud (RF-SOL-01, RF-SOL-02, RF-SOL-03)',
-          description: 'Valida horario 08-20 (RN-04), anticipación 24h (RN-05).',
-          requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/CreateSolicitud' } } } },
-          responses: { 201: { description: 'Solicitud creada' }, 400: { description: 'Validación fallida' } },
+          description:
+            'Valida horario 08-20 (RN-04), anticipación 24h (RN-05).',
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/CreateSolicitud' },
+              },
+            },
+          },
+          responses: {
+            201: { description: 'Solicitud creada' },
+            400: { description: 'Validación fallida' },
+          },
         },
       },
       '/solicitudes/mine': {
@@ -291,20 +456,44 @@ const options = {
           tags: ['Solicitudes'],
           summary: 'Detalle de solicitud (RF-EMP-02, RF-EMP-05)',
           description: 'Dirección visible solo para participantes aceptados.',
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } }],
-          responses: { 200: { description: 'Detalle completo' }, 404: { description: 'No encontrada' } },
+          parameters: [
+            {
+              in: 'path',
+              name: 'id',
+              required: true,
+              schema: { type: 'string', format: 'uuid' },
+            },
+          ],
+          responses: {
+            200: { description: 'Detalle completo' },
+            404: { description: 'No encontrada' },
+          },
         },
         put: {
           tags: ['Solicitudes'],
           summary: 'Editar solicitud (RF-SOL-04)',
           description: 'Solo si estado = PENDIENTE y es el creador.',
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } }],
+          parameters: [
+            {
+              in: 'path',
+              name: 'id',
+              required: true,
+              schema: { type: 'string', format: 'uuid' },
+            },
+          ],
           responses: { 200: { description: 'Solicitud actualizada' } },
         },
         delete: {
           tags: ['Solicitudes'],
           summary: 'Cancelar solicitud pendiente (RF-SOL-04)',
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } }],
+          parameters: [
+            {
+              in: 'path',
+              name: 'id',
+              required: true,
+              schema: { type: 'string', format: 'uuid' },
+            },
+          ],
           responses: { 200: { description: 'Solicitud cancelada' } },
         },
       },
@@ -312,17 +501,36 @@ const options = {
         post: {
           tags: ['Ciclo de Vida'],
           summary: 'Aceptar solicitud (RF-EMP-03, RF-EMP-04)',
-          description: 'Solo estudiantes. Máximo 2 activas (RF-EMP-04). Transacción atómica.',
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } }],
-          responses: { 200: { description: 'Solicitud aceptada' }, 409: { description: 'Ya aceptada o límite alcanzado' } },
+          description:
+            'Solo estudiantes. Máximo 2 activas (RF-EMP-04). Transacción atómica.',
+          parameters: [
+            {
+              in: 'path',
+              name: 'id',
+              required: true,
+              schema: { type: 'string', format: 'uuid' },
+            },
+          ],
+          responses: {
+            200: { description: 'Solicitud aceptada' },
+            409: { description: 'Ya aceptada o límite alcanzado' },
+          },
         },
       },
       '/solicitudes/{id}/cancel-acceptance': {
         post: {
           tags: ['Ciclo de Vida'],
           summary: 'Cancelar tarea aceptada (RF-EJE-01)',
-          description: 'Si <4h antes = inasistencia (RN-08). 3 inasistencias = suspensión (RN-09).',
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } }],
+          description:
+            'Si <4h antes = inasistencia (RN-08). 3 inasistencias = suspensión (RN-09).',
+          parameters: [
+            {
+              in: 'path',
+              name: 'id',
+              required: true,
+              schema: { type: 'string', format: 'uuid' },
+            },
+          ],
           responses: { 200: { description: 'Cancelación procesada' } },
         },
       },
@@ -330,8 +538,16 @@ const options = {
         post: {
           tags: ['Ciclo de Vida'],
           summary: 'Marcar como completada (RF-EJE-02)',
-          description: 'Solo el voluntario asignado. Estado: EN_CURSO → COMPLETADA.',
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } }],
+          description:
+            'Solo el voluntario asignado. Estado: EN_CURSO → COMPLETADA.',
+          parameters: [
+            {
+              in: 'path',
+              name: 'id',
+              required: true,
+              schema: { type: 'string', format: 'uuid' },
+            },
+          ],
           responses: { 200: { description: 'Solicitud completada' } },
         },
       },
@@ -339,8 +555,16 @@ const options = {
         post: {
           tags: ['Ciclo de Vida'],
           summary: 'Confirmar recepción (RF-EJE-03, RF-EJE-06, RN-11)',
-          description: 'Solo el solicitante. Acredita horas al voluntario. COMPLETADA → FINALIZADA.',
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } }],
+          description:
+            'Solo el solicitante. Acredita horas al voluntario. COMPLETADA → FINALIZADA.',
+          parameters: [
+            {
+              in: 'path',
+              name: 'id',
+              required: true,
+              schema: { type: 'string', format: 'uuid' },
+            },
+          ],
           responses: { 200: { description: 'Servicio confirmado' } },
         },
       },
@@ -348,7 +572,8 @@ const options = {
         post: {
           tags: ['Administración'],
           summary: 'Auto-aprobar tras 48h (RF-EJE-05, RN-12)',
-          description: 'Aprueba automáticamente solicitudes completadas sin respuesta en 48h.',
+          description:
+            'Aprueba automáticamente solicitudes completadas sin respuesta en 48h.',
           responses: { 200: { description: 'Solicitudes auto-aprobadas' } },
         },
       },
@@ -358,8 +583,16 @@ const options = {
         post: {
           tags: ['Evaluaciones'],
           summary: 'Crear evaluación (RF-EJE-04)',
-          description: 'Puntuación 1-5 estrellas. Anti-duplicado. Solo participantes.',
-          requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/CreateEvaluacion' } } } },
+          description:
+            'Puntuación 1-5 estrellas. Anti-duplicado. Solo participantes.',
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/CreateEvaluacion' },
+              },
+            },
+          },
           responses: { 201: { description: 'Evaluación creada' } },
         },
       },
@@ -367,7 +600,14 @@ const options = {
         get: {
           tags: ['Evaluaciones'],
           summary: 'Ver evaluaciones de una solicitud',
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } }],
+          parameters: [
+            {
+              in: 'path',
+              name: 'id',
+              required: true,
+              schema: { type: 'string', format: 'uuid' },
+            },
+          ],
           responses: { 200: { description: 'Lista de evaluaciones' } },
         },
       },
@@ -378,7 +618,9 @@ const options = {
           tags: ['Categorías'],
           summary: 'Listar categorías (RF-SOL-01)',
           security: [],
-          responses: { 200: { description: 'Lista de categorías predefinidas' } },
+          responses: {
+            200: { description: 'Lista de categorías predefinidas' },
+          },
         },
       },
     },
