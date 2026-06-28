@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { solicitudesAPI, categoriasAPI } from '../services/api';
@@ -27,7 +27,7 @@ export default function SolicitudesPage() {
   });
   const [loading, setLoading] = useState(true);
 
-  const fetchSolicitudes = async (page = 1) => {
+  const fetchSolicitudes = useCallback(async (page = 1) => {
     setLoading(true);
     try {
       const params = { page, limit: 9 };
@@ -41,7 +41,7 @@ export default function SolicitudesPage() {
       console.error(e);
     }
     setLoading(false);
-  };
+  }, [filters]);
 
   useEffect(() => {
     categoriasAPI.getAll().then((r) => setCategorias(r.data.data));

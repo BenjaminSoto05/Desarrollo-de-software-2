@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { solicitudesAPI, evaluacionesAPI } from '../services/api';
@@ -44,7 +44,7 @@ export default function SolicitudDetailPage() {
     if (!confirm(msg)) return;
     try {
       await action();
-      fetch();
+      fetchData();
       alert('¡Operación exitosa!');
     } catch (e) {
       alert(e.response?.data?.error || 'Error');

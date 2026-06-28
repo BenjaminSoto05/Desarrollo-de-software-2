@@ -4,6 +4,13 @@ import { authAPI } from '../services/api';
 
 const AuthContext = createContext(null);
 
+// eslint-disable-next-line react-refresh/only-export-components
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error('useAuth debe usarse dentro de AuthProvider');
+  return context;
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem('user');
@@ -42,6 +49,19 @@ export function AuthProvider({ children }) {
         .finally(() => setLoading(false));
     }
   }, []);
+
+  useEffect(() => {
+    if (!token) return;
+    authAPI.getProfile()
+      .then((res) => {
+        setUser(res.data.data);
+        localStorage.setItem('user', JSON.stringify(res.data.data));
+      })
+      .catch(() => {
+        logout();
+      })
+      .finally(() => { setLoading(false); });
+  }, [token, logout]);
 
   const login = async (email, password) => {
     const res = await authAPI.login({ email, password });
@@ -84,10 +104,4 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (!context) throw new Error('useAuth debe usarse dentro de AuthProvider');
-  return context;
 }
