@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { solicitudesAPI, categoriasAPI } from '../services/api';
@@ -19,7 +19,7 @@ export default function SolicitudesPage() {
   const [pagination, setPagination] = useState({ page: 1, totalPages: 1, total: 0 });
   const [loading, setLoading] = useState(true);
 
-  const fetchSolicitudes = async (page = 1) => {
+  const fetchSolicitudes = useCallback(async (page = 1) => {
     setLoading(true);
     try {
       const params = { page, limit: 9 };
@@ -31,10 +31,24 @@ export default function SolicitudesPage() {
       setPagination(res.data.pagination);
     } catch (e) { console.error(e); }
     setLoading(false);
-  };
+  }, [filters]);
 
   useEffect(() => { categoriasAPI.getAll().then((r) => setCategorias(r.data.data)); }, []);
-  useEffect(() => { fetchSolicitudes(); }, [filters]);
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const params = { page: 1, limit: 9 };
+        if (filters.categoriaId) params.categoriaId = filters.categoriaId;
+        if (filters.comuna) params.comuna = filters.comuna;
+        if (filters.estado) params.estado = filters.estado;
+        const res = await solicitudesAPI.getAll(params);
+        setSolicitudes(res.data.data);
+        setPagination(res.data.pagination);
+      } catch (e) { console.error(e); }
+      setLoading(false);
+    };
+    load();
+  }, [filters]);
 
   const handleAccept = async (id) => {
     if (!confirm('¿Aceptar esta solicitud?')) return;

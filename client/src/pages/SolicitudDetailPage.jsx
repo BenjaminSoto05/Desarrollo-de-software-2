@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { solicitudesAPI, evaluacionesAPI } from '../services/api';
@@ -14,8 +14,13 @@ export default function SolicitudDetailPage() {
   const [evalForm, setEvalForm] = useState({ puntuacion: 5, comentario: '' });
   const [showEvalForm, setShowEvalForm] = useState(false);
 
-  const fetch = () => { solicitudesAPI.getById(id).then((r) => setSol(r.data.data)).catch(() => navigate('/solicitudes')).finally(() => setLoading(false)); };
-  useEffect(fetch, [id]);
+  const fetchData = useCallback(() => {
+    solicitudesAPI.getById(id)
+      .then((r) => setSol(r.data.data))
+      .catch(() => navigate('/solicitudes'))
+      .finally(() => setLoading(false));
+  }, [id, navigate]);
+  useEffect(() => { fetchData(); }, [fetchData]);
 
   if (loading) return <div className="flex justify-center py-20"><div className="animate-spin h-10 w-10 border-4 border-uct-blue border-t-transparent rounded-full"></div></div>;
   if (!sol) return null;
@@ -27,7 +32,7 @@ export default function SolicitudDetailPage() {
     if (!confirm(msg)) return;
     try {
       await action();
-      fetch();
+      fetchData();
       alert('¡Operación exitosa!');
     } catch (e) { alert(e.response?.data?.error || 'Error'); }
   };
@@ -38,7 +43,7 @@ export default function SolicitudDetailPage() {
       await evaluacionesAPI.create({ solicitudId: id, ...evalForm });
       setShowEvalForm(false);
       alert('¡Evaluación registrada!');
-      fetch();
+      fetchData();
     } catch (e) { alert(e.response?.data?.error || 'Error'); }
   };
 
