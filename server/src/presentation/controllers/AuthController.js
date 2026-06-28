@@ -12,18 +12,27 @@ class AuthController {
    * @param {import('../../application/use-cases/user/RegisterElderlyUseCase')} useCases.registerElderly
    * @param {import('../../application/use-cases/user/LoginUserUseCase')} useCases.loginUser
    * @param {import('../../application/use-cases/user/GetUserProfileUseCase')} useCases.getUserProfile
+   * @param {import('../../application/use-cases/user/RefreshTokenUseCase')} useCases.refreshToken
+   * @param {import('../../application/use-cases/user/LogoutUserUseCase')} useCases.logoutUser
+   * @param {import('../../application/use-cases/user/LogoutAllUsersUseCase')} useCases.logoutAllUsers
    */
   constructor(useCases) {
     this.registerStudent = useCases.registerStudent;
     this.registerElderly = useCases.registerElderly;
     this.loginUser = useCases.loginUser;
     this.getUserProfile = useCases.getUserProfile;
+    this.refreshToken = useCases.refreshToken;
+    this.logoutUser = useCases.logoutUser;
+    this.logoutAllUsers = useCases.logoutAllUsers;
 
     // Bind para mantener el contexto de `this` en Express
     this.handleRegisterStudent = this.handleRegisterStudent.bind(this);
     this.handleRegisterElderly = this.handleRegisterElderly.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleGetProfile = this.handleGetProfile.bind(this);
+    this.handleRefresh = this.handleRefresh.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.handleLogoutAll = this.handleLogoutAll.bind(this);
   }
 
   /**
@@ -91,6 +100,61 @@ class AuthController {
       res.json({
         success: true,
         data: user,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  /**
+   * POST /api/auth/refresh
+   * Renueva el token de acceso
+   */
+  async handleRefresh(req, res, next) {
+    try {
+      const result = await this.refreshToken.execute({
+        token: req.body.refreshToken,
+      });
+
+      res.json({
+        success: true,
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  /**
+   * POST /api/auth/logout
+   * Cierra sesión individual
+   */
+  async handleLogout(req, res, next) {
+    try {
+      const result = await this.logoutUser.execute({
+        token: req.body.refreshToken,
+      });
+
+      res.json({
+        success: true,
+        message: result.message,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  /**
+   * POST /api/auth/logout-all
+   * Cierra sesión en todos los dispositivos
+   */
+  async handleLogoutAll(req, res, next) {
+    try {
+      const result = await this.logoutAllUsers.execute(req.user.id);
+
+      res.json({
+        success: true,
+        message: result.message,
       });
     } catch (error) {
       next(error);

@@ -40,7 +40,9 @@ class ConfirmSolicitudUseCase {
     }
 
     if (solicitud.solicitanteId !== solicitanteId) {
-      const error = new Error('Solo el solicitante puede confirmar la finalización.');
+      const error = new Error(
+        'Solo el solicitante puede confirmar la finalización.'
+      );
       error.statusCode = 403;
       throw error;
     }

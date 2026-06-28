@@ -8,7 +8,9 @@
 // ============================================================================
 
 const { ESTADOS } = require('../../../domain/entities/Solicitud');
-const { MAX_SOLICITUDES_ACTIVAS } = require('../../../domain/services/SolicitudValidationService');
+const {
+  MAX_SOLICITUDES_ACTIVAS,
+} = require('../../../domain/services/SolicitudValidationService');
 
 class AcceptSolicitudUseCase {
   /**
@@ -40,19 +42,24 @@ class AcceptSolicitudUseCase {
     }
 
     if (estudiante.rol !== 'ESTUDIANTE') {
-      const error = new Error('Solo los estudiantes pueden aceptar solicitudes.');
+      const error = new Error(
+        'Solo los estudiantes pueden aceptar solicitudes.'
+      );
       error.statusCode = 403;
       throw error;
     }
 
     if (estudiante.suspendido) {
-      const error = new Error('Tu cuenta está suspendida. No puedes aceptar solicitudes.');
+      const error = new Error(
+        'Tu cuenta está suspendida. No puedes aceptar solicitudes.'
+      );
       error.statusCode = 403;
       throw error;
     }
 
     // 2. Verificar límite de solicitudes activas (RF-EMP-04)
-    const activas = await this.solicitudRepository.countActiveByVoluntario(estudianteId);
+    const activas =
+      await this.solicitudRepository.countActiveByVoluntario(estudianteId);
 
     if (activas >= MAX_SOLICITUDES_ACTIVAS) {
       const error = new Error(
@@ -65,77 +72,79 @@ class AcceptSolicitudUseCase {
     // 3. Aceptar con transacción para evitar doble aceptación (concurrencia)
     // Usamos update con condición de estado para garantizar atomicidad
     try {
-      const solicitudActualizada = await this.prisma.$transaction(async (tx) => {
-        // Verificar estado actual dentro de la transacción
-        const solicitud = await tx.solicitud.findUnique({
-          where: { id: solicitudId },
-          include: { solicitante: true },
-        });
+      const solicitudActualizada = await this.prisma.$transaction(
+        async (tx) => {
+          // Verificar estado actual dentro de la transacción
+          const solicitud = await tx.solicitud.findUnique({
+            where: { id: solicitudId },
+            include: { solicitante: true },
+          });
 
-        if (!solicitud) {
-          const error = new Error('Solicitud no encontrada.');
-          error.statusCode = 404;
-          throw error;
-        }
+          if (!solicitud) {
+            const error = new Error('Solicitud no encontrada.');
+            error.statusCode = 404;
+            throw error;
+          }
 
-        if (solicitud.estado !== ESTADOS.PENDIENTE) {
-          const error = new Error('Esta solicitud ya no está disponible.');
-          error.statusCode = 409;
-          throw error;
-        }
+          if (solicitud.estado !== ESTADOS.PENDIENTE) {
+            const error = new Error('Esta solicitud ya no está disponible.');
+            error.statusCode = 409;
+            throw error;
+          }
 
-        // No puede aceptar su propia solicitud
-        if (solicitud.solicitanteId === estudianteId) {
-          const error = new Error('No puedes aceptar tu propia solicitud.');
-          error.statusCode = 400;
-          throw error;
-        }
+          // No puede aceptar su propia solicitud
+          if (solicitud.solicitanteId === estudianteId) {
+            const error = new Error('No puedes aceptar tu propia solicitud.');
+            error.statusCode = 400;
+            throw error;
+          }
 
-        // Re-verificar conteo dentro de la transacción (doble check)
-        const activasTx = await tx.solicitud.count({
-          where: { voluntarioId: estudianteId, estado: ESTADOS.EN_CURSO },
-        });
+          // Re-verificar conteo dentro de la transacción (doble check)
+          const activasTx = await tx.solicitud.count({
+            where: { voluntarioId: estudianteId, estado: ESTADOS.EN_CURSO },
+          });
 
-        if (activasTx >= MAX_SOLICITUDES_ACTIVAS) {
-          const error = new Error(
-            `Límite de solicitudes activas alcanzado (${MAX_SOLICITUDES_ACTIVAS}).`
-          );
-          error.statusCode = 400;
-          throw error;
-        }
+          if (activasTx >= MAX_SOLICITUDES_ACTIVAS) {
+            const error = new Error(
+              `Límite de solicitudes activas alcanzado (${MAX_SOLICITUDES_ACTIVAS}).`
+            );
+            error.statusCode = 400;
+            throw error;
+          }
 
-        // Actualizar estado y asignar voluntario atómicamente
-        const updated = await tx.solicitud.update({
-          where: { id: solicitudId },
-          data: {
-            estado: ESTADOS.EN_CURSO,
-            voluntarioId: estudianteId,
-          },
-          include: {
-            categoria: true,
-            solicitante: {
-              select: {
-                id: true,
-                nombre: true,
-                apellido: true,
-                telefono: true,
-                comuna: true,
-                direccion: true,
+          // Actualizar estado y asignar voluntario atómicamente
+          const updated = await tx.solicitud.update({
+            where: { id: solicitudId },
+            data: {
+              estado: ESTADOS.EN_CURSO,
+              voluntarioId: estudianteId,
+            },
+            include: {
+              categoria: true,
+              solicitante: {
+                select: {
+                  id: true,
+                  nombre: true,
+                  apellido: true,
+                  telefono: true,
+                  comuna: true,
+                  direccion: true,
+                },
+              },
+              voluntario: {
+                select: {
+                  id: true,
+                  nombre: true,
+                  apellido: true,
+                  email: true,
+                },
               },
             },
-            voluntario: {
-              select: {
-                id: true,
-                nombre: true,
-                apellido: true,
-                email: true,
-              },
-            },
-          },
-        });
+          });
 
-        return updated;
-      });
+          return updated;
+        }
+      );
 
       // RF-EMP-05: La dirección ahora es visible para el voluntario asignado
       return solicitudActualizada;

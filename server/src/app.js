@@ -9,7 +9,6 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./infrastructure/swagger');
-const { logger } = require('./infrastructure/logger');
 
 const app = express();
 
@@ -21,10 +20,12 @@ const app = express();
 app.use(helmet());
 
 // CORS: Permitir requests del frontend React
-app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+    credentials: true,
+  })
+);
 
 // Parsing de JSON y URL-encoded
 app.use(express.json({ limit: '10mb' }));
@@ -52,10 +53,14 @@ app.get('/api/health', (req, res) => {
 // Equivalente a /api/docs/swagger/ de Django (drf-spectacular)
 // ============================================================================
 
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
-  customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: 'AllyUCT API - Documentación',
-}));
+app.use(
+  '/api/docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'AllyUCT API - Documentación',
+  })
+);
 
 // Schema JSON endpoint (equivalente a /api/schema/ de Django)
 app.get('/api/schema', (req, res) => {
@@ -98,9 +103,10 @@ app.use((err, req, res, _next) => {
   console.error('❌ Error:', err.message);
 
   const statusCode = err.statusCode || 500;
-  const message = process.env.NODE_ENV === 'production'
-    ? 'Error interno del servidor.'
-    : err.message;
+  const message =
+    process.env.NODE_ENV === 'production'
+      ? 'Error interno del servidor.'
+      : err.message;
 
   res.status(statusCode).json({
     success: false,

@@ -25,10 +25,7 @@ const logger = winston.createLogger({
     // Console — solo warnings+ en producción
     new winston.transports.Console({
       level: process.env.NODE_ENV === 'production' ? 'warn' : 'info',
-      format: winston.format.combine(
-        winston.format.colorize(),
-        logFormat
-      ),
+      format: winston.format.combine(winston.format.colorize(), logFormat),
     }),
 
     // Archivo de seguridad — equivalente al handler 'security' de Django
@@ -69,17 +66,23 @@ const securityLogger = {
 
   // Login exitoso
   loginSuccess(userId, email) {
-    logger.info(`Login exitoso: ${email} (ID: ${userId})`, { module: 'security.auth' });
+    logger.info(`Login exitoso: ${email} (ID: ${userId})`, {
+      module: 'security.auth',
+    });
   },
 
   // Login fallido
   loginFailed(email, reason) {
-    logger.warn(`Login fallido: ${email} — ${reason}`, { module: 'security.auth' });
+    logger.warn(`Login fallido: ${email} — ${reason}`, {
+      module: 'security.auth',
+    });
   },
 
   // Suspensión de usuario (RN-09)
   userSuspended(userId, reason) {
-    logger.warn(`Usuario suspendido: ${userId} — ${reason}`, { module: 'security.suspension' });
+    logger.warn(`Usuario suspendido: ${userId} — ${reason}`, {
+      module: 'security.suspension',
+    });
   },
 
   // Inasistencia registrada (RN-08)
@@ -97,8 +100,8 @@ const securityLogger = {
   logSensitiveAccess(user, entityName, entityId, field, action) {
     logger.info(
       `Auditoría: Usuario ${user.email} (${user.rol}) accedió a campo '${field}' ` +
-      `en ${entityName} ID ${entityId} mediante acción '${action}' ` +
-      `el ${new Date().toISOString()}`,
+        `en ${entityName} ID ${entityId} mediante acción '${action}' ` +
+        `el ${new Date().toISOString()}`,
       { module: 'core.audit' }
     );
   },

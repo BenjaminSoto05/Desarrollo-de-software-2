@@ -5,7 +5,9 @@
 // ============================================================================
 
 const { Solicitud } = require('../../../domain/entities/Solicitud');
-const { SolicitudValidationService } = require('../../../domain/services/SolicitudValidationService');
+const {
+  SolicitudValidationService,
+} = require('../../../domain/services/SolicitudValidationService');
 
 class UpdateSolicitudUseCase {
   /**
@@ -47,7 +49,9 @@ class UpdateSolicitudUseCase {
 
     // Validar nueva categoría si se proporciona
     if (input.categoriaId) {
-      const categoria = await this.categoriaRepository.findById(input.categoriaId);
+      const categoria = await this.categoriaRepository.findById(
+        input.categoriaId
+      );
       if (!categoria || !categoria.activa) {
         const error = new Error('La categoría seleccionada no es válida.');
         error.statusCode = 400;
@@ -79,12 +83,16 @@ class UpdateSolicitudUseCase {
     if (input.titulo) updateData.titulo = input.titulo.trim();
     if (input.descripcion) updateData.descripcion = input.descripcion.trim();
     if (input.categoriaId) updateData.categoriaId = input.categoriaId;
-    if (input.fechaProgramada) updateData.fechaProgramada = new Date(input.fechaProgramada);
+    if (input.fechaProgramada)
+      updateData.fechaProgramada = new Date(input.fechaProgramada);
     if (input.horaProgramada) updateData.horaProgramada = input.horaProgramada;
     if (input.direccion) updateData.direccion = input.direccion.trim();
     if (input.comuna) updateData.comuna = input.comuna.trim();
 
-    const updated = await this.solicitudRepository.update(solicitudId, updateData);
+    const updated = await this.solicitudRepository.update(
+      solicitudId,
+      updateData
+    );
     return updated;
   }
 }

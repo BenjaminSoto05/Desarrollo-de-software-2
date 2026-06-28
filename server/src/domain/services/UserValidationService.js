@@ -11,10 +11,7 @@ const { DOMINIOS_UCT } = require('../entities/User');
  * Comunas permitidas por RN-03.
  * El voluntariado se limita a Temuco y Padre Las Casas.
  */
-const COMUNAS_PERMITIDAS = Object.freeze([
-  'temuco',
-  'padre las casas',
-]);
+const COMUNAS_PERMITIDAS = Object.freeze(['temuco', 'padre las casas']);
 
 class UserValidationService {
   /**
@@ -72,10 +69,14 @@ class UserValidationService {
     }
 
     // Calcular dígito verificador esperado
-    const digitoCalculado = UserValidationService.calcularDigitoVerificador(cuerpo);
+    const digitoCalculado =
+      UserValidationService.calcularDigitoVerificador(cuerpo);
 
     if (digitoCalculado !== digitoVerificador) {
-      return { valid: false, error: 'El dígito verificador del RUT no es válido.' };
+      return {
+        valid: false,
+        error: 'El dígito verificador del RUT no es válido.',
+      };
     }
 
     return { valid: true };

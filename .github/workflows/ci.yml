@@ -1,0 +1,68 @@
+name: Integración Continua (CI)
+
+on:
+  push:
+    branches: [ main, master, dev ]
+  pull_request:
+    branches: [ main, master, dev ]
+
+jobs:
+  backend-ci:
+    name: Backend CI (Lint, Format & Test)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del Repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: server/package-lock.json
+
+      - name: Instalar Dependencias
+        run: npm ci
+        working-directory: ./server
+
+      - name: Ejecutar Migraciones de Prisma (Mock/SQLite)
+        run: npx prisma generate
+        working-directory: ./server
+
+      - name: Ejecutar Linter (ESLint)
+        run: npm run lint
+        working-directory: ./server
+
+      - name: Verificar Formato (Prettier)
+        run: npm run format:check
+        working-directory: ./server
+
+      - name: Ejecutar Pruebas Unitarias e Integración
+        run: npm run test:ci
+        working-directory: ./server
+
+  frontend-ci:
+    name: Frontend CI (Lint & Format)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del Repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: client/package-lock.json
+
+      - name: Instalar Dependencias
+        run: npm ci
+        working-directory: ./client
+
+      - name: Ejecutar Linter (ESLint)
+        run: npm run lint
+        working-directory: ./client
+
+      - name: Verificar Formato (Prettier)
+        run: npm run format:check
+        working-directory: ./client
