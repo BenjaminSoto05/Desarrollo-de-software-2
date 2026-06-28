@@ -29,6 +29,7 @@ class GetSolicitudesUseCase {
 
       // Ocultar dirección en el listado público (RF-EMP-02)
       delete sanitized.direccion;
+      delete sanitized.telefonoBeneficiario;
 
       // Ocultar teléfono del solicitante
       if (sanitized.solicitante) {

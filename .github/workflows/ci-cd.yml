@@ -1,0 +1,104 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - dev-Benjamin
+  pull_request:
+    branches:
+      - main
+      - dev-Benjamin
+
+jobs:
+  ci:
+    name: Integración Continua (Build & Test)
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout del repositorio
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Necesario para SonarQube
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: |
+            server/package-lock.json
+            client/package-lock.json
+
+      - name: 📦 Instalar dependencias del Backend
+        working-directory: server
+        run: npm ci
+
+      - name: 📦 Instalar dependencias del Frontend
+        working-directory: client
+        run: npm ci
+
+      - name: 🔍 Linter en Backend
+        working-directory: server
+        run: npm run lint
+
+      - name: 🔍 Linter en Frontend
+        working-directory: client
+        run: npm run lint
+
+      - name: 🏗️ Compilar Frontend (Vite Build)
+        working-directory: client
+        run: npm run build
+
+      - name: 🔧 Generar Prisma Client
+        working-directory: server
+        run: npx prisma generate
+
+      - name: 🧪 Ejecutar Pruebas Unitarias con Cobertura
+        working-directory: server
+        run: npm test -- --coverage --ci
+
+      - name: 📊 SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v4
+        continue-on-error: true # Evita que falle el pipeline si la UCT bloquea la conexión
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          args: "-Dsonar.scm.disabled=true -X"
+
+  cd:
+    name: Despliegue Continuo (Docker a GHCR)
+    needs: ci # Solo se ejecuta si el CI pasa exitosamente
+    runs-on: ubuntu-latest
+    # Solo desplegar si es un push (no pull request) a main o dev-Benjamin
+    if: github.event_name == 'push'
+    
+    permissions:
+      contents: read
+      packages: write # Necesario para publicar la imagen
+
+    steps:
+      - name: 📥 Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: 🔑 Iniciar sesión en GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🏷️ Convertir nombre de repositorio a minúsculas
+        run: |
+          REPO_LOWERCASE=$(echo "ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          echo "IMAGE_NAME=$REPO_LOWERCASE" >> $GITHUB_ENV
+
+      - name: 🚀 Construir y hacer Push de la imagen Docker
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAME }}:latest
+            ${{ env.IMAGE_NAME }}:${{ github.sha }}
