@@ -28,7 +28,9 @@ class CreateEvaluacionUseCase {
    */
   async execute(input, evaluadorId) {
     // 1. Verificar que la solicitud existe y está FINALIZADA o COMPLETADA
-    const solicitud = await this.solicitudRepository.findById(input.solicitudId);
+    const solicitud = await this.solicitudRepository.findById(
+      input.solicitudId
+    );
 
     if (!solicitud) {
       const error = new Error('Solicitud no encontrada.');
@@ -36,8 +38,13 @@ class CreateEvaluacionUseCase {
       throw error;
     }
 
-    if (solicitud.estado !== ESTADOS.FINALIZADA && solicitud.estado !== ESTADOS.COMPLETADA) {
-      const error = new Error('Solo se pueden evaluar tareas finalizadas o completadas.');
+    if (
+      solicitud.estado !== ESTADOS.FINALIZADA &&
+      solicitud.estado !== ESTADOS.COMPLETADA
+    ) {
+      const error = new Error(
+        'Solo se pueden evaluar tareas finalizadas o completadas.'
+      );
       error.statusCode = 400;
       throw error;
     }
@@ -47,13 +54,17 @@ class CreateEvaluacionUseCase {
     const esVoluntario = solicitud.voluntarioId === evaluadorId;
 
     if (!esSolicitante && !esVoluntario) {
-      const error = new Error('Solo el solicitante o el voluntario pueden evaluar esta tarea.');
+      const error = new Error(
+        'Solo el solicitante o el voluntario pueden evaluar esta tarea.'
+      );
       error.statusCode = 403;
       throw error;
     }
 
     // 3. Determinar a quién se evalúa
-    const evaluadoId = esSolicitante ? solicitud.voluntarioId : solicitud.solicitanteId;
+    const evaluadoId = esSolicitante
+      ? solicitud.voluntarioId
+      : solicitud.solicitanteId;
 
     // 4. Validar puntuación con entidad de dominio
     const evaluacion = new Evaluacion({
@@ -72,10 +83,11 @@ class CreateEvaluacionUseCase {
     }
 
     // 6. Verificar que no haya evaluado ya esta solicitud
-    const yaEvaluo = await this.evaluacionRepository.existsForSolicitudAndEvaluador(
-      input.solicitudId,
-      evaluadorId
-    );
+    const yaEvaluo =
+      await this.evaluacionRepository.existsForSolicitudAndEvaluador(
+        input.solicitudId,
+        evaluadorId
+      );
 
     if (yaEvaluo) {
       const error = new Error('Ya has evaluado esta solicitud.');

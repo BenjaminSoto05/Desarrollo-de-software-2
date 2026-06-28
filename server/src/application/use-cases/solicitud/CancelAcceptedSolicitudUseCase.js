@@ -8,7 +8,9 @@
 
 const { ESTADOS } = require('../../../domain/entities/Solicitud');
 const { User, MAX_INASISTENCIAS } = require('../../../domain/entities/User');
-const { SolicitudValidationService } = require('../../../domain/services/SolicitudValidationService');
+const {
+  SolicitudValidationService,
+} = require('../../../domain/services/SolicitudValidationService');
 
 class CancelAcceptedSolicitudUseCase {
   /**
@@ -38,23 +40,28 @@ class CancelAcceptedSolicitudUseCase {
     }
 
     if (solicitud.estado !== ESTADOS.EN_CURSO) {
-      const error = new Error('Solo se pueden cancelar tareas que están en curso.');
+      const error = new Error(
+        'Solo se pueden cancelar tareas que están en curso.'
+      );
       error.statusCode = 400;
       throw error;
     }
 
     // 2. Verificar que el voluntario es quien la tiene asignada
     if (solicitud.voluntarioId !== voluntarioId) {
-      const error = new Error('Solo el voluntario asignado puede cancelar esta tarea.');
+      const error = new Error(
+        'Solo el voluntario asignado puede cancelar esta tarea.'
+      );
       error.statusCode = 403;
       throw error;
     }
 
     // 3. Determinar si genera inasistencia (RN-08)
-    const generaInasistencia = SolicitudValidationService.cancelacionGeneraInasistencia(
-      solicitud.fechaProgramada,
-      solicitud.horaProgramada
-    );
+    const generaInasistencia =
+      SolicitudValidationService.cancelacionGeneraInasistencia(
+        solicitud.fechaProgramada,
+        solicitud.horaProgramada
+      );
 
     // 4. Devolver solicitud a PENDIENTE (liberar para otro voluntario)
     await this.solicitudRepository.update(solicitudId, {
@@ -90,7 +97,8 @@ class CancelAcceptedSolicitudUseCase {
       message: 'Tarea cancelada. La solicitud vuelve a estar disponible.',
       penalizacion: penalizacion || {
         inasistenciaRegistrada: false,
-        mensaje: 'Cancelación sin penalización (más de 4 horas de anticipación).',
+        mensaje:
+          'Cancelación sin penalización (más de 4 horas de anticipación).',
       },
     };
   }

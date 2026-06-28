@@ -31,13 +31,17 @@ class CompleteSolicitudUseCase {
     }
 
     if (solicitud.estado !== ESTADOS.EN_CURSO) {
-      const error = new Error('Solo se pueden completar tareas que están en curso.');
+      const error = new Error(
+        'Solo se pueden completar tareas que están en curso.'
+      );
       error.statusCode = 400;
       throw error;
     }
 
     if (solicitud.voluntarioId !== voluntarioId) {
-      const error = new Error('Solo el voluntario asignado puede completar esta tarea.');
+      const error = new Error(
+        'Solo el voluntario asignado puede completar esta tarea.'
+      );
       error.statusCode = 403;
       throw error;
     }

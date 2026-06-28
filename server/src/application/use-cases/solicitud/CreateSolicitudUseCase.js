@@ -57,13 +57,17 @@ class CreateSolicitudUseCase {
     }
 
     if (solicitante.suspendido) {
-      const error = new Error('Tu cuenta está suspendida. No puedes crear solicitudes.');
+      const error = new Error(
+        'Tu cuenta está suspendida. No puedes crear solicitudes.'
+      );
       error.statusCode = 403;
       throw error;
     }
 
     // 2. Verificar que la categoría existe y está activa (RF-SOL-01)
-    const categoria = await this.categoriaRepository.findById(input.categoriaId);
+    const categoria = await this.categoriaRepository.findById(
+      input.categoriaId
+    );
     if (!categoria) {
       const error = new Error('La categoría seleccionada no existe.');
       error.statusCode = 400;
