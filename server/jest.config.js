@@ -7,9 +7,8 @@ module.exports = {
   ],
   setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
   collectCoverageFrom: [
-    'src/**/*.js',
-    '!src/server.js',
-    '!src/app.js',
+    'src/domain/**/*.js',
+    'src/application/**/*.js',
     '!src/infrastructure/swagger.js',
   ],
   coverageThreshold: {

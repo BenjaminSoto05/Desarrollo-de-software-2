@@ -46,7 +46,9 @@ api.interceptors.response.use(
             originalRequest.headers.Authorization = `Bearer ${token}`;
             return api(originalRequest);
           })
-          .catch((err) => Promise.reject(err));
+          .catch((err) => {
+            throw err;
+          });
       }
 
       originalRequest._retry = true;
@@ -59,7 +61,7 @@ api.interceptors.response.use(
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('user');
         window.location.href = '/login';
-        return Promise.reject(error);
+        throw error;
       }
 
       try {
@@ -97,11 +99,11 @@ api.interceptors.response.use(
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('user');
         window.location.href = '/login';
-        return Promise.reject(refreshError);
+        throw refreshError;
       }
     }
 
-    return Promise.reject(error);
+    throw error;
   }
 );
 

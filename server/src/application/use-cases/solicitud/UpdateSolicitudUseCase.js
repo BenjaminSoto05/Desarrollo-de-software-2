@@ -78,22 +78,27 @@ class UpdateSolicitudUseCase {
       }
     }
 
-    // Construir datos de actualización (solo campos proporcionados)
-    const updateData = {};
-    if (input.titulo) updateData.titulo = input.titulo.trim();
-    if (input.descripcion) updateData.descripcion = input.descripcion.trim();
-    if (input.categoriaId) updateData.categoriaId = input.categoriaId;
-    if (input.fechaProgramada)
-      updateData.fechaProgramada = new Date(input.fechaProgramada);
-    if (input.horaProgramada) updateData.horaProgramada = input.horaProgramada;
-    if (input.direccion) updateData.direccion = input.direccion.trim();
-    if (input.comuna) updateData.comuna = input.comuna.trim();
+    // Construir datos de actualización
+    const updateData = this._buildUpdateData(input);
 
     const updated = await this.solicitudRepository.update(
       solicitudId,
       updateData
     );
     return updated;
+  }
+
+  _buildUpdateData(input) {
+    const data = {};
+    if (input.titulo) data.titulo = input.titulo.trim();
+    if (input.descripcion) data.descripcion = input.descripcion.trim();
+    if (input.categoriaId) data.categoriaId = input.categoriaId;
+    if (input.fechaProgramada)
+      data.fechaProgramada = new Date(input.fechaProgramada);
+    if (input.horaProgramada) data.horaProgramada = input.horaProgramada;
+    if (input.direccion) data.direccion = input.direccion.trim();
+    if (input.comuna) data.comuna = input.comuna.trim();
+    return data;
   }
 }
 

@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>44/44</span>
+                <span class='fraction'>43/43</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>44/44</span>
+                <span class='fraction'>43/43</span>
             </div>
         
             
@@ -184,7 +184,18 @@
 <a name='L119'></a><a href='#L119'>119</a>
 <a name='L120'></a><a href='#L120'>120</a>
 <a name='L121'></a><a href='#L121'>121</a>
-<a name='L122'></a><a href='#L122'>122</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -194,8 +205,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -237,7 +251,11 @@
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -299,6 +317,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -314,10 +336,13 @@
 // RN-04, RN-05, RN-07
 // ============================================================================
 &nbsp;
-const { Solicitud } = require('../../../domain/entities/Solicitud');
 const { User } = require('../../../domain/entities/User');
-const { SolicitudValidationService } = require('../../../domain/services/SolicitudValidationService');
-const { UserValidationService } = require('../../../domain/services/UserValidationService');
+const {
+  SolicitudValidationService,
+} = require('../../../domain/services/SolicitudValidationService');
+const {
+  UserValidationService,
+} = require('../../../domain/services/UserValidationService');
 &nbsp;
 class CreateSolicitudUseCase {
   /**
@@ -357,8 +382,12 @@ class CreateSolicitudUseCase {
 &nbsp;
     const solicitante = new User(solicitanteData);
 &nbsp;
-    if (!['ADULTO_MAYOR', 'TUTOR', 'PRESIDENTE_JUNTA'].includes(solicitante.rol)) {
-      const error = new Error('Solo adultos mayores, tutores o presidentes de junta pueden crear solicitudes.');
+    if (
+      !['ADULTO_MAYOR', 'TUTOR', 'PRESIDENTE_JUNTA'].includes(solicitante.rol)
+    ) {
+      const error = new Error(
+        'Solo adultos mayores, tutores o presidentes de junta pueden crear solicitudes.'
+      );
       error.statusCode = 403;
       throw error;
     }
@@ -416,8 +445,12 @@ class CreateSolicitudUseCase {
       horaProgramada: input.horaProgramada,
       direccion: input.direccion.trim(),
       comuna: input.comuna.trim(),
-      nombreBeneficiario: input.nombreBeneficiario ? <span class="branch-0 cbranch-no" title="branch not covered" >input.nombreBeneficiario.trim() </span>: null,
-      telefonoBeneficiario: input.telefonoBeneficiario ? <span class="branch-0 cbranch-no" title="branch not covered" >input.telefonoBeneficiario.trim() </span>: null,
+      nombreBeneficiario: input.nombreBeneficiario
+        ? <span class="branch-0 cbranch-no" title="branch not covered" >input.nombreBeneficiario.trim()</span>
+        : null,
+      telefonoBeneficiario: input.telefonoBeneficiario
+        ? <span class="branch-0 cbranch-no" title="branch not covered" >input.telefonoBeneficiario.trim()</span>
+        : null,
     };
 &nbsp;
     const solicitud = await this.solicitudRepository.create(solicitudData);
@@ -433,7 +466,7 @@ module.exports = CreateSolicitudUseCase;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-06-29T17:19:52.144Z
+                at 2026-06-29T18:05:28.331Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
