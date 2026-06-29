@@ -27,21 +27,24 @@ export default function SolicitudesPage() {
   });
   const [loading, setLoading] = useState(true);
 
-  const fetchSolicitudes = useCallback(async (page = 1) => {
-    setLoading(true);
-    try {
-      const params = { page, limit: 9 };
-      if (filters.categoriaId) params.categoriaId = filters.categoriaId;
-      if (filters.comuna) params.comuna = filters.comuna;
-      if (filters.estado) params.estado = filters.estado;
-      const res = await solicitudesAPI.getAll(params);
-      setSolicitudes(res.data.data);
-      setPagination(res.data.pagination);
-    } catch (e) {
-      console.error(e);
-    }
-    setLoading(false);
-  }, [filters]);
+  const fetchSolicitudes = useCallback(
+    async (page = 1) => {
+      setLoading(true);
+      try {
+        const params = { page, limit: 9 };
+        if (filters.categoriaId) params.categoriaId = filters.categoriaId;
+        if (filters.comuna) params.comuna = filters.comuna;
+        if (filters.estado) params.estado = filters.estado;
+        const res = await solicitudesAPI.getAll(params);
+        setSolicitudes(res.data.data);
+        setPagination(res.data.pagination);
+      } catch (e) {
+        console.error(e);
+      }
+      setLoading(false);
+    },
+    [filters]
+  );
 
   useEffect(() => {
     categoriasAPI.getAll().then((r) => setCategorias(r.data.data));

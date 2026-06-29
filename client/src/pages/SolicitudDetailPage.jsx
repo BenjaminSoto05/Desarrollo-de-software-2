@@ -27,7 +27,9 @@ export default function SolicitudDetailPage() {
       .catch(() => navigate('/solicitudes'))
       .finally(() => setLoading(false));
   };
-  useEffect(() => { fetchData(); }, [id]);
+  useEffect(() => {
+    fetchData();
+  }, [id]);
 
   if (loading)
     return (
@@ -135,10 +137,16 @@ export default function SolicitudDetailPage() {
             )}
             {sol.nombreBeneficiario && (
               <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
-                <p className="text-xs text-emerald-600 font-semibold mb-1">Beneficiario Directo</p>
-                <p className="font-bold text-gray-800">{sol.nombreBeneficiario}</p>
+                <p className="text-xs text-emerald-600 font-semibold mb-1">
+                  Beneficiario Directo
+                </p>
+                <p className="font-bold text-gray-800">
+                  {sol.nombreBeneficiario}
+                </p>
                 {sol.telefonoBeneficiario && (
-                  <p className="text-sm text-gray-500">📞 {sol.telefonoBeneficiario}</p>
+                  <p className="text-sm text-gray-500">
+                    📞 {sol.telefonoBeneficiario}
+                  </p>
                 )}
               </div>
             )}

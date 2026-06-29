@@ -52,7 +52,8 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     if (!token) return;
-    authAPI.getProfile()
+    authAPI
+      .getProfile()
       .then((res) => {
         setUser(res.data.data);
         localStorage.setItem('user', JSON.stringify(res.data.data));
@@ -60,7 +61,9 @@ export function AuthProvider({ children }) {
       .catch(() => {
         logout();
       })
-      .finally(() => { setLoading(false); });
+      .finally(() => {
+        setLoading(false);
+      });
   }, [token, logout]);
 
   const login = async (email, password) => {

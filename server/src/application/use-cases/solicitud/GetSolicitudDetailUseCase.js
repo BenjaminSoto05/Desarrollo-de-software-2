@@ -42,7 +42,8 @@ class GetSolicitudDetailUseCase {
     if (!puedeVerDireccion) {
       result.direccion = '[Disponible después de aceptar la tarea]';
       if (result.telefonoBeneficiario) {
-        result.telefonoBeneficiario = '[Disponible después de aceptar la tarea]';
+        result.telefonoBeneficiario =
+          '[Disponible después de aceptar la tarea]';
       }
     }
 

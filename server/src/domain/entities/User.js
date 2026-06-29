@@ -74,7 +74,9 @@ class User {
   /** @returns {boolean} Si el usuario puede crear solicitudes */
   puedeCrearSolicitudes() {
     return (
-      (this.rol === ROLES.ADULTO_MAYOR || this.rol === ROLES.TUTOR || this.rol === ROLES.PRESIDENTE_JUNTA) &&
+      (this.rol === ROLES.ADULTO_MAYOR ||
+        this.rol === ROLES.TUTOR ||
+        this.rol === ROLES.PRESIDENTE_JUNTA) &&
       !this.suspendido
     );
   }
