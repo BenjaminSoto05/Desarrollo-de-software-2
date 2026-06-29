@@ -9,8 +9,8 @@
  * Horario operativo permitido — RN-04
  * Las tareas presenciales deben realizarse entre 08:00 y 20:00
  */
-const HORARIO_INICIO = 8;  // 08:00
-const HORARIO_FIN = 20;    // 20:00
+const HORARIO_INICIO = 8; // 08:00
+const HORARIO_FIN = 20; // 20:00
 
 /**
  * Horas mínimas de anticipación para crear solicitudes — RN-05
@@ -52,7 +52,14 @@ class SolicitudValidationService {
     const hora = parseInt(partes[0], 10);
     const minutos = parseInt(partes[1], 10);
 
-    if (isNaN(hora) || isNaN(minutos) || hora < 0 || hora > 23 || minutos < 0 || minutos > 59) {
+    if (
+      isNaN(hora) ||
+      isNaN(minutos) ||
+      hora < 0 ||
+      hora > 23 ||
+      minutos < 0 ||
+      minutos > 59
+    ) {
       return { valid: false, error: 'La hora proporcionada no es válida.' };
     }
 
@@ -154,7 +161,8 @@ class SolicitudValidationService {
         datos.fechaProgramada,
         datos.horaProgramada
       );
-      if (!resultadoAnticipacion.valid) errors.push(resultadoAnticipacion.error);
+      if (!resultadoAnticipacion.valid)
+        errors.push(resultadoAnticipacion.error);
     }
 
     return { valid: errors.length === 0, errors };

@@ -5,10 +5,16 @@
 // ============================================================================
 
 const { ROLES } = require('../../../domain/entities/User');
-const { UserValidationService } = require('../../../domain/services/UserValidationService');
+const {
+  UserValidationService,
+} = require('../../../domain/services/UserValidationService');
 
 /** Roles permitidos para este registro */
-const ROLES_PERMITIDOS = [ROLES.ADULTO_MAYOR, ROLES.TUTOR];
+const ROLES_PERMITIDOS = [
+  ROLES.ADULTO_MAYOR,
+  ROLES.TUTOR,
+  ROLES.PRESIDENTE_JUNTA,
+];
 
 class RegisterElderlyUseCase {
   /**
@@ -55,7 +61,9 @@ class RegisterElderlyUseCase {
 
     // 3. Validar comuna si se proporciona (RN-03)
     if (input.comuna) {
-      const comunaValidation = UserValidationService.validarComuna(input.comuna);
+      const comunaValidation = UserValidationService.validarComuna(
+        input.comuna
+      );
       if (!comunaValidation.valid) {
         const error = new Error(comunaValidation.error);
         error.statusCode = 400;

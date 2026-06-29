@@ -20,7 +20,7 @@ class GetMisSolicitudesUseCase {
    * @returns {Promise<Object[]>}
    */
   async execute(userId, userRol) {
-    if (['ADULTO_MAYOR', 'TUTOR'].includes(userRol)) {
+    if (['ADULTO_MAYOR', 'TUTOR', 'PRESIDENTE_JUNTA'].includes(userRol)) {
       return this.solicitudRepository.findBySolicitante(userId);
     }
 

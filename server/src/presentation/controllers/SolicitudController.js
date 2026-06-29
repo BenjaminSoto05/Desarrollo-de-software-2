@@ -41,7 +41,10 @@ class SolicitudController {
    */
   async handleCreate(req, res, next) {
     try {
-      const solicitud = await this.createSolicitud.execute(req.body, req.user.id);
+      const solicitud = await this.createSolicitud.execute(
+        req.body,
+        req.user.id
+      );
 
       res.status(201).json({
         success: true,
@@ -182,7 +185,8 @@ class SolicitudController {
 
       res.json({
         success: true,
-        message: 'Solicitud aceptada exitosamente. La dirección ya está disponible.',
+        message:
+          'Solicitud aceptada exitosamente. La dirección ya está disponible.',
         data: solicitud,
       });
     } catch (error) {
@@ -224,7 +228,8 @@ class SolicitudController {
 
       res.json({
         success: true,
-        message: 'Tarea marcada como completada. Esperando confirmación del solicitante.',
+        message:
+          'Tarea marcada como completada. Esperando confirmación del solicitante.',
         data: solicitud,
       });
     } catch (error) {
@@ -245,7 +250,8 @@ class SolicitudController {
 
       res.json({
         success: true,
-        message: 'Tarea finalizada exitosamente. Las horas han sido acreditadas.',
+        message:
+          'Tarea finalizada exitosamente. Las horas han sido acreditadas.',
         data: solicitud,
       });
     } catch (error) {

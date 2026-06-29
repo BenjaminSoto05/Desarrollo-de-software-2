@@ -20,7 +20,7 @@ class GetSolicitudesUseCase {
    * @param {Object} requestingUser - { id, rol } del usuario autenticado
    * @returns {Promise<Object>} { data, total, page, limit, totalPages }
    */
-  async execute(filters, requestingUser) {
+  async execute(filters, _requestingUser) {
     const result = await this.solicitudRepository.findAll(filters);
 
     // RF-EMP-02: Sanitizar datos sensibles en el listado
@@ -29,10 +29,15 @@ class GetSolicitudesUseCase {
 
       // Ocultar dirección en el listado público (RF-EMP-02)
       delete sanitized.direccion;
+      delete sanitized.telefonoBeneficiario;
 
       // Ocultar teléfono del solicitante
       if (sanitized.solicitante) {
-        const { telefono, direccion, ...solicitantePublico } = sanitized.solicitante;
+        const {
+          telefono: _telefono,
+          direccion: _direccion,
+          ...solicitantePublico
+        } = sanitized.solicitante;
         sanitized.solicitante = solicitantePublico;
       }
 

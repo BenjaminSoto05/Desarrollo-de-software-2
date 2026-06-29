@@ -7,9 +7,13 @@
 // RN-04, RN-05, RN-07
 // ============================================================================
 
-const { Solicitud } = require('../../../domain/entities/Solicitud');
-const { SolicitudValidationService } = require('../../../domain/services/SolicitudValidationService');
-const { UserValidationService } = require('../../../domain/services/UserValidationService');
+const { User } = require('../../../domain/entities/User');
+const {
+  SolicitudValidationService,
+} = require('../../../domain/services/SolicitudValidationService');
+const {
+  UserValidationService,
+} = require('../../../domain/services/UserValidationService');
 
 class CreateSolicitudUseCase {
   /**
@@ -33,32 +37,44 @@ class CreateSolicitudUseCase {
    * @param {string} input.horaProgramada - "HH:mm"
    * @param {string} input.direccion
    * @param {string} input.comuna
+   * @param {string} [input.nombreBeneficiario]
+   * @param {string} [input.telefonoBeneficiario]
    * @param {string} solicitanteId - ID del usuario autenticado
    * @returns {Promise<Object>} Solicitud creada
    */
   async execute(input, solicitanteId) {
     // 1. Verificar que el solicitante existe y puede crear solicitudes
-    const solicitante = await this.userRepository.findById(solicitanteId);
-    if (!solicitante) {
+    const solicitanteData = await this.userRepository.findById(solicitanteId);
+    if (!solicitanteData) {
       const error = new Error('Usuario no encontrado.');
       error.statusCode = 404;
       throw error;
     }
 
-    if (!['ADULTO_MAYOR', 'TUTOR'].includes(solicitante.rol)) {
-      const error = new Error('Solo adultos mayores o tutores pueden crear solicitudes.');
+    const solicitante = new User(solicitanteData);
+
+    if (
+      !['ADULTO_MAYOR', 'TUTOR', 'PRESIDENTE_JUNTA'].includes(solicitante.rol)
+    ) {
+      const error = new Error(
+        'Solo adultos mayores, tutores o presidentes de junta pueden crear solicitudes.'
+      );
       error.statusCode = 403;
       throw error;
     }
 
     if (solicitante.suspendido) {
-      const error = new Error('Tu cuenta está suspendida. No puedes crear solicitudes.');
+      const error = new Error(
+        'Tu cuenta está suspendida. No puedes crear solicitudes.'
+      );
       error.statusCode = 403;
       throw error;
     }
 
     // 2. Verificar que la categoría existe y está activa (RF-SOL-01)
-    const categoria = await this.categoriaRepository.findById(input.categoriaId);
+    const categoria = await this.categoriaRepository.findById(
+      input.categoriaId
+    );
     if (!categoria) {
       const error = new Error('La categoría seleccionada no existe.');
       error.statusCode = 400;
@@ -100,6 +116,12 @@ class CreateSolicitudUseCase {
       horaProgramada: input.horaProgramada,
       direccion: input.direccion.trim(),
       comuna: input.comuna.trim(),
+      nombreBeneficiario: input.nombreBeneficiario
+        ? input.nombreBeneficiario.trim()
+        : null,
+      telefonoBeneficiario: input.telefonoBeneficiario
+        ? input.telefonoBeneficiario.trim()
+        : null,
     };
 
     const solicitud = await this.solicitudRepository.create(solicitudData);

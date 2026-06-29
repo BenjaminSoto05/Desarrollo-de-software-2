@@ -49,7 +49,8 @@ class PrismaSolicitudRepository extends SolicitudRepository {
     const skip = (page - 1) * limit;
 
     if (filters.categoriaId) where.categoriaId = filters.categoriaId;
-    if (filters.comuna) where.comuna = { contains: filters.comuna, mode: 'insensitive' };
+    if (filters.comuna)
+      where.comuna = { contains: filters.comuna, mode: 'insensitive' };
     if (filters.estado) where.estado = filters.estado;
 
     const [data, total] = await Promise.all([

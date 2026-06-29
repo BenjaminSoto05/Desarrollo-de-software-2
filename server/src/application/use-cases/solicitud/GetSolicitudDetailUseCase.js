@@ -41,11 +41,19 @@ class GetSolicitudDetailUseCase {
 
     if (!puedeVerDireccion) {
       result.direccion = '[Disponible después de aceptar la tarea]';
+      if (result.telefonoBeneficiario) {
+        result.telefonoBeneficiario =
+          '[Disponible después de aceptar la tarea]';
+      }
     }
 
     // Ocultar teléfono del solicitante a usuarios no autorizados
     if (result.solicitante && !puedeVerDireccion) {
-      const { telefono, direccion, ...solicitantePublico } = result.solicitante;
+      const {
+        telefono: _telefono,
+        direccion: _direccion,
+        ...solicitantePublico
+      } = result.solicitante;
       result.solicitante = solicitantePublico;
     }
 

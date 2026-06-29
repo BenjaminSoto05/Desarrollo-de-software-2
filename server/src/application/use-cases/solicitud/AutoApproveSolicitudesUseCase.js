@@ -22,7 +22,8 @@ class AutoApproveSolicitudesUseCase {
    */
   async execute() {
     // Buscar solicitudes completadas sin confirmar hace >48h
-    const solicitudesPendientes = await this.solicitudRepository.findCompletadasSinConfirmar();
+    const solicitudesPendientes =
+      await this.solicitudRepository.findCompletadasSinConfirmar();
 
     let aprobadas = 0;
 
