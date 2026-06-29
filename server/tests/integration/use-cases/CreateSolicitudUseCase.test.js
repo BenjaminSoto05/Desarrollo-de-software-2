@@ -74,7 +74,7 @@ describe('CreateSolicitudUseCase (Integracion)', () => {
       };
 
       await expect(useCase.execute(input, 'user-001')).rejects.toThrow(
-        'Solo adultos mayores o tutores pueden crear solicitudes.'
+        'Solo adultos mayores, tutores o presidentes de junta pueden crear solicitudes.'
       );
       expect(mockSolicitudRepo.create).not.toHaveBeenCalled();
     });

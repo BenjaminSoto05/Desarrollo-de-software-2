@@ -156,7 +156,7 @@ describe('SolicitudValidationService', () => {
   // ── validarCreacion ───────────────────────────────────────────────
   describe('validarCreacion()', () => {
     it('debe retornar valid:true con datos completamente válidos', () => {
-      const fechaProgramada = fechaEnHoras(HORAS_ANTICIPACION_MINIMA + 2);
+      const fechaProgramada = soloFecha(2); // 2 días en el futuro garantiza >24h a las 10:00
       const hora = '10:00';
       const result = SolicitudValidationService.validarCreacion({
         fechaProgramada,
@@ -167,7 +167,7 @@ describe('SolicitudValidationService', () => {
     });
 
     it('debe retornar valid:false con hora fuera de horario operativo', () => {
-      const fechaProgramada = fechaEnHoras(HORAS_ANTICIPACION_MINIMA + 2);
+      const fechaProgramada = soloFecha(2);
       const result = SolicitudValidationService.validarCreacion({
         fechaProgramada,
         horaProgramada: '21:00',

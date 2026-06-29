@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { solicitudesAPI, evaluacionesAPI } from '../services/api';
@@ -20,14 +20,14 @@ export default function SolicitudDetailPage() {
   const [evalForm, setEvalForm] = useState({ puntuacion: 5, comentario: '' });
   const [showEvalForm, setShowEvalForm] = useState(false);
 
-  const fetch = () => {
+  const fetchData = () => {
     solicitudesAPI
       .getById(id)
       .then((r) => setSol(r.data.data))
       .catch(() => navigate('/solicitudes'))
       .finally(() => setLoading(false));
   };
-  useEffect(fetch, [id]);
+  useEffect(() => { fetchData(); }, [id]);
 
   if (loading)
     return (
@@ -57,7 +57,7 @@ export default function SolicitudDetailPage() {
       await evaluacionesAPI.create({ solicitudId: id, ...evalForm });
       setShowEvalForm(false);
       alert('¡Evaluación registrada!');
-      fetch();
+      fetchData();
     } catch (e) {
       alert(e.response?.data?.error || 'Error');
     }

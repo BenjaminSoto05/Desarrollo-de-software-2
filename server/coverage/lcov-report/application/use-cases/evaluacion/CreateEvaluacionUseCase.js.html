@@ -162,7 +162,19 @@
 <a name='L97'></a><a href='#L97'>97</a>
 <a name='L98'></a><a href='#L98'>98</a>
 <a name='L99'></a><a href='#L99'>99</a>
-<a name='L100'></a><a href='#L100'>100</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -193,6 +205,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -201,7 +215,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -212,12 +231,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
@@ -233,6 +256,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -291,7 +315,9 @@ class CreateEvaluacionUseCase {
    */
   async execute(input, evaluadorId) {
     // 1. Verificar que la solicitud existe y está FINALIZADA o COMPLETADA
-    const solicitud = await this.solicitudRepository.findById(input.solicitudId);
+    const solicitud = await this.solicitudRepository.findById(
+      input.solicitudId
+    );
 &nbsp;
     if (!solicitud) {
       const error = new Error('Solicitud no encontrada.');
@@ -299,8 +325,13 @@ class CreateEvaluacionUseCase {
       throw error;
     }
 &nbsp;
-    if (solicitud.estado !== ESTADOS.FINALIZADA &amp;&amp; solicitud.estado !== ESTADOS.COMPLETADA) {
-      const error = new Error('Solo se pueden evaluar tareas finalizadas o completadas.');
+    if (
+      solicitud.estado !== ESTADOS.FINALIZADA &amp;&amp;
+      solicitud.estado !== ESTADOS.COMPLETADA
+    ) {
+      const error = new Error(
+        'Solo se pueden evaluar tareas finalizadas o completadas.'
+      );
       error.statusCode = 400;
       throw error;
     }
@@ -310,13 +341,17 @@ class CreateEvaluacionUseCase {
     const esVoluntario = solicitud.voluntarioId === evaluadorId;
 &nbsp;
     if (!esSolicitante &amp;&amp; !esVoluntario) {
-      const error = new Error('Solo el solicitante o el voluntario pueden evaluar esta tarea.');
+      const error = new Error(
+        'Solo el solicitante o el voluntario pueden evaluar esta tarea.'
+      );
       error.statusCode = 403;
       throw error;
     }
 &nbsp;
     // 3. Determinar a quién se evalúa
-    const evaluadoId = esSolicitante ? solicitud.voluntarioId : solicitud.solicitanteId;
+    const evaluadoId = esSolicitante
+      ? solicitud.voluntarioId
+      : solicitud.solicitanteId;
 &nbsp;
     // 4. Validar puntuación con entidad de dominio
     const evaluacion = new Evaluacion({
@@ -335,10 +370,11 @@ class CreateEvaluacionUseCase {
     }
 &nbsp;
     // 6. Verificar que no haya evaluado ya esta solicitud
-    const yaEvaluo = await this.evaluacionRepository.existsForSolicitudAndEvaluador(
-      input.solicitudId,
-      evaluadorId
-    );
+    const yaEvaluo =
+      await this.evaluacionRepository.existsForSolicitudAndEvaluador(
+        input.solicitudId,
+        evaluadorId
+      );
 &nbsp;
     if (yaEvaluo) {
       const error = new Error('Ya has evaluado esta solicitud.');
@@ -367,7 +403,7 @@ module.exports = CreateEvaluacionUseCase;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-06-27T18:17:40.558Z
+                at 2026-06-29T17:19:52.144Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">97.5% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>39/39</span>
+                <span class='fraction'>39/40</span>
             </div>
         
             
@@ -155,13 +155,23 @@
 <a name='L90'></a><a href='#L90'>90</a>
 <a name='L91'></a><a href='#L91'>91</a>
 <a name='L92'></a><a href='#L92'>92</a>
-<a name='L93'></a><a href='#L93'>93</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -205,6 +215,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -237,11 +249,15 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -254,7 +270,9 @@
 // ============================================================================
 &nbsp;
 const { Solicitud } = require('../../../domain/entities/Solicitud');
-const { SolicitudValidationService } = require('../../../domain/services/SolicitudValidationService');
+const {
+  SolicitudValidationService,
+} = require('../../../domain/services/SolicitudValidationService');
 &nbsp;
 class UpdateSolicitudUseCase {
   /**
@@ -296,7 +314,9 @@ class UpdateSolicitudUseCase {
 &nbsp;
     // Validar nueva categoría si se proporciona
     if (input.categoriaId) {
-      const categoria = await this.categoriaRepository.findById(input.categoriaId);
+      const categoria = await this.categoriaRepository.findById(
+        input.categoriaId
+      );
       <span class="missing-if-branch" title="else path not taken" >E</span>if (!categoria || <span class="branch-1 cbranch-no" title="branch not covered" >!categoria.activa)</span> {
         const error = new Error('La categoría seleccionada no es válida.');
         error.statusCode = 400;
@@ -328,12 +348,16 @@ class UpdateSolicitudUseCase {
     <span class="missing-if-branch" title="else path not taken" >E</span>if (input.titulo) updateData.titulo = input.titulo.trim();
     <span class="missing-if-branch" title="if path not taken" >I</span>if (input.descripcion) <span class="cstat-no" title="statement not covered" >updateData.descripcion = input.descripcion.trim();</span>
     <span class="missing-if-branch" title="if path not taken" >I</span>if (input.categoriaId) <span class="cstat-no" title="statement not covered" >updateData.categoriaId = input.categoriaId;</span>
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (input.fechaProgramada) <span class="cstat-no" title="statement not covered" >updateData.fechaProgramada = new Date(input.fechaProgramada);</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (input.fechaProgramada)
+<span class="cstat-no" title="statement not covered" >      updateData.fechaProgramada = new Date(input.fechaProgramada);</span>
     <span class="missing-if-branch" title="if path not taken" >I</span>if (input.horaProgramada) <span class="cstat-no" title="statement not covered" >updateData.horaProgramada = input.horaProgramada;</span>
     <span class="missing-if-branch" title="if path not taken" >I</span>if (input.direccion) <span class="cstat-no" title="statement not covered" >updateData.direccion = input.direccion.trim();</span>
     <span class="missing-if-branch" title="if path not taken" >I</span>if (input.comuna) <span class="cstat-no" title="statement not covered" >updateData.comuna = input.comuna.trim();</span>
 &nbsp;
-    const updated = await this.solicitudRepository.update(solicitudId, updateData);
+    const updated = await this.solicitudRepository.update(
+      solicitudId,
+      updateData
+    );
     return updated;
   }
 }
@@ -346,7 +370,7 @@ module.exports = UpdateSolicitudUseCase;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-06-27T18:17:40.558Z
+                at 2026-06-29T17:19:52.144Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
