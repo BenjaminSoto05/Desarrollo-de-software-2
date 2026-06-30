@@ -36,6 +36,7 @@ class RefreshTokenUseCase {
     } catch (_err) {
       const error = new Error('Refresh Token inválido o expirado.');
       error.statusCode = 401;
+      error.cause = _err;
       throw error;
     }
 

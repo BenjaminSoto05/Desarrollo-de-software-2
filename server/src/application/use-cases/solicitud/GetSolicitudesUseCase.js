@@ -33,11 +33,9 @@ class GetSolicitudesUseCase {
 
       // Ocultar teléfono del solicitante
       if (sanitized.solicitante) {
-        const {
-          telefono: _telefono,
-          direccion: _direccion,
-          ...solicitantePublico
-        } = sanitized.solicitante;
+        const solicitantePublico = { ...sanitized.solicitante };
+        delete solicitantePublico.telefono;
+        delete solicitantePublico.direccion;
         sanitized.solicitante = solicitantePublico;
       }
 

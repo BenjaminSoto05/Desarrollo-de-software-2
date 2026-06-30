@@ -25,12 +25,12 @@ export default function Navbar() {
   };
 
   // Navbar color por rol (igual que Django)
-  const navBg =
-    user?.rol === 'ADULTO_MAYOR'
-      ? 'bg-[#fdc300]'
-      : user?.rol === 'ESTUDIANTE'
-        ? 'bg-[#0077ba]'
-        : 'bg-[#343a40]';
+  let navBg = 'bg-[#343a40]';
+  if (user?.rol === 'ADULTO_MAYOR') {
+    navBg = 'bg-[#fdc300]';
+  } else if (user?.rol === 'ESTUDIANTE') {
+    navBg = 'bg-[#0077ba]';
+  }
   const navText = user?.rol === 'ADULTO_MAYOR' ? 'text-black' : 'text-white';
 
   return (

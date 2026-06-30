@@ -49,11 +49,9 @@ class GetSolicitudDetailUseCase {
 
     // Ocultar teléfono del solicitante a usuarios no autorizados
     if (result.solicitante && !puedeVerDireccion) {
-      const {
-        telefono: _telefono,
-        direccion: _direccion,
-        ...solicitantePublico
-      } = result.solicitante;
+      const solicitantePublico = { ...result.solicitante };
+      delete solicitantePublico.telefono;
+      delete solicitantePublico.direccion;
       result.solicitante = solicitantePublico;
     }
 
