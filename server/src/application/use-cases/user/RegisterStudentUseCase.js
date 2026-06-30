@@ -9,6 +9,10 @@ const { ROLES } = require('../../../domain/entities/User');
 const {
   UserValidationService,
 } = require('../../../domain/services/UserValidationService');
+const {
+  ValidationError,
+  ConflictError,
+} = require('../../../domain/exceptions');
 
 class RegisterStudentUseCase {
   /**
@@ -37,38 +41,24 @@ class RegisterStudentUseCase {
     const emailValidation = UserValidationService.validarEmailEstudiante(
       input.email
     );
-    if (!emailValidation.valid) {
-      const error = new Error(emailValidation.error);
-      error.statusCode = 400;
-      throw error;
-    }
+    if (!emailValidation.valid)
+      throw new ValidationError(emailValidation.error);
 
     // 2. Validar RUT chileno
     const rutNormalizado = UserValidationService.normalizarRut(input.rut);
     const rutValidation = UserValidationService.validarRut(rutNormalizado);
-    if (!rutValidation.valid) {
-      const error = new Error(rutValidation.error);
-      error.statusCode = 400;
-      throw error;
-    }
+    if (!rutValidation.valid) throw new ValidationError(rutValidation.error);
 
     // 3. Verificar que el email no esté registrado
     const existingEmail = await this.userRepository.findByEmail(
       input.email.toLowerCase().trim()
     );
-    if (existingEmail) {
-      const error = new Error('Este correo electrónico ya está registrado.');
-      error.statusCode = 409;
-      throw error;
-    }
+    if (existingEmail)
+      throw new ConflictError('Este correo electrónico ya está registrado.');
 
     // 4. Verificar que el RUT no esté registrado
     const existingRut = await this.userRepository.findByRut(rutNormalizado);
-    if (existingRut) {
-      const error = new Error('Este RUT ya está registrado.');
-      error.statusCode = 409;
-      throw error;
-    }
+    if (existingRut) throw new ConflictError('Este RUT ya está registrado.');
 
     // 5. Hashear contraseña (RNF-SEG-02)
     const passwordHash = await this.hashService.hash(input.password);

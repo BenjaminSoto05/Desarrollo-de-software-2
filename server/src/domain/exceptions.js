@@ -63,10 +63,34 @@ class NotFoundError extends Error {
   }
 }
 
+/**
+ * ValidationError — Error de validación de datos.
+ */
+class ValidationError extends Error {
+  constructor(message = 'Error de validación.') {
+    super(message);
+    this.name = 'ValidationError';
+    this.statusCode = 400;
+  }
+}
+
+/**
+ * ConflictError — Conflicto con recurso existente.
+ */
+class ConflictError extends Error {
+  constructor(message = 'Conflicto con un recurso existente.') {
+    super(message);
+    this.name = 'ConflictError';
+    this.statusCode = 409;
+  }
+}
+
 module.exports = {
   RoleValidationError,
   SensitiveDataAccessError,
   TaskAssignmentError,
   AuthenticationError,
   NotFoundError,
+  ValidationError,
+  ConflictError,
 };

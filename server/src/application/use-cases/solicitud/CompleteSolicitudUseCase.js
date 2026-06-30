@@ -5,6 +5,7 @@
 // ============================================================================
 
 const { ESTADOS } = require('../../../domain/entities/Solicitud');
+const { NotFoundError } = require('../../../domain/exceptions');
 
 class CompleteSolicitudUseCase {
   /**
@@ -25,9 +26,7 @@ class CompleteSolicitudUseCase {
     const solicitud = await this.solicitudRepository.findById(solicitudId);
 
     if (!solicitud) {
-      const error = new Error('Solicitud no encontrada.');
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError('Solicitud no encontrada.');
     }
 
     if (solicitud.estado !== ESTADOS.EN_CURSO) {
