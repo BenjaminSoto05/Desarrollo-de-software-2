@@ -5,7 +5,7 @@
 // ============================================================================
 
 const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
+const crypto = require('node:crypto');
 
 class JwtService {
   /**
@@ -100,7 +100,7 @@ class JwtService {
       throw new Error(`Formato de duración inválido: ${durationStr}`);
     }
 
-    const value = parseInt(matches[1], 10);
+    const value = Number.parseInt(matches[1], 10);
     const unit = matches[2];
     const multipliers = {
       s: 1000,

@@ -53,8 +53,8 @@ class SolicitudValidationService {
     const minutos = parseInt(partes[1], 10);
 
     if (
-      isNaN(hora) ||
-      isNaN(minutos) ||
+      Number.isNaN(hora) ||
+      Number.isNaN(minutos) ||
       hora < 0 ||
       hora > 23 ||
       minutos < 0 ||
