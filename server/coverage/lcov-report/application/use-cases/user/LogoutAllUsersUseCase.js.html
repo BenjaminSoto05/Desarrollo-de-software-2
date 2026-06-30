@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for application/use-cases/solicitud/GetMisSolicitudesUseCase.js</title>
+    <title>Code coverage report for application/use-cases/user/LogoutAllUsersUseCase.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">application/use-cases/solicitud</a> GetMisSolicitudesUseCase.js</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">application/use-cases/user</a> LogoutAllUsersUseCase.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/9</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/9</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
@@ -92,25 +92,7 @@
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -121,59 +103,53 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// ============================================================================
-// Use Case: Obtener Solicitudes del Usuario (Mis Solicitudes)
+// Use Case: Cerrar Todas las Sesiones (Logout Global)
 // Capa: Application
+// Revoca todos los Refresh Tokens de un usuario de forma masiva.
 // ============================================================================
 &nbsp;
-class GetMisSolicitudesUseCase {
+class LogoutAllUsersUseCase {
   /**
-   * @param {import('../../../domain/repositories/SolicitudRepository')} solicitudRepository
+   * @param {import('../../domain/repositories/RefreshTokenRepository')} refreshTokenRepository
    */
-  constructor(solicitudRepository) {
-    this.solicitudRepository = solicitudRepository;
+  constructor(refreshTokenRepository) {
+    this.refreshTokenRepository = refreshTokenRepository;
   }
 &nbsp;
   /**
-   * Obtiene solicitudes del usuario según su rol.
-   * - ADULTO_MAYOR/TUTOR: solicitudes que creó
-   * - ESTUDIANTE: solicitudes que aceptó
-   * @param {string} userId
-   * @param {string} userRol
-   * @returns {Promise&lt;Object[]&gt;}
+   * Revoca todos los tokens de refresco del usuario.
+   * @param {string} userId - ID del usuario actual
+   * @returns {Promise&lt;{ success: boolean, message: string }&gt;}
    */
-  async execute(userId, userRol) {
-    if (['ADULTO_MAYOR', 'TUTOR', 'PRESIDENTE_JUNTA'].includes(userRol)) {
-      return this.solicitudRepository.findBySolicitante(userId);
-    }
-&nbsp;
-    if (userRol === 'ESTUDIANTE') {
-      return this.solicitudRepository.findByVoluntario(userId);
-    }
-&nbsp;
-    const error = new Error('Rol no válido para esta consulta.');
-    error.statusCode = 403;
-    throw error;
+  async execute(userId) {
+    await this.refreshTokenRepository.revokeAllByUserId(userId);
+    return {
+      success: true,
+      message: 'Todas las sesiones activas han sido cerradas exitosamente.',
+    };
   }
 }
 &nbsp;
-module.exports = GetMisSolicitudesUseCase;
+module.exports = LogoutAllUsersUseCase;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

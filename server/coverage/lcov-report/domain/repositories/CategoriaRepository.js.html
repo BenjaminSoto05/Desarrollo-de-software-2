@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for application/use-cases/solicitud/GetMisSolicitudesUseCase.js</title>
+    <title>Code coverage report for domain/repositories/CategoriaRepository.js</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../../prettify.css" />
-    <link rel="stylesheet" href="../../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../../sort-arrow-sprite.png);
+            background-image: url(../../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">application/use-cases/solicitud</a> GetMisSolicitudesUseCase.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">domain/repositories</a> CategoriaRepository.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/9</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/9</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -110,7 +110,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -119,61 +123,57 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// ============================================================================
-// Use Case: Obtener Solicitudes del Usuario (Mis Solicitudes)
-// Capa: Application
+// Interfaz de Repositorio: CategoriaRepository
+// Capa: Domain — Contrato que la infraestructura debe implementar
 // ============================================================================
 &nbsp;
-class GetMisSolicitudesUseCase {
+/**
+ * @interface
+ */
+class CategoriaRepository {
   /**
-   * @param {import('../../../domain/repositories/SolicitudRepository')} solicitudRepository
+   * Lista todas las categorías activas.
+   * @returns {Promise&lt;Object[]&gt;}
    */
-  constructor(solicitudRepository) {
-    this.solicitudRepository = solicitudRepository;
+<span class="fstat-no" title="function not covered" >  as</span>ync findAllActive() {
+<span class="cstat-no" title="statement not covered" >    throw new Error('Método findAllActive no implementado.');</span>
   }
 &nbsp;
   /**
-   * Obtiene solicitudes del usuario según su rol.
-   * - ADULTO_MAYOR/TUTOR: solicitudes que creó
-   * - ESTUDIANTE: solicitudes que aceptó
-   * @param {string} userId
-   * @param {string} userRol
-   * @returns {Promise&lt;Object[]&gt;}
+   * Busca una categoría por ID.
+   * @param {string} id
+   * @returns {Promise&lt;Object|null&gt;}
    */
-  async execute(userId, userRol) {
-    if (['ADULTO_MAYOR', 'TUTOR', 'PRESIDENTE_JUNTA'].includes(userRol)) {
-      return this.solicitudRepository.findBySolicitante(userId);
-    }
+<span class="fstat-no" title="function not covered" >  as</span>ync findById(id) {
+<span class="cstat-no" title="statement not covered" >    throw new Error('Método findById no implementado.');</span>
+  }
 &nbsp;
-    if (userRol === 'ESTUDIANTE') {
-      return this.solicitudRepository.findByVoluntario(userId);
-    }
-&nbsp;
-    const error = new Error('Rol no válido para esta consulta.');
-    error.statusCode = 403;
-    throw error;
+  /**
+   * Crea una nueva categoría.
+   * @param {Object} categoriaData
+   * @returns {Promise&lt;Object&gt;}
+   */
+<span class="fstat-no" title="function not covered" >  as</span>ync create(categoriaData) {
+<span class="cstat-no" title="statement not covered" >    throw new Error('Método create no implementado.');</span>
   }
 }
 &nbsp;
-module.exports = GetMisSolicitudesUseCase;
+<span class="cstat-no" title="statement not covered" >module.exports = CategoriaRepository;</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -181,16 +181,16 @@ module.exports = GetMisSolicitudesUseCase;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-06-30T20:31:44.282Z
+                at 2026-06-30T20:30:34.235Z
             </div>
-        <script src="../../../prettify.js"></script>
+        <script src="../../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../../sorter.js"></script>
-        <script src="../../../block-navigation.js"></script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
     </body>
 </html>
     
