@@ -40,7 +40,7 @@ const registerStudentRules = [
     .withMessage('La contraseña debe tener al menos 8 caracteres.')
     .matches(/[A-Z]/)
     .withMessage('La contraseña debe contener al menos una mayúscula.')
-    .matches(/[0-9]/)
+    .matches(/\d/)
     .withMessage('La contraseña debe contener al menos un número.'),
   body('rut').notEmpty().withMessage('El RUT es requerido.').isString(),
   body('nombre')

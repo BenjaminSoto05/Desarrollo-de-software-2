@@ -34,6 +34,7 @@ class LogoutUserUseCase {
       await this.refreshTokenRepository.revoke(tokenHash);
     } catch (_e) {
       // Ignorar errores si el token no existía (ej: ya expiró de la base de datos)
+      console.error('Error silencioso al revocar token:', _e.message);
     }
 
     return {

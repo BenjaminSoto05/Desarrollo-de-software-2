@@ -95,7 +95,8 @@ class JwtService {
    * @returns {number} Milisegundos correspondientes
    */
   parseDuration(durationStr) {
-    const matches = durationStr.trim().match(/^(\d+)([smhd])$/);
+    const regex = /^(\d+)([smhd])$/;
+    const matches = regex.exec(durationStr.trim());
     if (!matches) {
       throw new Error(`Formato de duración inválido: ${durationStr}`);
     }
