@@ -11,6 +11,7 @@ const { User, MAX_INASISTENCIAS } = require('../../../domain/entities/User');
 const {
   SolicitudValidationService,
 } = require('../../../domain/services/SolicitudValidationService');
+const { NotFoundError } = require('../../../domain/exceptions');
 
 class CancelAcceptedSolicitudUseCase {
   /**
@@ -34,9 +35,7 @@ class CancelAcceptedSolicitudUseCase {
     const solicitud = await this.solicitudRepository.findById(solicitudId);
 
     if (!solicitud) {
-      const error = new Error('Solicitud no encontrada.');
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError('Solicitud no encontrada.');
     }
 
     if (solicitud.estado !== ESTADOS.EN_CURSO) {

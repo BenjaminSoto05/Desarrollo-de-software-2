@@ -250,6 +250,14 @@ const options = {
           },
         },
       },
+      parameters: {
+        SolicitudId: {
+          in: 'path',
+          name: 'id',
+          required: true,
+          schema: { type: 'string', format: 'uuid' },
+        },
+      },
     },
     security: [{ bearerAuth: [] }],
 
@@ -456,14 +464,7 @@ const options = {
           tags: ['Solicitudes'],
           summary: 'Detalle de solicitud (RF-EMP-02, RF-EMP-05)',
           description: 'Dirección visible solo para participantes aceptados.',
-          parameters: [
-            {
-              in: 'path',
-              name: 'id',
-              required: true,
-              schema: { type: 'string', format: 'uuid' },
-            },
-          ],
+          parameters: [{ $ref: '#/components/parameters/SolicitudId' }],
           responses: {
             200: { description: 'Detalle completo' },
             404: { description: 'No encontrada' },
@@ -473,27 +474,13 @@ const options = {
           tags: ['Solicitudes'],
           summary: 'Editar solicitud (RF-SOL-04)',
           description: 'Solo si estado = PENDIENTE y es el creador.',
-          parameters: [
-            {
-              in: 'path',
-              name: 'id',
-              required: true,
-              schema: { type: 'string', format: 'uuid' },
-            },
-          ],
+          parameters: [{ $ref: '#/components/parameters/SolicitudId' }],
           responses: { 200: { description: 'Solicitud actualizada' } },
         },
         delete: {
           tags: ['Solicitudes'],
           summary: 'Cancelar solicitud pendiente (RF-SOL-04)',
-          parameters: [
-            {
-              in: 'path',
-              name: 'id',
-              required: true,
-              schema: { type: 'string', format: 'uuid' },
-            },
-          ],
+          parameters: [{ $ref: '#/components/parameters/SolicitudId' }],
           responses: { 200: { description: 'Solicitud cancelada' } },
         },
       },
@@ -503,14 +490,7 @@ const options = {
           summary: 'Aceptar solicitud (RF-EMP-03, RF-EMP-04)',
           description:
             'Solo estudiantes. Máximo 2 activas (RF-EMP-04). Transacción atómica.',
-          parameters: [
-            {
-              in: 'path',
-              name: 'id',
-              required: true,
-              schema: { type: 'string', format: 'uuid' },
-            },
-          ],
+          parameters: [{ $ref: '#/components/parameters/SolicitudId' }],
           responses: {
             200: { description: 'Solicitud aceptada' },
             409: { description: 'Ya aceptada o límite alcanzado' },
@@ -523,14 +503,7 @@ const options = {
           summary: 'Cancelar tarea aceptada (RF-EJE-01)',
           description:
             'Si <4h antes = inasistencia (RN-08). 3 inasistencias = suspensión (RN-09).',
-          parameters: [
-            {
-              in: 'path',
-              name: 'id',
-              required: true,
-              schema: { type: 'string', format: 'uuid' },
-            },
-          ],
+          parameters: [{ $ref: '#/components/parameters/SolicitudId' }],
           responses: { 200: { description: 'Cancelación procesada' } },
         },
       },
@@ -540,14 +513,7 @@ const options = {
           summary: 'Marcar como completada (RF-EJE-02)',
           description:
             'Solo el voluntario asignado. Estado: EN_CURSO → COMPLETADA.',
-          parameters: [
-            {
-              in: 'path',
-              name: 'id',
-              required: true,
-              schema: { type: 'string', format: 'uuid' },
-            },
-          ],
+          parameters: [{ $ref: '#/components/parameters/SolicitudId' }],
           responses: { 200: { description: 'Solicitud completada' } },
         },
       },
@@ -557,14 +523,7 @@ const options = {
           summary: 'Confirmar recepción (RF-EJE-03, RF-EJE-06, RN-11)',
           description:
             'Solo el solicitante. Acredita horas al voluntario. COMPLETADA → FINALIZADA.',
-          parameters: [
-            {
-              in: 'path',
-              name: 'id',
-              required: true,
-              schema: { type: 'string', format: 'uuid' },
-            },
-          ],
+          parameters: [{ $ref: '#/components/parameters/SolicitudId' }],
           responses: { 200: { description: 'Servicio confirmado' } },
         },
       },

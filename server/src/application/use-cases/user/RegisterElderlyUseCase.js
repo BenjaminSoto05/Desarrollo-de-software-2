@@ -8,6 +8,10 @@ const { ROLES } = require('../../../domain/entities/User');
 const {
   UserValidationService,
 } = require('../../../domain/services/UserValidationService');
+const {
+  ValidationError,
+  ConflictError,
+} = require('../../../domain/exceptions');
 
 /** Roles permitidos para este registro */
 const ROLES_PERMITIDOS = [
@@ -43,51 +47,35 @@ class RegisterElderlyUseCase {
   async execute(input) {
     // 1. Validar rol permitido
     if (!ROLES_PERMITIDOS.includes(input.rol)) {
-      const error = new Error(
+      throw new ValidationError(
         `El rol debe ser uno de: ${ROLES_PERMITIDOS.join(', ')}.`
       );
-      error.statusCode = 400;
-      throw error;
     }
 
     // 2. Validar RUT chileno (RF-USR-02)
     const rutNormalizado = UserValidationService.normalizarRut(input.rut);
     const rutValidation = UserValidationService.validarRut(rutNormalizado);
-    if (!rutValidation.valid) {
-      const error = new Error(rutValidation.error);
-      error.statusCode = 400;
-      throw error;
-    }
+    if (!rutValidation.valid) throw new ValidationError(rutValidation.error);
 
     // 3. Validar comuna si se proporciona (RN-03)
     if (input.comuna) {
       const comunaValidation = UserValidationService.validarComuna(
         input.comuna
       );
-      if (!comunaValidation.valid) {
-        const error = new Error(comunaValidation.error);
-        error.statusCode = 400;
-        throw error;
-      }
+      if (!comunaValidation.valid)
+        throw new ValidationError(comunaValidation.error);
     }
 
     // 4. Verificar unicidad de email
     const existingEmail = await this.userRepository.findByEmail(
       input.email.toLowerCase().trim()
     );
-    if (existingEmail) {
-      const error = new Error('Este correo electrónico ya está registrado.');
-      error.statusCode = 409;
-      throw error;
-    }
+    if (existingEmail)
+      throw new ConflictError('Este correo electrónico ya está registrado.');
 
     // 5. Verificar unicidad de RUT
     const existingRut = await this.userRepository.findByRut(rutNormalizado);
-    if (existingRut) {
-      const error = new Error('Este RUT ya está registrado.');
-      error.statusCode = 409;
-      throw error;
-    }
+    if (existingRut) throw new ConflictError('Este RUT ya está registrado.');
 
     // 6. Hashear contraseña (RNF-SEG-02)
     const passwordHash = await this.hashService.hash(input.password);
