@@ -3,6 +3,18 @@ const Redis = require('ioredis');
 let redisClient = null;
 
 function createRedisClient() {
+  if (process.env.NODE_ENV === 'test') {
+    return {
+      status: 'ready',
+      async connect() {},
+      async ping() { return 'PONG'; },
+      async set() { return true; },
+      async get() { return null; },
+      async del() { return 1; },
+      async quit() {},
+    };
+  }
+
   const redisUrl = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
 
   const client = new Redis(redisUrl, {

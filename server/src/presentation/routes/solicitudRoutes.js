@@ -8,11 +8,11 @@ const { Router } = require('express');
 const { body } = require('express-validator');
 
 // Middlewares
-const authMiddleware = require('../middleware/authMiddleware');
+const authMiddleware = require('../middlewares/authMiddleware');
 const { requireRole } = require('../middleware/rolePermissions');
 const {
   handleValidationErrors,
-} = require('../middleware/validationMiddleware');
+} = require('../middlewares/validationMiddleware');
 
 // Infraestructura
 const prisma = require('../../infrastructure/database/prismaClient');
