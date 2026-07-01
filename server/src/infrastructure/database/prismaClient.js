@@ -4,7 +4,13 @@
 // Evita múltiples instancias de PrismaClient en desarrollo (hot reload)
 // ============================================================================
 
-const { PrismaClient } = require('@prisma/client');
+let PrismaClient;
+
+if (process.env.NODE_ENV === 'test') {
+  PrismaClient = require('../../../tests/mocks/prismaMock').PrismaClient;
+} else {
+  ({ PrismaClient } = require('@prisma/client'));
+}
 
 /** @type {PrismaClient} */
 let prisma;
@@ -12,7 +18,6 @@ let prisma;
 if (process.env.NODE_ENV === 'production') {
   prisma = new PrismaClient();
 } else {
-  // En desarrollo, reutilizar la instancia para evitar conexiones huérfanas
   if (!global.__prisma) {
     global.__prisma = new PrismaClient({
       log: ['query', 'warn', 'error'],

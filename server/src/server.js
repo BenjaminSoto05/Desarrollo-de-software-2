@@ -25,6 +25,10 @@ const app = require('./app');
 const prisma = require('./infrastructure/database/prismaClient');
 const { logger } = require('./infrastructure/logger');
 const { startAutoApproveJob } = require('./infrastructure/cron/autoApproveJob');
+const {
+  connectRedis,
+  closeRedis,
+} = require('./infrastructure/cache/redisClient');
 
 // Use cases necesarios para el cron job
 const AutoApproveSolicitudesUseCase = require('./application/use-cases/solicitud/AutoApproveSolicitudesUseCase');
@@ -37,6 +41,9 @@ async function startServer() {
     // Verificar conexión a la base de datos
     await prisma.$connect();
     logger.info('✅ Conexión a PostgreSQL establecida.', { module: 'server' });
+
+    await connectRedis();
+    logger.info('✅ Conexión a Redis establecida.', { module: 'server' });
 
     // Iniciar cron job de auto-aprobación (equivalente a Celery beat)
     const solicitudRepo = new PrismaSolicitudRepository(prisma);
@@ -64,11 +71,13 @@ async function startServer() {
 // Graceful shutdown
 process.on('SIGINT', async () => {
   console.log('\n🛑 Cerrando servidor...');
+  await closeRedis();
   await prisma.$disconnect();
   process.exit(0);
 });
 
 process.on('SIGTERM', async () => {
+  await closeRedis();
   await prisma.$disconnect();
   process.exit(0);
 });

@@ -20,11 +20,12 @@ class JwtService {
     refreshTokenSecret,
     refreshTokenExpiresIn
   ) {
-    this.accessTokenSecret = accessTokenSecret || process.env.JWT_SECRET;
+    this.accessTokenSecret =
+      accessTokenSecret || process.env.JWT_SECRET || 'test-access-secret';
     this.accessTokenExpiresIn =
       accessTokenExpiresIn || process.env.JWT_EXPIRES_IN || '15m';
     this.refreshTokenSecret =
-      refreshTokenSecret || process.env.JWT_REFRESH_SECRET;
+      refreshTokenSecret || process.env.JWT_REFRESH_SECRET || 'test-refresh-secret';
     this.refreshTokenExpiresIn =
       refreshTokenExpiresIn || process.env.JWT_REFRESH_EXPIRES_IN || '7d';
   }

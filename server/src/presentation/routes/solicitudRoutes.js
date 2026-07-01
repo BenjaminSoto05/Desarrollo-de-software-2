@@ -9,7 +9,7 @@ const { body } = require('express-validator');
 
 // Middlewares
 const authMiddleware = require('../middlewares/authMiddleware');
-const roleMiddleware = require('../middlewares/roleMiddleware');
+const { requireRole } = require('../middleware/rolePermissions');
 const {
   handleValidationErrors,
 } = require('../middlewares/validationMiddleware');
@@ -165,7 +165,7 @@ router.get('/mine', solicitudController.handleGetMine);
  */
 router.post(
   '/',
-  roleMiddleware('ADULTO_MAYOR', 'TUTOR'),
+  requireRole('ADULTO_MAYOR', 'TUTOR'),
   createSolicitudRules,
   solicitudController.handleCreate
 );
@@ -188,7 +188,7 @@ router.get('/:id', solicitudController.handleGetById);
  */
 router.put(
   '/:id',
-  roleMiddleware('ADULTO_MAYOR', 'TUTOR'),
+  requireRole('ADULTO_MAYOR', 'TUTOR'),
   updateSolicitudRules,
   solicitudController.handleUpdate
 );
@@ -207,7 +207,7 @@ router.delete('/:id', solicitudController.handleCancel);
  */
 router.post(
   '/:id/accept',
-  roleMiddleware('ESTUDIANTE'),
+  requireRole('ESTUDIANTE'),
   solicitudController.handleAccept
 );
 
@@ -218,7 +218,7 @@ router.post(
  */
 router.post(
   '/:id/cancel-acceptance',
-  roleMiddleware('ESTUDIANTE'),
+  requireRole('ESTUDIANTE'),
   solicitudController.handleCancelAccepted
 );
 
@@ -228,7 +228,7 @@ router.post(
  */
 router.post(
   '/:id/complete',
-  roleMiddleware('ESTUDIANTE'),
+  requireRole('ESTUDIANTE'),
   solicitudController.handleComplete
 );
 
@@ -239,7 +239,7 @@ router.post(
  */
 router.post(
   '/:id/confirm',
-  roleMiddleware('ADULTO_MAYOR', 'TUTOR'),
+  requireRole('ADULTO_MAYOR', 'TUTOR'),
   solicitudController.handleConfirm
 );
 
@@ -249,7 +249,7 @@ router.post(
  */
 router.post(
   '/admin/auto-approve',
-  roleMiddleware('ADMIN'),
+  requireRole('ADMIN'),
   solicitudController.handleAutoApprove
 );
 

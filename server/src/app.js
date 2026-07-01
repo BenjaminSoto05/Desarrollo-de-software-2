@@ -9,6 +9,10 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./infrastructure/swagger');
+const { connectRedis } = require('./infrastructure/cache/redisClient');
+const {
+  cacheMiddleware,
+} = require('./presentation/middleware/redisCacheMiddleware');
 
 const app = express();
 
@@ -40,13 +44,29 @@ if (process.env.NODE_ENV !== 'test') {
 // Health Check
 // ============================================================================
 
-app.get('/api/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    timestamp: new Date().toISOString(),
-    service: 'UCT-Vínculo Mayor API',
-  });
-});
+app.get(
+  '/api/health',
+  cacheMiddleware({ ttlSeconds: 30 }),
+  async (req, res) => {
+    try {
+      await connectRedis();
+      res.json({
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        service: 'UCT-Vínculo Mayor API',
+        redis: 'connected',
+      });
+    } catch (error) {
+      res.status(503).json({
+        status: 'degraded',
+        timestamp: new Date().toISOString(),
+        service: 'UCT-Vínculo Mayor API',
+        redis: 'disconnected',
+        error: error.message,
+      });
+    }
+  }
+);
 
 // ============================================================================
 // Swagger/OpenAPI — RNF-MAN-02
@@ -78,8 +98,16 @@ app.use('/api/auth', authRoutes);
 // Fase 3: Solicitudes y Categorías (RF-SOL-01 a RF-SOL-04)
 const solicitudRoutes = require('./presentation/routes/solicitudRoutes');
 const categoriaRoutes = require('./presentation/routes/categoriaRoutes');
-app.use('/api/solicitudes', solicitudRoutes);
-app.use('/api/categorias', categoriaRoutes);
+app.use(
+  '/api/solicitudes',
+  cacheMiddleware({ ttlSeconds: 120 }),
+  solicitudRoutes
+);
+app.use(
+  '/api/categorias',
+  cacheMiddleware({ ttlSeconds: 120 }),
+  categoriaRoutes
+);
 
 // Fase 5: Evaluaciones (RF-EJE-04)
 const evaluacionRoutes = require('./presentation/routes/evaluacionRoutes');
