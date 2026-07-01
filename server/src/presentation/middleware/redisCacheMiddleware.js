@@ -1,4 +1,7 @@
-const { getCache, setCache } = require('../../infrastructure/cache/redisClient');
+const {
+  getCache,
+  setCache,
+} = require('../../infrastructure/cache/redisClient');
 
 function cacheMiddleware({ ttlSeconds = 60 } = {}) {
   return async function middleware(req, res, next) {

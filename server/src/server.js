@@ -25,7 +25,10 @@ const app = require('./app');
 const prisma = require('./infrastructure/database/prismaClient');
 const { logger } = require('./infrastructure/logger');
 const { startAutoApproveJob } = require('./infrastructure/cron/autoApproveJob');
-const { connectRedis, closeRedis } = require('./infrastructure/cache/redisClient');
+const {
+  connectRedis,
+  closeRedis,
+} = require('./infrastructure/cache/redisClient');
 
 // Use cases necesarios para el cron job
 const AutoApproveSolicitudesUseCase = require('./application/use-cases/solicitud/AutoApproveSolicitudesUseCase');
