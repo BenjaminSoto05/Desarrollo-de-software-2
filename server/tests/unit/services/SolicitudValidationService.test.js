@@ -147,7 +147,7 @@ describe('SolicitudValidationService', () => {
     });
 
     it('debe retornar true para cancelación con fecha ya pasada', () => {
-      const fecha = fechaEnHoras(-1);
+      const fecha = soloFecha(-1);
       const hora = '10:00';
       expect(SolicitudValidationService.cancelacionGeneraInasistencia(fecha, hora)).toBe(true);
     });

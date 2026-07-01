@@ -4,6 +4,7 @@ module.exports = {
   testMatch: [
     '**/unit/**/*.test.js',
     '**/integration/**/*.test.js',
+    '**/e2e/**/*.test.js',
   ],
   setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
   collectCoverageFrom: [
