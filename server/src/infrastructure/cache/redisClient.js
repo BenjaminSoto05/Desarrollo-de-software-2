@@ -69,13 +69,12 @@ async function getCache(key) {
 
   if (!value) return null;
 
-  /* eslint-disable no-unused-vars */
   try {
     return JSON.parse(value);
-  } catch (ignored) {
+  } catch (error_) {
+    console.debug('Redis getCache - No es JSON:', error_.message);
     return value;
   }
-  /* eslint-enable no-unused-vars */
 }
 
 async function deleteCache(key) {
