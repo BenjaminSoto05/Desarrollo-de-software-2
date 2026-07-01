@@ -71,7 +71,7 @@ async function getCache(key) {
 
   try {
     return JSON.parse(value);
-  } catch (ignored) {
+  } catch (ignored) { // eslint-disable-line no-unused-vars
     return value;
   }
 }
