@@ -7,12 +7,12 @@
 const { Router } = require('express');
 
 // Middlewares
-const authMiddleware = require('../middlewares/authMiddleware');
+const authMiddleware = require('../middleware/authMiddleware');
 const {
   registerStudentRules,
   registerElderlyRules,
   loginRules,
-} = require('../middlewares/validationMiddleware');
+} = require('../middleware/validationMiddleware');
 
 // Infraestructura
 const prisma = require('../../infrastructure/database/prismaClient');
