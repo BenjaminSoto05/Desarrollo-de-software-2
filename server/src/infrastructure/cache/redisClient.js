@@ -71,7 +71,7 @@ async function getCache(key) {
 
   try {
     return JSON.parse(value);
-  } catch (_error) {
+  } catch (ignored) {
     return value;
   }
 }
