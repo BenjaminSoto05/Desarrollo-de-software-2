@@ -9,6 +9,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./infrastructure/swagger');
+const { connectRedis } = require('./infrastructure/cache/redisClient');
 
 const app = express();
 
@@ -40,12 +41,24 @@ if (process.env.NODE_ENV !== 'test') {
 // Health Check
 // ============================================================================
 
-app.get('/api/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    timestamp: new Date().toISOString(),
-    service: 'UCT-Vínculo Mayor API',
-  });
+app.get('/api/health', async (req, res) => {
+  try {
+    await connectRedis();
+    res.json({
+      status: 'ok',
+      timestamp: new Date().toISOString(),
+      service: 'UCT-Vínculo Mayor API',
+      redis: 'connected',
+    });
+  } catch (error) {
+    res.status(503).json({
+      status: 'degraded',
+      timestamp: new Date().toISOString(),
+      service: 'UCT-Vínculo Mayor API',
+      redis: 'disconnected',
+      error: error.message,
+    });
+  }
 });
 
 // ============================================================================
