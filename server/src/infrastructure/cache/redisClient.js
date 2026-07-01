@@ -69,11 +69,13 @@ async function getCache(key) {
 
   if (!value) return null;
 
+  /* eslint-disable no-unused-vars */
   try {
     return JSON.parse(value);
-  } catch (_error) {
+  } catch (ignored) {
     return value;
   }
+  /* eslint-enable no-unused-vars */
 }
 
 async function deleteCache(key) {
