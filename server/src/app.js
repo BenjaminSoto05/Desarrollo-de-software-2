@@ -10,6 +10,7 @@ const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./infrastructure/swagger');
 const { connectRedis } = require('./infrastructure/cache/redisClient');
+const { cacheMiddleware } = require('./presentation/middleware/redisCacheMiddleware');
 
 const app = express();
 
@@ -41,7 +42,7 @@ if (process.env.NODE_ENV !== 'test') {
 // Health Check
 // ============================================================================
 
-app.get('/api/health', async (req, res) => {
+app.get('/api/health', cacheMiddleware({ ttlSeconds: 30 }), async (req, res) => {
   try {
     await connectRedis();
     res.json({
@@ -91,8 +92,8 @@ app.use('/api/auth', authRoutes);
 // Fase 3: Solicitudes y Categorías (RF-SOL-01 a RF-SOL-04)
 const solicitudRoutes = require('./presentation/routes/solicitudRoutes');
 const categoriaRoutes = require('./presentation/routes/categoriaRoutes');
-app.use('/api/solicitudes', solicitudRoutes);
-app.use('/api/categorias', categoriaRoutes);
+app.use('/api/solicitudes', cacheMiddleware({ ttlSeconds: 120 }), solicitudRoutes);
+app.use('/api/categorias', cacheMiddleware({ ttlSeconds: 120 }), categoriaRoutes);
 
 // Fase 5: Evaluaciones (RF-EJE-04)
 const evaluacionRoutes = require('./presentation/routes/evaluacionRoutes');
