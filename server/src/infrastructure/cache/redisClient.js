@@ -7,10 +7,18 @@ function createRedisClient() {
     return {
       status: 'ready',
       async connect() {},
-      async ping() { return 'PONG'; },
-      async set() { return true; },
-      async get() { return null; },
-      async del() { return 1; },
+      async ping() {
+        return 'PONG';
+      },
+      async set() {
+        return true;
+      },
+      async get() {
+        return null;
+      },
+      async del() {
+        return 1;
+      },
       async quit() {},
     };
   }

@@ -1,9 +1,1517 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="0" lines-covered="0" line-rate="NaN" branches-valid="0" branches-covered="0" branch-rate="NaN" timestamp="1782864629346" complexity="0" version="0.1">
+<coverage lines-valid="697" lines-covered="654" line-rate="0.9383" branches-valid="318" branches-covered="288" branch-rate="0.9056000000000001" timestamp="1782873190282" complexity="0" version="0.1">
   <sources>
-    <source>C:\Users\axelp\Documents\GitHub\Desarrollo-de-software-2\server</source>
+    <source>C:\Users\bsd28\Documents\GitHub\Desarrollo-de-software-2\server</source>
   </sources>
   <packages>
+    <package name="application.use-cases.categoria" line-rate="1" branch-rate="1">
+      <classes>
+        <class name="GetCategoriasUseCase.js" filename="src\application\use-cases\categoria\GetCategoriasUseCase.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="4" signature="()V">
+              <lines>
+                <line number="11" hits="4"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="3" signature="()V">
+              <lines>
+                <line number="19" hits="3"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="12" hits="4" branch="false"/>
+            <line number="20" hits="3" branch="false"/>
+            <line number="24" hits="4" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="application.use-cases.evaluacion" line-rate="0.9166" branch-rate="0.8887999999999999">
+      <classes>
+        <class name="CreateEvaluacionUseCase.js" filename="src\application\use-cases\evaluacion\CreateEvaluacionUseCase.js" line-rate="0.909" branch-rate="0.8887999999999999">
+          <methods>
+            <method name="(anonymous_0)" hits="10" signature="()V">
+              <lines>
+                <line number="15" hits="10"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="8" signature="()V">
+              <lines>
+                <line number="29" hits="8"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="7" hits="4" branch="false"/>
+            <line number="8" hits="4" branch="false"/>
+            <line number="16" hits="10" branch="false"/>
+            <line number="17" hits="10" branch="false"/>
+            <line number="31" hits="8" branch="false"/>
+            <line number="35" hits="8" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="36" hits="1" branch="false"/>
+            <line number="37" hits="1" branch="false"/>
+            <line number="38" hits="1" branch="false"/>
+            <line number="41" hits="7" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="45" hits="1" branch="false"/>
+            <line number="48" hits="1" branch="false"/>
+            <line number="49" hits="1" branch="false"/>
+            <line number="53" hits="6" branch="false"/>
+            <line number="54" hits="6" branch="false"/>
+            <line number="56" hits="6" branch="true" condition-coverage="100% (4/4)"/>
+            <line number="57" hits="1" branch="false"/>
+            <line number="60" hits="1" branch="false"/>
+            <line number="61" hits="1" branch="false"/>
+            <line number="65" hits="5" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="70" hits="5" branch="false"/>
+            <line number="79" hits="4" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="80" hits="0" branch="false"/>
+            <line number="81" hits="0" branch="false"/>
+            <line number="82" hits="0" branch="false"/>
+            <line number="87" hits="4" branch="false"/>
+            <line number="92" hits="4" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="93" hits="1" branch="false"/>
+            <line number="94" hits="1" branch="false"/>
+            <line number="95" hits="1" branch="false"/>
+            <line number="99" hits="3" branch="false"/>
+            <line number="107" hits="3" branch="false"/>
+            <line number="111" hits="4" branch="false"/>
+          </lines>
+        </class>
+        <class name="GetEvaluacionesUseCase.js" filename="src\application\use-cases\evaluacion\GetEvaluacionesUseCase.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="4" signature="()V">
+              <lines>
+                <line number="10" hits="4"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="1" signature="()V">
+              <lines>
+                <line number="19" hits="1"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="11" hits="4" branch="false"/>
+            <line number="20" hits="1" branch="false"/>
+            <line number="24" hits="4" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="application.use-cases.solicitud" line-rate="0.9520000000000001" branch-rate="0.8403">
+      <classes>
+        <class name="AcceptSolicitudUseCase.js" filename="src\application\use-cases\solicitud\AcceptSolicitudUseCase.js" line-rate="0.7924" branch-rate="0.75">
+          <methods>
+            <method name="(anonymous_0)" hits="14" signature="()V">
+              <lines>
+                <line number="21" hits="14"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="13" signature="()V">
+              <lines>
+                <line number="34" hits="13"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="6" signature="()V">
+              <lines>
+                <line number="76" hits="6"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="10" hits="5" branch="false"/>
+            <line number="13" hits="5" branch="false"/>
+            <line number="22" hits="14" branch="false"/>
+            <line number="23" hits="14" branch="false"/>
+            <line number="24" hits="14" branch="false"/>
+            <line number="36" hits="13" branch="false"/>
+            <line number="38" hits="13" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="39" hits="1" branch="false"/>
+            <line number="40" hits="1" branch="false"/>
+            <line number="41" hits="1" branch="false"/>
+            <line number="44" hits="12" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="45" hits="2" branch="false"/>
+            <line number="48" hits="2" branch="false"/>
+            <line number="49" hits="2" branch="false"/>
+            <line number="52" hits="10" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="53" hits="2" branch="false"/>
+            <line number="56" hits="2" branch="false"/>
+            <line number="57" hits="2" branch="false"/>
+            <line number="62" hits="8" branch="false"/>
+            <line number="64" hits="8" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="65" hits="2" branch="false"/>
+            <line number="68" hits="2" branch="false"/>
+            <line number="69" hits="2" branch="false"/>
+            <line number="74" hits="6" branch="false"/>
+            <line number="75" hits="6" branch="false"/>
+            <line number="78" hits="6" branch="false"/>
+            <line number="83" hits="6" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="84" hits="1" branch="false"/>
+            <line number="85" hits="1" branch="false"/>
+            <line number="86" hits="1" branch="false"/>
+            <line number="89" hits="5" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="90" hits="1" branch="false"/>
+            <line number="91" hits="1" branch="false"/>
+            <line number="92" hits="1" branch="false"/>
+            <line number="96" hits="4" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="97" hits="0" branch="false"/>
+            <line number="98" hits="0" branch="false"/>
+            <line number="99" hits="0" branch="false"/>
+            <line number="103" hits="4" branch="false"/>
+            <line number="107" hits="4" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="108" hits="0" branch="false"/>
+            <line number="111" hits="0" branch="false"/>
+            <line number="112" hits="0" branch="false"/>
+            <line number="116" hits="4" branch="false"/>
+            <line number="145" hits="4" branch="false"/>
+            <line number="150" hits="4" branch="false"/>
+            <line number="153" hits="2" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="156" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="157" hits="0" branch="false"/>
+            <line number="160" hits="0" branch="false"/>
+            <line number="161" hits="0" branch="false"/>
+            <line number="164" hits="0" branch="false"/>
+            <line number="169" hits="5" branch="false"/>
+          </lines>
+        </class>
+        <class name="AutoApproveSolicitudesUseCase.js" filename="src\application\use-cases\solicitud\AutoApproveSolicitudesUseCase.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="5" signature="()V">
+              <lines>
+                <line number="14" hits="5"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="2" signature="()V">
+              <lines>
+                <line number="23" hits="2"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="8" hits="4" branch="false"/>
+            <line number="15" hits="5" branch="false"/>
+            <line number="26" hits="2" branch="false"/>
+            <line number="28" hits="2" branch="false"/>
+            <line number="30" hits="2" branch="false"/>
+            <line number="31" hits="2" branch="false"/>
+            <line number="34" hits="2" branch="false"/>
+            <line number="37" hits="2" branch="false"/>
+            <line number="45" hits="4" branch="false"/>
+          </lines>
+        </class>
+        <class name="CancelAcceptedSolicitudUseCase.js" filename="src\application\use-cases\solicitud\CancelAcceptedSolicitudUseCase.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="9" signature="()V">
+              <lines>
+                <line number="21" hits="9"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="6" signature="()V">
+              <lines>
+                <line number="33" hits="6"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="9" hits="4" branch="false"/>
+            <line number="10" hits="4" branch="false"/>
+            <line number="13" hits="4" branch="false"/>
+            <line number="14" hits="4" branch="false"/>
+            <line number="22" hits="9" branch="false"/>
+            <line number="23" hits="9" branch="false"/>
+            <line number="35" hits="6" branch="false"/>
+            <line number="37" hits="6" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="38" hits="1" branch="false"/>
+            <line number="41" hits="5" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="42" hits="1" branch="false"/>
+            <line number="45" hits="1" branch="false"/>
+            <line number="46" hits="1" branch="false"/>
+            <line number="50" hits="4" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="51" hits="1" branch="false"/>
+            <line number="54" hits="1" branch="false"/>
+            <line number="55" hits="1" branch="false"/>
+            <line number="60" hits="3" branch="false"/>
+            <line number="66" hits="3" branch="false"/>
+            <line number="72" hits="3" branch="false"/>
+            <line number="74" hits="3" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="75" hits="2" branch="false"/>
+            <line number="76" hits="2" branch="false"/>
+            <line number="77" hits="2" branch="false"/>
+            <line number="79" hits="2" branch="false"/>
+            <line number="84" hits="2" branch="false"/>
+            <line number="95" hits="3" branch="false"/>
+            <line number="106" hits="4" branch="false"/>
+          </lines>
+        </class>
+        <class name="CancelSolicitudUseCase.js" filename="src\application\use-cases\solicitud\CancelSolicitudUseCase.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="6" signature="()V">
+              <lines>
+                <line number="13" hits="6"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="3" signature="()V">
+              <lines>
+                <line number="24" hits="3"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="7" hits="4" branch="false"/>
+            <line number="14" hits="6" branch="false"/>
+            <line number="25" hits="3" branch="false"/>
+            <line number="27" hits="3" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="28" hits="1" branch="false"/>
+            <line number="29" hits="1" branch="false"/>
+            <line number="30" hits="1" branch="false"/>
+            <line number="33" hits="2" branch="false"/>
+            <line number="35" hits="2" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="36" hits="1" branch="false"/>
+            <line number="39" hits="1" branch="false"/>
+            <line number="40" hits="1" branch="false"/>
+            <line number="44" hits="1" branch="false"/>
+            <line number="46" hits="1" branch="false"/>
+            <line number="51" hits="1" branch="false"/>
+            <line number="55" hits="4" branch="false"/>
+          </lines>
+        </class>
+        <class name="CompleteSolicitudUseCase.js" filename="src\application\use-cases\solicitud\CompleteSolicitudUseCase.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="7" signature="()V">
+              <lines>
+                <line number="14" hits="7"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="6" signature="()V">
+              <lines>
+                <line number="25" hits="6"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="7" hits="4" branch="false"/>
+            <line number="8" hits="4" branch="false"/>
+            <line number="15" hits="7" branch="false"/>
+            <line number="26" hits="6" branch="false"/>
+            <line number="28" hits="6" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="29" hits="1" branch="false"/>
+            <line number="32" hits="5" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="33" hits="1" branch="false"/>
+            <line number="36" hits="1" branch="false"/>
+            <line number="37" hits="1" branch="false"/>
+            <line number="40" hits="4" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="41" hits="1" branch="false"/>
+            <line number="44" hits="1" branch="false"/>
+            <line number="45" hits="1" branch="false"/>
+            <line number="48" hits="3" branch="false"/>
+            <line number="52" hits="3" branch="false"/>
+            <line number="56" hits="4" branch="false"/>
+          </lines>
+        </class>
+        <class name="ConfirmSolicitudUseCase.js" filename="src\application\use-cases\solicitud\ConfirmSolicitudUseCase.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="7" signature="()V">
+              <lines>
+                <line number="14" hits="7"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="6" signature="()V">
+              <lines>
+                <line number="25" hits="6"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="8" hits="4" branch="false"/>
+            <line number="15" hits="7" branch="false"/>
+            <line number="26" hits="6" branch="false"/>
+            <line number="28" hits="6" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="29" hits="1" branch="false"/>
+            <line number="30" hits="1" branch="false"/>
+            <line number="31" hits="1" branch="false"/>
+            <line number="34" hits="5" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="35" hits="1" branch="false"/>
+            <line number="38" hits="1" branch="false"/>
+            <line number="39" hits="1" branch="false"/>
+            <line number="42" hits="4" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="43" hits="1" branch="false"/>
+            <line number="46" hits="1" branch="false"/>
+            <line number="47" hits="1" branch="false"/>
+            <line number="50" hits="3" branch="false"/>
+            <line number="54" hits="3" branch="false"/>
+            <line number="58" hits="4" branch="false"/>
+          </lines>
+        </class>
+        <class name="CreateSolicitudUseCase.js" filename="src\application\use-cases\solicitud\CreateSolicitudUseCase.js" line-rate="1" branch-rate="0.8887999999999999">
+          <methods>
+            <method name="(anonymous_0)" hits="18" signature="()V">
+              <lines>
+                <line number="24" hits="18"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="17" signature="()V">
+              <lines>
+                <line number="45" hits="17"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="10" hits="5" branch="false"/>
+            <line number="13" hits="5" branch="false"/>
+            <line number="16" hits="5" branch="false"/>
+            <line number="25" hits="18" branch="false"/>
+            <line number="26" hits="18" branch="false"/>
+            <line number="27" hits="18" branch="false"/>
+            <line number="47" hits="17" branch="false"/>
+            <line number="48" hits="17" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="49" hits="2" branch="false"/>
+            <line number="50" hits="2" branch="false"/>
+            <line number="51" hits="2" branch="false"/>
+            <line number="54" hits="15" branch="false"/>
+            <line number="56" hits="15" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="59" hits="2" branch="false"/>
+            <line number="62" hits="2" branch="false"/>
+            <line number="63" hits="2" branch="false"/>
+            <line number="66" hits="13" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="67" hits="2" branch="false"/>
+            <line number="70" hits="2" branch="false"/>
+            <line number="71" hits="2" branch="false"/>
+            <line number="75" hits="11" branch="false"/>
+            <line number="78" hits="11" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="79" hits="2" branch="false"/>
+            <line number="80" hits="2" branch="false"/>
+            <line number="81" hits="2" branch="false"/>
+            <line number="83" hits="9" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="84" hits="1" branch="false"/>
+            <line number="85" hits="1" branch="false"/>
+            <line number="86" hits="1" branch="false"/>
+            <line number="90" hits="8" branch="false"/>
+            <line number="95" hits="8" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="96" hits="3" branch="false"/>
+            <line number="97" hits="3" branch="false"/>
+            <line number="98" hits="3" branch="false"/>
+            <line number="102" hits="5" branch="false"/>
+            <line number="103" hits="5" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="104" hits="1" branch="false"/>
+            <line number="105" hits="1" branch="false"/>
+            <line number="106" hits="1" branch="false"/>
+            <line number="110" hits="4" branch="false"/>
+            <line number="127" hits="4" branch="false"/>
+            <line number="128" hits="4" branch="false"/>
+            <line number="132" hits="5" branch="false"/>
+          </lines>
+        </class>
+        <class name="GetMisSolicitudesUseCase.js" filename="src\application\use-cases\solicitud\GetMisSolicitudesUseCase.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="6" signature="()V">
+              <lines>
+                <line number="10" hits="6"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="3" signature="()V">
+              <lines>
+                <line number="22" hits="3"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="11" hits="6" branch="false"/>
+            <line number="23" hits="3" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="24" hits="1" branch="false"/>
+            <line number="27" hits="2" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="28" hits="1" branch="false"/>
+            <line number="31" hits="1" branch="false"/>
+            <line number="32" hits="1" branch="false"/>
+            <line number="33" hits="1" branch="false"/>
+            <line number="37" hits="4" branch="false"/>
+          </lines>
+        </class>
+        <class name="GetSolicitudDetailUseCase.js" filename="src\application\use-cases\solicitud\GetSolicitudDetailUseCase.js" line-rate="0.9545" branch-rate="0.9229999999999999">
+          <methods>
+            <method name="(anonymous_0)" hits="7" signature="()V">
+              <lines>
+                <line number="12" hits="7"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="4" signature="()V">
+              <lines>
+                <line number="23" hits="4"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="13" hits="7" branch="false"/>
+            <line number="24" hits="4" branch="false"/>
+            <line number="26" hits="4" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="27" hits="1" branch="false"/>
+            <line number="28" hits="1" branch="false"/>
+            <line number="29" hits="1" branch="false"/>
+            <line number="33" hits="3" branch="false"/>
+            <line number="34" hits="3" branch="false"/>
+            <line number="35" hits="3" branch="false"/>
+            <line number="38" hits="3" branch="true" condition-coverage="100% (3/3)"/>
+            <line number="40" hits="3" branch="false"/>
+            <line number="42" hits="3" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="43" hits="1" branch="false"/>
+            <line number="44" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="45" hits="0" branch="false"/>
+            <line number="51" hits="3" branch="true" condition-coverage="100% (4/4)"/>
+            <line number="52" hits="1" branch="false"/>
+            <line number="53" hits="1" branch="false"/>
+            <line number="54" hits="1" branch="false"/>
+            <line number="55" hits="1" branch="false"/>
+            <line number="58" hits="3" branch="false"/>
+            <line number="62" hits="4" branch="false"/>
+          </lines>
+        </class>
+        <class name="GetSolicitudesUseCase.js" filename="src\application\use-cases\solicitud\GetSolicitudesUseCase.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="4" signature="()V">
+              <lines>
+                <line number="12" hits="4"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="2" signature="()V">
+              <lines>
+                <line number="23" hits="2"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="2" signature="()V">
+              <lines>
+                <line number="27" hits="2"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="13" hits="4" branch="false"/>
+            <line number="24" hits="2" branch="false"/>
+            <line number="27" hits="2" branch="false"/>
+            <line number="28" hits="2" branch="false"/>
+            <line number="31" hits="2" branch="false"/>
+            <line number="32" hits="2" branch="false"/>
+            <line number="35" hits="2" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="36" hits="1" branch="false"/>
+            <line number="37" hits="1" branch="false"/>
+            <line number="38" hits="1" branch="false"/>
+            <line number="39" hits="1" branch="false"/>
+            <line number="42" hits="2" branch="false"/>
+            <line number="45" hits="2" branch="false"/>
+            <line number="49" hits="4" branch="false"/>
+          </lines>
+        </class>
+        <class name="UpdateSolicitudUseCase.js" filename="src\application\use-cases\solicitud\UpdateSolicitudUseCase.js" line-rate="0.9761" branch-rate="0.6764">
+          <methods>
+            <method name="(anonymous_0)" hits="8" signature="()V">
+              <lines>
+                <line number="17" hits="8"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="5" signature="()V">
+              <lines>
+                <line number="30" hits="5"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="1" signature="()V">
+              <lines>
+                <line number="91" hits="1"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="7" hits="4" branch="false"/>
+            <line number="10" hits="4" branch="false"/>
+            <line number="18" hits="8" branch="false"/>
+            <line number="19" hits="8" branch="false"/>
+            <line number="31" hits="5" branch="false"/>
+            <line number="33" hits="5" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="34" hits="1" branch="false"/>
+            <line number="35" hits="1" branch="false"/>
+            <line number="36" hits="1" branch="false"/>
+            <line number="40" hits="4" branch="false"/>
+            <line number="42" hits="4" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="43" hits="1" branch="false"/>
+            <line number="46" hits="1" branch="false"/>
+            <line number="47" hits="1" branch="false"/>
+            <line number="51" hits="3" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="52" hits="1" branch="false"/>
+            <line number="55" hits="1" branch="true" condition-coverage="50% (2/4)"/>
+            <line number="56" hits="1" branch="false"/>
+            <line number="57" hits="1" branch="false"/>
+            <line number="58" hits="1" branch="false"/>
+            <line number="63" hits="2" branch="true" condition-coverage="100% (4/4)"/>
+            <line number="64" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="67" hits="1" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="69" hits="1" branch="false"/>
+            <line number="74" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="75" hits="1" branch="false"/>
+            <line number="76" hits="1" branch="false"/>
+            <line number="77" hits="1" branch="false"/>
+            <line number="82" hits="1" branch="false"/>
+            <line number="84" hits="1" branch="false"/>
+            <line number="88" hits="1" branch="false"/>
+            <line number="92" hits="1" branch="false"/>
+            <line number="93" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="94" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="95" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="96" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="97" hits="0" branch="false"/>
+            <line number="98" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="99" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="100" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="101" hits="1" branch="false"/>
+            <line number="105" hits="4" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="application.use-cases.user" line-rate="1" branch-rate="0.9259000000000001">
+      <classes>
+        <class name="GetUserProfileUseCase.js" filename="src\application\use-cases\user\GetUserProfileUseCase.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="5" signature="()V">
+              <lines>
+                <line number="10" hits="5"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="4" signature="()V">
+              <lines>
+                <line number="20" hits="4"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="11" hits="5" branch="false"/>
+            <line number="21" hits="4" branch="false"/>
+            <line number="23" hits="4" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="24" hits="2" branch="false"/>
+            <line number="25" hits="2" branch="false"/>
+            <line number="26" hits="2" branch="false"/>
+            <line number="29" hits="2" branch="false"/>
+            <line number="30" hits="2" branch="false"/>
+            <line number="34" hits="4" branch="false"/>
+          </lines>
+        </class>
+        <class name="LoginUserUseCase.js" filename="src\application\use-cases\user\LoginUserUseCase.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="13" signature="()V">
+              <lines>
+                <line number="14" hits="13"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="15" signature="()V">
+              <lines>
+                <line number="29" hits="15"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="15" hits="13" branch="false"/>
+            <line number="16" hits="13" branch="false"/>
+            <line number="17" hits="13" branch="false"/>
+            <line number="18" hits="13" branch="false"/>
+            <line number="31" hits="15" branch="false"/>
+            <line number="35" hits="15" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="36" hits="2" branch="false"/>
+            <line number="37" hits="2" branch="false"/>
+            <line number="38" hits="2" branch="false"/>
+            <line number="42" hits="13" branch="false"/>
+            <line number="47" hits="13" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="48" hits="2" branch="false"/>
+            <line number="49" hits="2" branch="false"/>
+            <line number="50" hits="2" branch="false"/>
+            <line number="54" hits="11" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="55" hits="2" branch="false"/>
+            <line number="58" hits="2" branch="false"/>
+            <line number="59" hits="2" branch="false"/>
+            <line number="63" hits="9" branch="false"/>
+            <line number="68" hits="9" branch="false"/>
+            <line number="69" hits="9" branch="false"/>
+            <line number="72" hits="9" branch="false"/>
+            <line number="73" hits="9" branch="false"/>
+            <line number="75" hits="9" branch="false"/>
+            <line number="82" hits="9" branch="false"/>
+            <line number="84" hits="9" branch="false"/>
+            <line number="92" hits="5" branch="false"/>
+          </lines>
+        </class>
+        <class name="LogoutAllUsersUseCase.js" filename="src\application\use-cases\user\LogoutAllUsersUseCase.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="4" signature="()V">
+              <lines>
+                <line number="11" hits="4"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="1" signature="()V">
+              <lines>
+                <line number="20" hits="1"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="12" hits="4" branch="false"/>
+            <line number="21" hits="1" branch="false"/>
+            <line number="22" hits="1" branch="false"/>
+            <line number="29" hits="4" branch="false"/>
+          </lines>
+        </class>
+        <class name="LogoutUserUseCase.js" filename="src\application\use-cases\user\LogoutUserUseCase.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="6" signature="()V">
+              <lines>
+                <line number="12" hits="6"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="3" signature="()V">
+              <lines>
+                <line number="23" hits="3"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="13" hits="6" branch="false"/>
+            <line number="14" hits="6" branch="false"/>
+            <line number="24" hits="3" branch="false"/>
+            <line number="25" hits="3" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="26" hits="1" branch="false"/>
+            <line number="27" hits="1" branch="false"/>
+            <line number="28" hits="1" branch="false"/>
+            <line number="31" hits="2" branch="false"/>
+            <line number="33" hits="2" branch="false"/>
+            <line number="34" hits="2" branch="false"/>
+            <line number="37" hits="1" branch="false"/>
+            <line number="40" hits="2" branch="false"/>
+            <line number="47" hits="4" branch="false"/>
+          </lines>
+        </class>
+        <class name="RefreshTokenUseCase.js" filename="src\application\use-cases\user\RefreshTokenUseCase.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="10" signature="()V">
+              <lines>
+                <line number="13" hits="10"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="8" signature="()V">
+              <lines>
+                <line number="25" hits="8"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="14" hits="10" branch="false"/>
+            <line number="15" hits="10" branch="false"/>
+            <line number="16" hits="10" branch="false"/>
+            <line number="26" hits="8" branch="false"/>
+            <line number="27" hits="8" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="28" hits="1" branch="false"/>
+            <line number="29" hits="1" branch="false"/>
+            <line number="30" hits="1" branch="false"/>
+            <line number="34" hits="7" branch="false"/>
+            <line number="35" hits="7" branch="false"/>
+            <line number="37" hits="1" branch="false"/>
+            <line number="38" hits="1" branch="false"/>
+            <line number="39" hits="1" branch="false"/>
+            <line number="40" hits="1" branch="false"/>
+            <line number="44" hits="6" branch="false"/>
+            <line number="46" hits="6" branch="false"/>
+            <line number="48" hits="6" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="49" hits="1" branch="false"/>
+            <line number="50" hits="1" branch="false"/>
+            <line number="51" hits="1" branch="false"/>
+            <line number="55" hits="5" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="57" hits="1" branch="false"/>
+            <line number="58" hits="1" branch="false"/>
+            <line number="61" hits="1" branch="false"/>
+            <line number="62" hits="1" branch="false"/>
+            <line number="66" hits="4" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="67" hits="1" branch="false"/>
+            <line number="68" hits="1" branch="false"/>
+            <line number="69" hits="1" branch="false"/>
+            <line number="73" hits="3" branch="false"/>
+            <line number="74" hits="3" branch="true" condition-coverage="100% (4/4)"/>
+            <line number="75" hits="1" branch="false"/>
+            <line number="76" hits="1" branch="false"/>
+            <line number="77" hits="1" branch="false"/>
+            <line number="81" hits="2" branch="false"/>
+            <line number="86" hits="2" branch="false"/>
+            <line number="87" hits="2" branch="false"/>
+            <line number="90" hits="2" branch="false"/>
+            <line number="92" hits="2" branch="false"/>
+            <line number="93" hits="2" branch="false"/>
+            <line number="95" hits="2" branch="false"/>
+            <line number="101" hits="2" branch="false"/>
+            <line number="108" hits="4" branch="false"/>
+          </lines>
+        </class>
+        <class name="RegisterElderlyUseCase.js" filename="src\application\use-cases\user\RegisterElderlyUseCase.js" line-rate="1" branch-rate="0.7777">
+          <methods>
+            <method name="(anonymous_0)" hits="9" signature="()V">
+              <lines>
+                <line number="28" hits="9"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="8" signature="()V">
+              <lines>
+                <line number="47" hits="8"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="7" hits="4" branch="false"/>
+            <line number="10" hits="4" branch="false"/>
+            <line number="14" hits="4" branch="false"/>
+            <line number="17" hits="4" branch="false"/>
+            <line number="29" hits="9" branch="false"/>
+            <line number="30" hits="9" branch="false"/>
+            <line number="49" hits="8" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="50" hits="1" branch="false"/>
+            <line number="56" hits="7" branch="false"/>
+            <line number="57" hits="7" branch="false"/>
+            <line number="58" hits="7" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="61" hits="6" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="62" hits="6" branch="false"/>
+            <line number="65" hits="6" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="66" hits="1" branch="false"/>
+            <line number="70" hits="5" branch="false"/>
+            <line number="73" hits="5" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="74" hits="1" branch="false"/>
+            <line number="77" hits="4" branch="false"/>
+            <line number="78" hits="4" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="81" hits="3" branch="false"/>
+            <line number="84" hits="3" branch="false"/>
+            <line number="96" hits="3" branch="false"/>
+            <line number="98" hits="3" branch="false"/>
+            <line number="99" hits="3" branch="false"/>
+            <line number="103" hits="4" branch="false"/>
+          </lines>
+        </class>
+        <class name="RegisterStudentUseCase.js" filename="src\application\use-cases\user\RegisterStudentUseCase.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="10" signature="()V">
+              <lines>
+                <line number="22" hits="10"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="10" signature="()V">
+              <lines>
+                <line number="39" hits="10"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="8" hits="5" branch="false"/>
+            <line number="11" hits="5" branch="false"/>
+            <line number="15" hits="5" branch="false"/>
+            <line number="23" hits="10" branch="false"/>
+            <line number="24" hits="10" branch="false"/>
+            <line number="41" hits="10" branch="false"/>
+            <line number="44" hits="10" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="45" hits="1" branch="false"/>
+            <line number="48" hits="9" branch="false"/>
+            <line number="49" hits="9" branch="false"/>
+            <line number="50" hits="9" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="53" hits="8" branch="false"/>
+            <line number="56" hits="8" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="57" hits="1" branch="false"/>
+            <line number="60" hits="7" branch="false"/>
+            <line number="61" hits="7" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="64" hits="6" branch="false"/>
+            <line number="67" hits="6" branch="false"/>
+            <line number="77" hits="6" branch="false"/>
+            <line number="80" hits="6" branch="false"/>
+            <line number="81" hits="6" branch="false"/>
+            <line number="85" hits="5" branch="false"/>
+          </lines>
+        </class>
+        <class name="SuspendUserUseCase.js" filename="src\application\use-cases\user\SuspendUserUseCase.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="3" signature="()V">
+              <lines>
+                <line number="14" hits="3"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="3" signature="()V">
+              <lines>
+                <line number="23" hits="3"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="8" hits="1" branch="false"/>
+            <line number="15" hits="3" branch="false"/>
+            <line number="24" hits="3" branch="false"/>
+            <line number="26" hits="3" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="27" hits="1" branch="false"/>
+            <line number="28" hits="1" branch="false"/>
+            <line number="29" hits="1" branch="false"/>
+            <line number="33" hits="2" branch="false"/>
+            <line number="34" hits="2" branch="false"/>
+            <line number="37" hits="2" branch="false"/>
+            <line number="42" hits="2" branch="false"/>
+            <line number="52" hits="1" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="domain" line-rate="1" branch-rate="0.7142000000000001">
+      <classes>
+        <class name="exceptions.js" filename="src\domain\exceptions.js" line-rate="1" branch-rate="0.7142000000000001">
+          <methods>
+            <method name="(anonymous_0)" hits="9" signature="()V">
+              <lines>
+                <line number="12" hits="9"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="8" signature="()V">
+              <lines>
+                <line number="25" hits="8"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="8" signature="()V">
+              <lines>
+                <line number="37" hits="8"/>
+              </lines>
+            </method>
+            <method name="(anonymous_3)" hits="8" signature="()V">
+              <lines>
+                <line number="48" hits="8"/>
+              </lines>
+            </method>
+            <method name="(anonymous_4)" hits="10" signature="()V">
+              <lines>
+                <line number="59" hits="10"/>
+              </lines>
+            </method>
+            <method name="(anonymous_5)" hits="5" signature="()V">
+              <lines>
+                <line number="70" hits="5"/>
+              </lines>
+            </method>
+            <method name="(anonymous_6)" hits="4" signature="()V">
+              <lines>
+                <line number="81" hits="4"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="13" hits="9" branch="false"/>
+            <line number="14" hits="9" branch="false"/>
+            <line number="15" hits="9" branch="false"/>
+            <line number="26" hits="8" branch="false"/>
+            <line number="27" hits="8" branch="false"/>
+            <line number="28" hits="8" branch="false"/>
+            <line number="38" hits="8" branch="false"/>
+            <line number="39" hits="8" branch="false"/>
+            <line number="40" hits="8" branch="false"/>
+            <line number="49" hits="8" branch="false"/>
+            <line number="50" hits="8" branch="false"/>
+            <line number="51" hits="8" branch="false"/>
+            <line number="60" hits="10" branch="false"/>
+            <line number="61" hits="10" branch="false"/>
+            <line number="62" hits="10" branch="false"/>
+            <line number="71" hits="5" branch="false"/>
+            <line number="72" hits="5" branch="false"/>
+            <line number="73" hits="5" branch="false"/>
+            <line number="82" hits="4" branch="false"/>
+            <line number="83" hits="4" branch="false"/>
+            <line number="84" hits="4" branch="false"/>
+            <line number="88" hits="10" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="domain.entities" line-rate="1" branch-rate="1">
+      <classes>
+        <class name="Categoria.js" filename="src\domain\entities\Categoria.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="27" signature="()V">
+              <lines>
+                <line number="30" hits="27"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="22" signature="()V">
+              <lines>
+                <line number="41" hits="22"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="95" signature="()V">
+              <lines>
+                <line number="43" hits="95"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="12" hits="2" branch="false"/>
+            <line number="31" hits="27" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="32" hits="27" branch="false"/>
+            <line number="33" hits="27" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="34" hits="27" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="42" hits="22" branch="false"/>
+            <line number="43" hits="22" branch="false"/>
+            <line number="44" hits="95" branch="false"/>
+            <line number="49" hits="2" branch="false"/>
+          </lines>
+        </class>
+        <class name="Evaluacion.js" filename="src\domain\entities\Evaluacion.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="30" signature="()V">
+              <lines>
+                <line number="21" hits="30"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="30" signature="()V">
+              <lines>
+                <line number="36" hits="30"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="8" signature="()V">
+              <lines>
+                <line number="52" hits="8"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="8" hits="6" branch="false"/>
+            <line number="9" hits="6" branch="false"/>
+            <line number="22" hits="30" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="23" hits="30" branch="false"/>
+            <line number="24" hits="30" branch="false"/>
+            <line number="25" hits="30" branch="false"/>
+            <line number="26" hits="30" branch="false"/>
+            <line number="27" hits="30" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="29" hits="30" branch="false"/>
+            <line number="37" hits="30" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="42" hits="12" branch="false"/>
+            <line number="53" hits="8" branch="false"/>
+            <line number="57" hits="6" branch="false"/>
+          </lines>
+        </class>
+        <class name="Solicitud.js" filename="src\domain\entities\Solicitud.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="62" signature="()V">
+              <lines>
+                <line number="51" hits="62"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="25" signature="()V">
+              <lines>
+                <line number="68" hits="25"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="5" signature="()V">
+              <lines>
+                <line number="73" hits="5"/>
+              </lines>
+            </method>
+            <method name="(anonymous_3)" hits="6" signature="()V">
+              <lines>
+                <line number="78" hits="6"/>
+              </lines>
+            </method>
+            <method name="(anonymous_4)" hits="36" signature="()V">
+              <lines>
+                <line number="89" hits="36"/>
+              </lines>
+            </method>
+            <method name="(anonymous_5)" hits="11" signature="()V">
+              <lines>
+                <line number="99" hits="11"/>
+              </lines>
+            </method>
+            <method name="(anonymous_6)" hits="5" signature="()V">
+              <lines>
+                <line number="111" hits="5"/>
+              </lines>
+            </method>
+            <method name="(anonymous_7)" hits="10" signature="()V">
+              <lines>
+                <line number="125" hits="10"/>
+              </lines>
+            </method>
+            <method name="(anonymous_8)" hits="10" signature="()V">
+              <lines>
+                <line number="134" hits="10"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="14" hits="14" branch="false"/>
+            <line number="26" hits="14" branch="false"/>
+            <line number="52" hits="62" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="53" hits="62" branch="false"/>
+            <line number="54" hits="62" branch="false"/>
+            <line number="55" hits="62" branch="false"/>
+            <line number="56" hits="62" branch="false"/>
+            <line number="57" hits="62" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="58" hits="62" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="59" hits="62" branch="false"/>
+            <line number="60" hits="62" branch="false"/>
+            <line number="61" hits="62" branch="false"/>
+            <line number="62" hits="62" branch="false"/>
+            <line number="63" hits="62" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="64" hits="62" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="69" hits="25" branch="false"/>
+            <line number="74" hits="5" branch="false"/>
+            <line number="79" hits="6" branch="false"/>
+            <line number="90" hits="36" branch="false"/>
+            <line number="91" hits="36" branch="false"/>
+            <line number="100" hits="11" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="101" hits="3" branch="false"/>
+            <line number="103" hits="8" branch="false"/>
+            <line number="112" hits="5" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="113" hits="3" branch="false"/>
+            <line number="115" hits="2" branch="false"/>
+            <line number="116" hits="2" branch="false"/>
+            <line number="126" hits="10" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="135" hits="10" branch="false"/>
+            <line number="142" hits="14" branch="false"/>
+          </lines>
+        </class>
+        <class name="User.js" filename="src\domain\entities\User.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="62" signature="()V">
+              <lines>
+                <line number="49" hits="62"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="3" signature="()V">
+              <lines>
+                <line number="65" hits="3"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="6" signature="()V">
+              <lines>
+                <line number="70" hits="6"/>
+              </lines>
+            </method>
+            <method name="(anonymous_3)" hits="9" signature="()V">
+              <lines>
+                <line number="75" hits="9"/>
+              </lines>
+            </method>
+            <method name="(anonymous_4)" hits="7" signature="()V">
+              <lines>
+                <line number="85" hits="7"/>
+              </lines>
+            </method>
+            <method name="(anonymous_5)" hits="6" signature="()V">
+              <lines>
+                <line number="90" hits="6"/>
+              </lines>
+            </method>
+            <method name="(anonymous_6)" hits="14" signature="()V">
+              <lines>
+                <line number="99" hits="14"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="13" hits="15" branch="false"/>
+            <line number="25" hits="15" branch="false"/>
+            <line number="31" hits="15" branch="false"/>
+            <line number="50" hits="62" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="51" hits="62" branch="false"/>
+            <line number="52" hits="62" branch="false"/>
+            <line number="53" hits="62" branch="false"/>
+            <line number="54" hits="62" branch="false"/>
+            <line number="55" hits="62" branch="false"/>
+            <line number="56" hits="62" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="57" hits="62" branch="false"/>
+            <line number="58" hits="62" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="59" hits="62" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="60" hits="62" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="61" hits="62" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="66" hits="3" branch="false"/>
+            <line number="71" hits="6" branch="false"/>
+            <line number="76" hits="9" branch="false"/>
+            <line number="86" hits="7" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="91" hits="6" branch="false"/>
+            <line number="100" hits="14" branch="false"/>
+            <line number="101" hits="14" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="102" hits="5" branch="false"/>
+            <line number="104" hits="14" branch="false"/>
+            <line number="108" hits="15" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="domain.repositories" line-rate="0.1612" branch-rate="1">
+      <classes>
+        <class name="CategoriaRepository.js" filename="src\domain\repositories\CategoriaRepository.js" line-rate="0.25" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="0" signature="()V">
+              <lines>
+                <line number="14" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="0" signature="()V">
+              <lines>
+                <line number="23" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="0" signature="()V">
+              <lines>
+                <line number="32" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="15" hits="0" branch="false"/>
+            <line number="24" hits="0" branch="false"/>
+            <line number="33" hits="0" branch="false"/>
+            <line number="37" hits="3" branch="false"/>
+          </lines>
+        </class>
+        <class name="EvaluacionRepository.js" filename="src\domain\repositories\EvaluacionRepository.js" line-rate="0.2" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="0" signature="()V">
+              <lines>
+                <line number="15" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="0" signature="()V">
+              <lines>
+                <line number="24" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="0" signature="()V">
+              <lines>
+                <line number="33" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_3)" hits="0" signature="()V">
+              <lines>
+                <line number="43" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="16" hits="0" branch="false"/>
+            <line number="25" hits="0" branch="false"/>
+            <line number="34" hits="0" branch="false"/>
+            <line number="44" hits="0" branch="false"/>
+            <line number="48" hits="3" branch="false"/>
+          </lines>
+        </class>
+        <class name="RefreshTokenRepository.js" filename="src\domain\repositories\RefreshTokenRepository.js" line-rate="0.2" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="0" signature="()V">
+              <lines>
+                <line number="20" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="0" signature="()V">
+              <lines>
+                <line number="29" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="0" signature="()V">
+              <lines>
+                <line number="38" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_3)" hits="0" signature="()V">
+              <lines>
+                <line number="47" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="21" hits="0" branch="false"/>
+            <line number="30" hits="0" branch="false"/>
+            <line number="39" hits="0" branch="false"/>
+            <line number="48" hits="0" branch="false"/>
+            <line number="52" hits="3" branch="false"/>
+          </lines>
+        </class>
+        <class name="SolicitudRepository.js" filename="src\domain\repositories\SolicitudRepository.js" line-rate="0.1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="0" signature="()V">
+              <lines>
+                <line number="18" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="0" signature="()V">
+              <lines>
+                <line number="28" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="0" signature="()V">
+              <lines>
+                <line number="37" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_3)" hits="0" signature="()V">
+              <lines>
+                <line number="46" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_4)" hits="0" signature="()V">
+              <lines>
+                <line number="56" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_5)" hits="0" signature="()V">
+              <lines>
+                <line number="65" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_6)" hits="0" signature="()V">
+              <lines>
+                <line number="75" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_7)" hits="0" signature="()V">
+              <lines>
+                <line number="84" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_8)" hits="0" signature="()V">
+              <lines>
+                <line number="93" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="19" hits="0" branch="false"/>
+            <line number="29" hits="0" branch="false"/>
+            <line number="38" hits="0" branch="false"/>
+            <line number="47" hits="0" branch="false"/>
+            <line number="57" hits="0" branch="false"/>
+            <line number="66" hits="0" branch="false"/>
+            <line number="76" hits="0" branch="false"/>
+            <line number="85" hits="0" branch="false"/>
+            <line number="94" hits="0" branch="false"/>
+            <line number="98" hits="3" branch="false"/>
+          </lines>
+        </class>
+        <class name="UserRepository.js" filename="src\domain\repositories\UserRepository.js" line-rate="0.14279999999999998" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="0" signature="()V">
+              <lines>
+                <line number="19" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="0" signature="()V">
+              <lines>
+                <line number="28" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="0" signature="()V">
+              <lines>
+                <line number="37" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_3)" hits="0" signature="()V">
+              <lines>
+                <line number="46" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_4)" hits="0" signature="()V">
+              <lines>
+                <line number="56" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_5)" hits="0" signature="()V">
+              <lines>
+                <line number="65" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="20" hits="0" branch="false"/>
+            <line number="29" hits="0" branch="false"/>
+            <line number="38" hits="0" branch="false"/>
+            <line number="47" hits="0" branch="false"/>
+            <line number="57" hits="0" branch="false"/>
+            <line number="66" hits="0" branch="false"/>
+            <line number="70" hits="3" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="domain.services" line-rate="0.99" branch-rate="0.9531000000000001">
+      <classes>
+        <class name="SolicitudValidationService.js" filename="src\domain\services\SolicitudValidationService.js" line-rate="0.9806999999999999" branch-rate="0.9666">
+          <methods>
+            <method name="(anonymous_0)" hits="32" signature="()V">
+              <lines>
+                <line number="42" hits="32"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="11" signature="()V">
+              <lines>
+                <line number="83" hits="11"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="19" signature="()V">
+              <lines>
+                <line number="108" hits="19"/>
+              </lines>
+            </method>
+            <method name="(anonymous_3)" hits="5" signature="()V">
+              <lines>
+                <line number="132" hits="5"/>
+              </lines>
+            </method>
+            <method name="(anonymous_4)" hits="13" signature="()V">
+              <lines>
+                <line number="150" hits="13"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="12" hits="11" branch="false"/>
+            <line number="13" hits="11" branch="false"/>
+            <line number="18" hits="11" branch="false"/>
+            <line number="23" hits="11" branch="false"/>
+            <line number="28" hits="11" branch="false"/>
+            <line number="33" hits="11" branch="false"/>
+            <line number="43" hits="32" branch="true" condition-coverage="100% (4/4)"/>
+            <line number="44" hits="4" branch="false"/>
+            <line number="47" hits="28" branch="false"/>
+            <line number="48" hits="28" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="49" hits="2" branch="false"/>
+            <line number="52" hits="26" branch="false"/>
+            <line number="53" hits="26" branch="false"/>
+            <line number="55" hits="26" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="63" hits="1" branch="false"/>
+            <line number="66" hits="25" branch="true" condition-coverage="100% (4/4)"/>
+            <line number="67" hits="11" branch="false"/>
+            <line number="73" hits="14" branch="false"/>
+            <line number="84" hits="11" branch="false"/>
+            <line number="86" hits="11" branch="false"/>
+            <line number="87" hits="11" branch="false"/>
+            <line number="88" hits="11" branch="false"/>
+            <line number="90" hits="11" branch="false"/>
+            <line number="91" hits="11" branch="false"/>
+            <line number="93" hits="11" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="94" hits="3" branch="false"/>
+            <line number="100" hits="8" branch="false"/>
+            <line number="109" hits="19" branch="false"/>
+            <line number="110" hits="19" branch="false"/>
+            <line number="112" hits="19" branch="false"/>
+            <line number="113" hits="19" branch="false"/>
+            <line number="115" hits="19" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="116" hits="7" branch="false"/>
+            <line number="122" hits="12" branch="false"/>
+            <line number="133" hits="5" branch="false"/>
+            <line number="135" hits="5" branch="false"/>
+            <line number="136" hits="5" branch="false"/>
+            <line number="137" hits="5" branch="false"/>
+            <line number="139" hits="5" branch="false"/>
+            <line number="140" hits="5" branch="false"/>
+            <line number="142" hits="5" branch="false"/>
+            <line number="151" hits="13" branch="false"/>
+            <line number="153" hits="13" branch="false"/>
+            <line number="154" hits="13" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="156" hits="13" branch="false"/>
+            <line number="157" hits="13" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="159" hits="13" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="160" hits="6" branch="false"/>
+            <line number="164" hits="6" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="165" hits="0" branch="false"/>
+            <line number="168" hits="13" branch="false"/>
+            <line number="172" hits="11" branch="false"/>
+          </lines>
+        </class>
+        <class name="UserValidationService.js" filename="src\domain\services\UserValidationService.js" line-rate="1" branch-rate="0.9411">
+          <methods>
+            <method name="(anonymous_0)" hits="21" signature="()V">
+              <lines>
+                <line number="24" hits="21"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="27" signature="()V">
+              <lines>
+                <line number="30" hits="27"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="21" signature="()V">
+              <lines>
+                <line number="51" hits="21"/>
+              </lines>
+            </method>
+            <method name="(anonymous_3)" hits="19" signature="()V">
+              <lines>
+                <line number="90" hits="19"/>
+              </lines>
+            </method>
+            <method name="(anonymous_4)" hits="19" signature="()V">
+              <lines>
+                <line number="112" hits="19"/>
+              </lines>
+            </method>
+            <method name="(anonymous_5)" hits="22" signature="()V">
+              <lines>
+                <line number="135" hits="22"/>
+              </lines>
+            </method>
+            <method name="(anonymous_6)" hits="9" signature="()V">
+              <lines>
+                <line number="152" hits="9"/>
+              </lines>
+            </method>
+            <method name="(anonymous_7)" hits="10" signature="()V">
+              <lines>
+                <line number="155" hits="10"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="8" hits="10" branch="false"/>
+            <line number="14" hits="10" branch="false"/>
+            <line number="25" hits="21" branch="true" condition-coverage="100% (4/4)"/>
+            <line number="26" hits="5" branch="false"/>
+            <line number="29" hits="16" branch="false"/>
+            <line number="30" hits="16" branch="false"/>
+            <line number="31" hits="27" branch="false"/>
+            <line number="34" hits="16" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="35" hits="4" branch="false"/>
+            <line number="41" hits="12" branch="false"/>
+            <line number="52" hits="21" branch="true" condition-coverage="100% (4/4)"/>
+            <line number="53" hits="4" branch="false"/>
+            <line number="57" hits="17" branch="false"/>
+            <line number="59" hits="17" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="60" hits="1" branch="false"/>
+            <line number="63" hits="16" branch="false"/>
+            <line number="64" hits="16" branch="false"/>
+            <line number="67" hits="16" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="68" hits="2" branch="false"/>
+            <line number="73" hits="14" branch="false"/>
+            <line number="75" hits="14" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="76" hits="2" branch="false"/>
+            <line number="82" hits="12" branch="false"/>
+            <line number="91" hits="19" branch="false"/>
+            <line number="92" hits="19" branch="false"/>
+            <line number="94" hits="19" branch="false"/>
+            <line number="95" hits="152" branch="false"/>
+            <line number="96" hits="152" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="99" hits="19" branch="false"/>
+            <line number="101" hits="19" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="102" hits="19" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="103" hits="19" branch="false"/>
+            <line number="113" hits="19" branch="true" condition-coverage="100% (4/4)"/>
+            <line number="114" hits="3" branch="false"/>
+            <line number="117" hits="16" branch="false"/>
+            <line number="118" hits="16" branch="false"/>
+            <line number="120" hits="16" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="121" hits="4" branch="false"/>
+            <line number="127" hits="12" branch="false"/>
+            <line number="136" hits="22" branch="false"/>
+            <line number="137" hits="22" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="139" hits="3" branch="false"/>
+            <line number="140" hits="3" branch="false"/>
+            <line number="141" hits="3" branch="false"/>
+            <line number="153" hits="9" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="154" hits="6" branch="false"/>
+            <line number="155" hits="10" branch="false"/>
+            <line number="156" hits="6" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="160" hits="10" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
   </packages>
 </coverage>

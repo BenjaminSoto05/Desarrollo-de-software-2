@@ -11,22 +11,36 @@ const mockRedisInstance = {
 
 jest.mock('ioredis', () => jest.fn(() => mockRedisInstance));
 
-const { connectRedis, setCache, getCache, deleteCache } = require('../../src/infrastructure/cache/redisClient');
+let redisClientModule;
 
 describe('Redis client', () => {
-  beforeEach(() => {
+  const originalEnv = process.env.NODE_ENV;
+
+  beforeAll(() => {
+    process.env.NODE_ENV = 'development';
+    redisClientModule = require('../../src/infrastructure/cache/redisClient');
+  });
+
+  afterAll(() => {
+    process.env.NODE_ENV = originalEnv;
+  });
+  beforeEach(async () => {
     jest.clearAllMocks();
     mockRedisInstance.get.mockResolvedValue('{"status":"cached"}');
     mockRedisInstance.set.mockResolvedValue('OK');
     mockRedisInstance.del.mockResolvedValue(1);
     mockRedisInstance.quit.mockResolvedValue('OK');
+    
+    // Ensure redisClient is null before each test
+    await redisClientModule.closeRedis();
   });
 
   it('debe conectar con Redis y almacenar un valor en caché', async () => {
-    await connectRedis();
-    await setCache('test:key', { status: 'cached' }, 60);
+    await redisClientModule.connectRedis();
+    await redisClientModule.setCache('test:key', { status: 'cached' }, 60);
 
     expect(Redis).toHaveBeenCalled();
+
     expect(mockRedisInstance.ping).toHaveBeenCalled();
     expect(mockRedisInstance.set).toHaveBeenCalledWith(
       'test:key',
@@ -37,8 +51,8 @@ describe('Redis client', () => {
   });
 
   it('debe leer y eliminar valores de caché', async () => {
-    const cachedValue = await getCache('test:key');
-    await deleteCache('test:key');
+    const cachedValue = await redisClientModule.getCache('test:key');
+    await redisClientModule.deleteCache('test:key');
 
     expect(mockRedisInstance.get).toHaveBeenCalledWith('test:key');
     expect(cachedValue).toEqual({ status: 'cached' });

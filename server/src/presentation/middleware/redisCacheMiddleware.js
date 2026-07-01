@@ -6,6 +6,10 @@ const {
 function cacheMiddleware({ ttlSeconds = 60 } = {}) {
   return async function middleware(req, res, next) {
     try {
+      if (req.method !== 'GET') {
+        return next();
+      }
+
       const cacheKey = req.originalUrl || req.url;
       const cachedValue = await getCache(cacheKey);
 

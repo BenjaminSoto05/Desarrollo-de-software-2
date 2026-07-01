@@ -26,6 +26,7 @@ describe('E2E solicitudes flow', () => {
   let elderlyToken;
   let studentToken;
   let solicitudId;
+  let categoriaId;
 
   beforeAll(async () => {
     await request(app).post('/api/auth/register/elderly').send(elderlyUser).expect(201);
@@ -43,6 +44,9 @@ describe('E2E solicitudes flow', () => {
 
     elderlyToken = elderlyLogin.body.data.accessToken;
     studentToken = studentLogin.body.data.accessToken;
+
+    const catResponse = await request(app).get('/api/categorias').expect(200);
+    categoriaId = catResponse.body.data[0].id;
   });
 
   it('crea, lista, acepta, completa y confirma una solicitud', async () => {
@@ -52,13 +56,16 @@ describe('E2E solicitudes flow', () => {
       .send({
         titulo: 'Compra de medicamentos',
         descripcion: 'Necesito ayuda para comprar medicamentos de forma rápida.',
-        categoriaId: '00000000-0000-0000-0000-000000000001',
+        categoriaId: categoriaId,
         fechaProgramada: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
         horaProgramada: '14:00',
         direccion: 'Av. Siempre Viva 123',
         comuna: 'Temuco',
-      })
-      .expect(201);
+      });
+      
+    if(createResponse.status === 400) console.log(createResponse.body);
+    
+    expect(createResponse.status).toBe(201);
 
     expect(createResponse.body.success).toBe(true);
     solicitudId = createResponse.body.data.id;
