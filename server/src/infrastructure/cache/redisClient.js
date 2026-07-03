@@ -3,7 +3,7 @@ const Redis = require('ioredis');
 let redisClient = null;
 
 function createRedisClient() {
-  if (process.env.NODE_ENV === 'test') {
+  if (process.env.NODE_ENV === 'test' || process.env.REDIS_MOCK === 'true') {
     return {
       status: 'ready',
       async connect() {},

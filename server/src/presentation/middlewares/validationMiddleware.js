@@ -34,7 +34,7 @@ const registerStudentRules = [
   body('email')
     .isEmail()
     .withMessage('Debe proporcionar un email válido.')
-    .normalizeEmail(),
+    .normalizeEmail({ gmail_remove_dots: false }),
   body('password')
     .isLength({ min: 8 })
     .withMessage('La contraseña debe tener al menos 8 caracteres.')
@@ -70,7 +70,7 @@ const registerElderlyRules = [
   body('email')
     .isEmail()
     .withMessage('Debe proporcionar un email válido.')
-    .normalizeEmail(),
+    .normalizeEmail({ gmail_remove_dots: false }),
   body('password')
     .isLength({ min: 8 })
     .withMessage('La contraseña debe tener al menos 8 caracteres.'),
@@ -104,7 +104,7 @@ const loginRules = [
   body('email')
     .isEmail()
     .withMessage('Debe proporcionar un email válido.')
-    .normalizeEmail(),
+    .normalizeEmail({ gmail_remove_dots: false }),
   body('password').notEmpty().withMessage('La contraseña es requerida.'),
   handleValidationErrors,
 ];

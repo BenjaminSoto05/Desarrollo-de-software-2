@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Swal from 'sweetalert2';
 import { solicitudesAPI, evaluacionesAPI } from '../services/api';
 
 const estadoStyles = {
@@ -43,13 +44,22 @@ export default function SolicitudDetailPage() {
   const esVoluntario = sol.voluntarioId === user?.id;
 
   const handleAction = async (action, msg) => {
-    if (!confirm(msg)) return;
+    const result = await Swal.fire({
+      title: 'UCT-Vínculo Mayor',
+      text: msg,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar'
+    });
+    if (!result.isConfirmed) return;
+    
     try {
       await action();
       fetchData();
-      alert('¡Operación exitosa!');
+      Swal.fire('UCT-Vínculo Mayor', '¡Operación exitosa!', 'success');
     } catch (e) {
-      alert(e.response?.data?.error || 'Error');
+      Swal.fire('Error', e.response?.data?.error || 'Error', 'error');
     }
   };
 
@@ -58,10 +68,10 @@ export default function SolicitudDetailPage() {
     try {
       await evaluacionesAPI.create({ solicitudId: id, ...evalForm });
       setShowEvalForm(false);
-      alert('¡Evaluación registrada!');
+      Swal.fire('UCT-Vínculo Mayor', '¡Evaluación registrada!', 'success');
       fetchData();
     } catch (e) {
-      alert(e.response?.data?.error || 'Error');
+      Swal.fire('Error', e.response?.data?.error || 'Error', 'error');
     }
   };
 
