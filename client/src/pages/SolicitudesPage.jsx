@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Swal from 'sweetalert2';
 import { solicitudesAPI, categoriasAPI } from '../services/api';
 
 const estadoStyles = {
@@ -54,13 +55,27 @@ export default function SolicitudesPage() {
   }, [filters]);
 
   const handleAccept = async (id) => {
-    if (!confirm('¿Aceptar esta solicitud?')) return;
+    const result = await Swal.fire({
+      title: 'UCT-Vínculo Mayor',
+      text: '¿Aceptar esta solicitud?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (!result.isConfirmed) return;
+
     try {
       await solicitudesAPI.accept(id);
-      alert('¡Solicitud aceptada! La dirección ya está disponible.');
+      Swal.fire(
+        'UCT-Vínculo Mayor',
+        '¡Solicitud aceptada! La dirección ya está disponible.',
+        'success'
+      );
       fetchSolicitudes(pagination.page);
     } catch (e) {
-      alert(e.response?.data?.error || 'Error');
+      Swal.fire('Error', e.response?.data?.error || 'Error', 'error');
     }
   };
 

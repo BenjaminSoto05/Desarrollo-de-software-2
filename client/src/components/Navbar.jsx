@@ -9,10 +9,10 @@ const roleLabels = {
 };
 
 const roleColors = {
-  ESTUDIANTE: 'bg-[#0077ba]',
-  ADULTO_MAYOR: 'bg-[#fdc300] !text-black',
-  TUTOR: 'bg-[#343a40]',
-  ADMIN: 'bg-[#343a40]',
+  ESTUDIANTE: 'bg-[#ffc107] !text-black',
+  ADULTO_MAYOR: 'bg-[#0d6efd] !text-white',
+  TUTOR: 'bg-[#343a40] !text-white',
+  ADMIN: 'bg-[#343a40] !text-white',
 };
 
 export default function Navbar() {
@@ -27,11 +27,11 @@ export default function Navbar() {
   // Navbar color por rol (igual que Django)
   let navBg = 'bg-[#343a40]';
   if (user?.rol === 'ADULTO_MAYOR') {
-    navBg = 'bg-[#fdc300]';
+    navBg = 'bg-[#0d6efd]';
   } else if (user?.rol === 'ESTUDIANTE') {
-    navBg = 'bg-[#0077ba]';
+    navBg = 'bg-[#ffc107]';
   }
-  const navText = user?.rol === 'ADULTO_MAYOR' ? 'text-black' : 'text-white';
+  const navText = user?.rol === 'ESTUDIANTE' ? 'text-black' : 'text-white';
 
   return (
     <nav
