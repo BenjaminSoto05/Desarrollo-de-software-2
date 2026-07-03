@@ -50,10 +50,10 @@ export default function SolicitudDetailPage() {
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
-      cancelButtonText: 'Cancelar'
+      cancelButtonText: 'Cancelar',
     });
     if (!result.isConfirmed) return;
-    
+
     try {
       await action();
       fetchData();

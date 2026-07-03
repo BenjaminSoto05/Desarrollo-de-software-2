@@ -61,14 +61,18 @@ export default function SolicitudesPage() {
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
+      cancelButtonText: 'Cancelar',
     });
 
     if (!result.isConfirmed) return;
 
     try {
       await solicitudesAPI.accept(id);
-      Swal.fire('UCT-Vínculo Mayor', '¡Solicitud aceptada! La dirección ya está disponible.', 'success');
+      Swal.fire(
+        'UCT-Vínculo Mayor',
+        '¡Solicitud aceptada! La dirección ya está disponible.',
+        'success'
+      );
       fetchSolicitudes(pagination.page);
     } catch (e) {
       Swal.fire('Error', e.response?.data?.error || 'Error', 'error');
